@@ -1,0 +1,31 @@
+##
+## EPITECH PROJECT, 2019
+## Makefile
+## File description:
+## ..
+##
+
+NAME	=	a.out
+
+CC	=	g++
+
+SRCS	=	./src/main.cpp		\
+
+OBJS	=	$(SRCS:.cpp=.o)
+
+CFLAGS +=	-Wall
+
+CPPFLAGS = -I./include/
+
+all: $(NAME)
+
+$(NAME): $(OBJS)
+	 $(CC) $(OBJS) -o $(NAME)
+
+clean:
+	$(RM) $(OBJS)
+
+fclean: clean
+	$(RM) $(NAME)
+
+re: fclean all
