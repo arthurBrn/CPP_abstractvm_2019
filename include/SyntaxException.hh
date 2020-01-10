@@ -2,13 +2,12 @@
 #ifndef _SYNTAX_EXCEPTION_
 #define _SYNTAX_EXCEPTION_
 
-#include <iostream>
-#include <string.h>
-#include <cstring>
+#include "abstractvm.hh"
 
 class SyntaxException : std::exception 
 {
-    
+    public:
+        const char* what() const throw();
 };
 
 #endif
