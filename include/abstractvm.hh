@@ -6,3 +6,4 @@
 #include "OperationException.hh"
 #include "StackException.hh"
 #include "SyntaxException.hh"
+#include "IOperand.hh"

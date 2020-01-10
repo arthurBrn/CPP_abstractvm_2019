@@ -1,7 +1,7 @@
 /*
 ** EPITECH PROJECT, 2019
-** source/IOperand.cpp
+** source/Int8.cpp
 ** File description:
-** IOperand file
+** int 8 class
 */
 
