@@ -1,7 +1,9 @@
-/**
- * 
- * 
- * */
+/*
+** EPITECH PROJECT, 2020
+** InputException.cpp
+** File description:
+** ...
+*/
 
 #include "abstractvm.hh"
 
