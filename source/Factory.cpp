@@ -1,6 +1,6 @@
 /*
 ** EPITECH PROJECT, 2020
-** AAnimal.cpp
+** Factory.cpp
 ** File description:
 ** ...
 */
