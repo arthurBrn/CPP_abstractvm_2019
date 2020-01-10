@@ -9,10 +9,6 @@
 #include <string.h>
 #include <cstring>
 
-// #include "../include/AAnimal.hh"
-// #include "../include/cat.hh"
-// #include "../include/mouse.hh"
-
 class IOperand
 {
     public:

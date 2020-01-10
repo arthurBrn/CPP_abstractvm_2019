@@ -3,7 +3,7 @@
  * 
  * */
 
-#include "SyntaxException.hh"
+#include "abstractvm.hh"
 
 class SyntaxException : SyntaxException
 {
