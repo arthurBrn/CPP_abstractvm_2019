@@ -5,11 +5,11 @@
 ## ..
 ##
 
-NAME	=	a.out
+NAME	=	abstractVM
 
 CC	=	g++
 
-SRCS	=	./src/main.cpp		\
+SRCS	=	./source/main.cpp		\
 
 OBJS	=	$(SRCS:.cpp=.o)
 
