@@ -2,4 +2,5 @@
 #include <string.h>
 #include <cstring>
 #include "Factory.hh"
-#include "AbstractVmException.hh"
+#include "IOperand.hh"
+

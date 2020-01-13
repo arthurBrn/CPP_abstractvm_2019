@@ -7,7 +7,7 @@
 #include <cstring>
 
 class Factory 
-{
+{/*
     public:
         static IOperand* createOperand(eOperandType type, const std::string& value);
         IOperand* createInt8(const std::string& value);
@@ -16,7 +16,7 @@ class Factory
         IOperand* createFloat(const std::string& value);
         IOperand* createDouble(const std::string& value);
         IOperand* createBigDecimal(const std::string& value);
-    private:
-}
+	private:*/
+};
 
 #endif

@@ -7,6 +7,7 @@
 
 #include <iostream>
 #include <string>
+#include "abstractvm.hh"
 
 using namespace std;
 

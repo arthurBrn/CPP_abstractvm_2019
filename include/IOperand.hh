@@ -1,19 +1,22 @@
 /*
-** EPITECH PROJECT, 2019
-** source/IOperand.cpp
+** EPITECH PROJECT, 2020
+** AAnimal.cpp
 ** File description:
-** IOperand file
+** ...
 */
 
 #include <iostream>
 #include <string.h>
 #include <cstring>
 
+#ifndef IOperand_HH_
+#define IOperand_HH_
+
 class IOperand
 {
     public:
         virtual std::string toString() const = 0;
-        virtual eOperandType getType() const = 0;
+  //        virtual eOperandType getType() const = 0;
 
         virtual IOperand* operator+(const IOperand &rhs) const = 0;
         virtual IOperand* operator-(const IOperand &rhs) const = 0;
@@ -21,5 +24,7 @@ class IOperand
         virtual IOperand* operator/(const IOperand &rhs) const = 0;
         virtual IOperand* operator%(const IOperand &rhs) const = 0;
 
-        virtual -IOperand(){}
+  //virtual -IOperand(){};
 };
+
+#endif
