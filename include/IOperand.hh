@@ -1,30 +1,28 @@
 /*
 ** EPITECH PROJECT, 2020
-** AAnimal.cpp
+** IOperand.hh
 ** File description:
 ** ...
 */
 
-#include <iostream>
-#include <string.h>
-#include <cstring>
+#include "abstractvm.hh"
 
-#ifndef IOperand_HH_
-#define IOperand_HH_
+#ifndef _IOperand_HH_
+#define _IOperand_HH_
 
 class IOperand
 {
-    public:
-        virtual std::string toString() const = 0;
-  //        virtual eOperandType getType() const = 0;
+public:
+      virtual std::string toString() const = 0;
+      //        virtual eOperandType getType() const = 0;
 
-        virtual IOperand* operator+(const IOperand &rhs) const = 0;
-        virtual IOperand* operator-(const IOperand &rhs) const = 0;
-        virtual IOperand* operator*(const IOperand &rhs) const = 0;
-        virtual IOperand* operator/(const IOperand &rhs) const = 0;
-        virtual IOperand* operator%(const IOperand &rhs) const = 0;
+      virtual IOperand *operator+(const IOperand &rhs) const = 0;
+      virtual IOperand *operator-(const IOperand &rhs) const = 0;
+      virtual IOperand *operator*(const IOperand &rhs) const = 0;
+      virtual IOperand *operator/(const IOperand &rhs) const = 0;
+      virtual IOperand *operator%(const IOperand &rhs) const = 0;
 
-  //virtual -IOperand(){};
+      //virtual -IOperand(){};
 };
 
 #endif

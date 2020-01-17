@@ -1,6 +1,12 @@
+/*
+** EPITECH PROJECT, 2020
+** AbstractVmException.hh
+** File description:
+** ...
+*/
 
-#ifndef _INPUT_EXCEPTION_
-#define _INPUT_EXCEPTION_
+#ifndef _ABSTRACT_VM_EXCEPTION_HH_
+#define _ABSTRACT_VM_EXCEPTION_HH_
 
 #include "abstractvm.hh"
 
