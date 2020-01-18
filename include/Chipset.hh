@@ -13,9 +13,13 @@
 
 class Chipset {
     public:
+        Chipset(std::vector<std::string>commands);
+        void show_commands();
         void read();
         void read(std::string file);
         void parseFile(std::string file);
+    private :
+        std::vector<std::string>commands;
 };
 
 #endif
