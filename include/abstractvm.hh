@@ -13,4 +13,5 @@
 #include <cstring>
 #include <vector>
 
+int read_file(int ac, char **av);
 #endif

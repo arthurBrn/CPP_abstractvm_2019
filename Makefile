@@ -10,6 +10,7 @@ NAME	=	abstractVM
 CC	=	g++
 
 SRCS	=	./source/main.cpp		\
+			./source/read_file.cpp	\
 
 OBJS	=	$(SRCS:.cpp=.o)
 
