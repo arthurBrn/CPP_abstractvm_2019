@@ -26,6 +26,7 @@ int main (int ac, char **av)
         std::cout << "no file match" << std::endl;
     file.close();
     Chipset mychip(commands);
-    mychip.show_commands();
+    mychip.check_file(commands);
+    mychip.get_is_file_error();
     return 0;
 }
