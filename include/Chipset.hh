@@ -14,7 +14,8 @@
 
 class Chipset {
     public:
-        Chipset(std::vector<std::string>commands);
+        Chipset();
+        ~Chipset();
         void show_commands();
         void read();
         void read(std::string file);
@@ -23,8 +24,11 @@ class Chipset {
         void get_is_file_error();
         std::vector<std::string> keywords();
         std::string test();
+        void setVectorStack(std::string someStack);
+        std::vector<std::string> getFullVector();
+        void displayVector();
     private :
-        std::vector<std::string>commands;
+        std::vector<std::string> commands;
         int is_file_error;
 
 };

@@ -13,20 +13,23 @@
 #include <fstream>
 #include <iostream>
 
-int main (int ac, char **av)
+int main(int ac, char **av)
 {
-    std::vector<std::string>commands;
     std::ifstream file;
+    Chipset *chip = new Chipset();
+
     file.open(av[1]);
     std::string line;
-    if (file.is_open()) {
+    if (file.is_open())
+    {
         while (getline(file, line))
-        commands.push_back(line);
-    } else
+            chip->setVectorStack(line);
+    }
+    else
         std::cout << "no file match" << std::endl;
     file.close();
-    Chipset mychip(commands);
-    mychip.check_file(commands);
-    mychip.get_is_file_error();
+    chip->check_file(chip->getFullVector());
+    chip->get_is_file_error();
+    chip->displayVector();
     return 0;
 }

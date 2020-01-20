@@ -1,0 +1,8 @@
+*.o
+*.gcno
+*.gcda
+*~
+#*
+readme.txt
+abstractVM
+example.avm

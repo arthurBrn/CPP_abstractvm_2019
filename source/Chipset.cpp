@@ -8,9 +8,8 @@
 #include "abstractvm.hh"
 #include "Chipset.hh"
 
-Chipset::Chipset(std::vector<std::string>commands)
+Chipset::Chipset()
 {
-    this->commands = commands;
     this->is_file_error = 0;
 }
 
@@ -72,4 +71,20 @@ std::vector<std::string> Chipset::keywords()
     keyword.push_back("print");
     keyword.push_back("exit");
     return keyword;
+}
+
+void Chipset::setVectorStack(std::string someStack)
+{   
+    commands.push_back(someStack);
+}
+
+std::vector<std::string> Chipset::getFullVector()
+{
+    return commands;
+}
+
+void Chipset::displayVector()
+{
+    for (int i = 0; i < commands.size(); i++)
+        std::cout << commands.at(i) << std::endl;
 }
