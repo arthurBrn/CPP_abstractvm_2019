@@ -18,16 +18,8 @@ int main(int ac, char **av)
     std::ifstream file;
     Chipset *chip = new Chipset();
 
-    file.open(av[1]);
-    std::string line;
-    if (file.is_open())
-    {
-        while (getline(file, line))
-            chip->setVectorStack(line);
-    }
-    else
-        std::cout << "no file match" << std::endl;
-    file.close();
+    if (av[1])
+        chip->read(av);
     chip->check_file(chip->getFullVector());
     chip->get_is_file_error();
     chip->displayVector();

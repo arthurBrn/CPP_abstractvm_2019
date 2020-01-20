@@ -7,6 +7,7 @@
 
 #include "abstractvm.hh"
 #include "Chipset.hh"
+#include <fstream>
 
 Chipset::Chipset()
 {
@@ -19,23 +20,26 @@ void Chipset::show_commands()
         std::cout << commands.at(i) << std::endl;
 }
 
-void Chipset::check_file(std::vector<std::string>commands)
+void Chipset::check_file(std::vector<std::string> commands)
 {
-    std::vector<std::string>keyword = keywords();
+    std::vector<std::string> keyword = keywords();
     int len;
     int find = 0;
     int i;
     bool comment = false;
 
-    for (int j = 0; j < commands.size(); j++) {
-        for (i = 0; i < keyword.size(); i++) {
+    for (int j = 0; j < commands.size(); j++)
+    {
+        for (i = 0; i < keyword.size(); i++)
+        {
             len = keyword.at(i).size();
-            if (commands.at(j).compare(0, len, keyword.at(i)) == 0) {
+            if (commands.at(j).compare(0, len, keyword.at(i)) == 0)
+            {
                 std::cout << "match : " << keyword.at(i) << std::endl;
                 find = 1;
             }
         }
-        if (find == 0 &&  commands.at(j)[0] != ';')
+        if (find == 0 && commands.at(j)[0] != ';')
             this->is_file_error = j + 1;
         find = 0;
         comment = false;
@@ -52,7 +56,7 @@ void Chipset::get_is_file_error()
 
 std::vector<std::string> Chipset::keywords()
 {
-    std::vector<std::string>keyword;
+    std::vector<std::string> keyword;
     keyword.push_back("comments");
     keyword.push_back("push");
     keyword.push_back("pop");
@@ -74,7 +78,7 @@ std::vector<std::string> Chipset::keywords()
 }
 
 void Chipset::setVectorStack(std::string someStack)
-{   
+{
     commands.push_back(someStack);
 }
 
@@ -87,4 +91,23 @@ void Chipset::displayVector()
 {
     for (int i = 0; i < commands.size(); i++)
         std::cout << commands.at(i) << std::endl;
+}
+
+void Chipset::read(char **av)
+{
+    std::ifstream file;
+    std::string line;
+
+    file.open(av[1]);
+    if (file.is_open())
+        while (getline(file, line))
+            commands.push_back(line);
+    else
+        std::cout << "no file match" << std::endl;
+    file.close();
+}
+
+void Chipset::read()
+{
+
 }

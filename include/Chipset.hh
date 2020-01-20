@@ -18,7 +18,7 @@ class Chipset {
         ~Chipset();
         void show_commands();
         void read();
-        void read(std::string file);
+        void read(char **av);
         void parseFile(std::string file);
         void check_file(std::vector<std::string>commands);
         void get_is_file_error();
