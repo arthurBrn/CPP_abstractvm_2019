@@ -6,7 +6,10 @@
 */
 
 #include "abstractvm.hh"
+#include "AbstractVmException.hh"
 
-std::string getErrorMessage(std::string errorMessage) throw() {
+
+
+std::string AbstractVmException::getErrorMessage(std::string errorMessage) throw() {
     return (errorMessage);
 }

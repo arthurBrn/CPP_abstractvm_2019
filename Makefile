@@ -11,6 +11,7 @@ CC	=	g++
 
 SRCS	=	./source/main.cpp		\
 			./source/Chipset.cpp	\
+			./source/AbstractVmException.cpp	\
 
 OBJS	=	$(SRCS:.cpp=.o)
 

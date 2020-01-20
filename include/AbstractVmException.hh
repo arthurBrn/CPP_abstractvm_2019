@@ -10,10 +10,10 @@
 
 #include "abstractvm.hh"
 
-class AbstractVmException : std::exception 
-{
+class AbstractVmException : public std::exception 
+{   
     public:
-        std::string getErrorMessage(std::string errorMessage) throw();
+        static std::string getErrorMessage(std::string errorMessage) throw();
 };
 
 #endif

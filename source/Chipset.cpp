@@ -8,10 +8,15 @@
 #include "abstractvm.hh"
 #include "Chipset.hh"
 #include <fstream>
+#include "AbstractVmException.hh"
 
 Chipset::Chipset()
 {
     this->is_file_error = 0;
+}
+
+Chipset::~Chipset()
+{
 }
 
 void Chipset::show_commands()
@@ -84,7 +89,7 @@ void Chipset::setVectorStack(std::string someStack)
 
 std::vector<std::string> Chipset::getFullVector()
 {
-    return commands;
+    return this->commands;
 }
 
 void Chipset::displayVector()
@@ -98,16 +103,17 @@ void Chipset::read(char **av)
     std::ifstream file;
     std::string line;
 
-    file.open(av[1]);
-    if (file.is_open())
-        while (getline(file, line))
-            commands.push_back(line);
-    else
-        std::cout << "no file match" << std::endl;
+    if (av[1]) {
+        file.open(av[1]);
+        if (file.is_open())
+            while (getline(file, line))
+                this->setVectorStack(line);
+    } else 
+        this->read();
     file.close();
 }
 
 void Chipset::read()
 {
-
+    std::cout << "We're in the read with no file input." << std::endl;
 }

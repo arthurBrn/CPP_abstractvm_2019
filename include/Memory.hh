@@ -16,6 +16,8 @@ class Memory
 public:
     int getStackSize();
     IOperand* getTopPileStack();
+    IOperand* getStackAtIndexX(int index);
+    IOperand* setStackAtIndexX(int index, IOperand* value);
     std::vector<IOperand*> getAllStack();
     void addStack(IOperand &object);
     void popTheStack();
