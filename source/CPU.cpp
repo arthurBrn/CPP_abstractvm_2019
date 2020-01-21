@@ -9,81 +9,100 @@
 #include "CPU.hh"
 #include "IOperand.hh"
 #include "Memory.hh"
+#include "Chipset.hh"
+#include "Output.hh"
 
-std::vector<std::string> CPU::getAllStorage()
+CPU::CPU()
 {
-    return (this->storage);
 }
 
-int CPU::getStorageSize()
+CPU::~CPU()
 {
-    return (this->storage.size());
 }
 
-std::string CPU::getLastStored()
+int CPU::getRegistreSize()
 {
-    return (this->storage.at(getStorageSize() - 1));
+    return (this->registre.size());
 }
 
-void push(IOperand &object)
+std::vector<std::string> CPU::getFullRegistre()
+{
+    return (this->registre);
+}
+
+std::string CPU::getRegistreStackAtIndex(int index)
+{
+    return (this->registre.at(index));
+}
+
+void CPU::setRegistreStackAtIndex(int index, std::string someStack)
+{
+    // take in account the difference of type etc...
+    this->registre.at(index) = someStack;
+}
+
+void CPU::push(IOperand &object)
 {
     // do smthg
-
 }
-void store(IOperand &object)
+void CPU::store(IOperand &object)
 {
     // do smthg
 }
-void load(IOperand &object)
+void CPU::load(IOperand &object)
 {
     // do smthg
 }
-void assert(IOperand &object)
+void CPU::assert(IOperand &object)
 {
     // do smthg
 }
-void dup(std::vector<IOperand>)
+void CPU::dup(std::vector<IOperand *> vector)
 {
     // Duplicates the value on the top of stack and copy the stack of the value
-
 }
 
-void swap(Memory objMemory)
+void CPU::swap(Memory objMemory)
 {
-    // do smthg
-    // reverse the order of the first two values of the stack 
     int stackSize = objMemory.getStackSize();
-    IOperand* fstValueHolder = objMemory.getStackAtIndexX(stackSize);
-    IOperand* sndValueHolder = objMemory.getStackAtIndexX((stackSize - 1));
+    IOperand *fstValueHolder = objMemory.getStackAtIndexX(stackSize);
+    IOperand *sndValueHolder = objMemory.getStackAtIndexX((stackSize - 1));
 
     objMemory.setStackAtIndexX(stackSize, sndValueHolder);
     objMemory.setStackAtIndexX((stackSize - 1), fstValueHolder);
 }
 
-void pop(std::vector<IOperand*> stack)
+void CPU::pop(std::vector<IOperand *> stack) throw()
 {
-    // Unstack the value at the top of the stack 
-    // If the stack is empty, the program stop error 
-    if (!stack.empty()) {
-        throw("Stack is empty");
-    } else {
-
+    if (stack.empty())
+    {
+        throw("STACK IS EMPTY ERROR");
     }
+    // stack.erase(stack.size());
 }
 
-void add()
+void CPU::add()
 {
     // do smthg
 }
 
-void clear(std::vector<IOperand*> stack)
+void CPU::clear(std::vector<IOperand *> stack)
 {
-    // Clear the stack
-    // for (int i = 0; i < stack.size(); i++)
-        // stack.erase(stack.at(i));
+    auto iterator = stack.begin();
+
+    while (iterator != stack.end())
+        iterator = stack.erase(iterator);
 }
-void exit()
+
+void CPU::dump(Memory memoryObject)
+{
+    // Create an Output object, to use its function print
+    Output *out = new Output();
+    // for (auto iterator = memoryObject.getAllStack().begin(); iterator != memoryObject.getAllStack().end(); ++iterator)
+    // out->print(memoryObject.getAllStack().at(iterator));
+}
+
+void CPU::exit()
 {
     // do smthg
-
 }

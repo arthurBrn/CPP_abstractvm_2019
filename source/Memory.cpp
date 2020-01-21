@@ -10,17 +10,32 @@
 
 int Memory::getStackSize()
 {
-    return (stack.size());
+    return (this->stack.size());
 }
 
-IOperand* Memory::getTopPileStack()
+IOperand* Memory::getStackTopPile()
 {
-    return (stack.at(getStackSize() - 1));
+    return (this->stack.at(this->getStackSize()));
 }
+
+IOperand* Memory::getStackAtIndexX(int index)
+{
+    IOperand* someobject;
+
+    return (someobject);
+}
+
+IOperand* Memory::setStackAtIndexX(int index, IOperand* value)
+{
+    IOperand* someobject;
+
+    return (someobject);
+}
+
 
 std::vector<IOperand*> Memory::getAllStack()
 {
-    return (stack);
+    return (this->stack);
 }
 
 void addStack(IOperand &object)
