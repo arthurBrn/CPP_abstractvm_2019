@@ -51,6 +51,7 @@ void Input::checkFile(Chipset *chip)
     int len;
     int find = 0;
     int i;
+    int flag = 0;
     bool comment = false;
 
     this->setKeywords();
@@ -64,12 +65,16 @@ void Input::checkFile(Chipset *chip)
                 std::cout << "match : " << this->getKeywords().at(i) << std::endl;
                 find = 1;
             }
+            if (chip->getAllCommands().at(j) == "exit")
+                flag = 1;
         }
         if (find == 0 && chip->getAllCommands().at(j)[0] != ';')
             this->setFileError(j + 1);
         find = 0;
         comment = false;
     }
+    if (flag == 0)
+        std::cout << "FILE ERROR. NO EXIT COMMAND" << std::endl;
 }
 
 void Input::setKeywords()

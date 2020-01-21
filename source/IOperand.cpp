@@ -11,9 +11,9 @@
 class IOperand
 {
     public:
-        virtual std::string toString() const = 0;
+        enum eOperandType {int8_t, int16_t, int32_t, _Float32};
+        virtual std::string toString() const = 0; 
         virtual eOperandType getType() const = 0;
-
         virtual IOperand* operator+(const IOperand &rhs) const = 0;
         virtual IOperand* operator-(const IOperand &rhs) const = 0;
         virtual IOperand* operator*(const IOperand &rhs) const = 0;
@@ -21,8 +21,4 @@ class IOperand
         virtual IOperand* operator%(const IOperand &rhs) const = 0;
 
         virtual -IOperand(){}
-
-    protected:
-    // trv comment rajouter double et bigDecimal
-        enum eOperandType {int8_t, int16_t, int32_t, _Float32}; 
 };

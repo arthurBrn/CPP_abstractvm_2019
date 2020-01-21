@@ -16,7 +16,8 @@ IOperand* createInt8(const std::string& value)
 }
 
 IOperand* createInt16(const std::string& value) {
-
+    int8_t *nb = new int8_t(std::stoi(value));
+    // return (nb);
 }
 IOperand* createInt32(const std::string& value) {
 

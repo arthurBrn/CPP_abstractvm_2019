@@ -47,6 +47,8 @@ void Chipset::execution()
     CPU cpu;
     int cpt = this->getAllCommands().size();
 
+    
+
     this->showCommands();
     // for (int i = 0; i < cpt; i++) 
     // {
