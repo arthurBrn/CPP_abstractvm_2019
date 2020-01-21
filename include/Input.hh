@@ -24,13 +24,11 @@ public:
     void printFileError();
     int getFileError();
     void setFileError(int value);
-    std::vector<std::string> getKeywords();
-    std::string getKeyWordAtIndex(int index);
-    void setKeywords();
     void checkFile(Chipset *chip);
 
 private:
     std::vector<std::string> keywords;
+    std::vector<std::string> commands;
     std::string line;
     int fileError;
 };

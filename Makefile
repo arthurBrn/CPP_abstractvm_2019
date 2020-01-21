@@ -21,7 +21,7 @@ OBJS	=	$(SRCS:.cpp=.o)
 
 CFLAGS +=	-Wall
 
-CPPFLAGS = -I./include/
+CPPFLAGS = -I./include/ -std=c++11
 
 all: $(NAME)
 
