@@ -40,19 +40,16 @@ void Chipset::setCommand(std::string command)
     this->commands.push_back(command);
 }
 
+void Chipset::deleteStackAtIndex(int index)
+{
+    this->getAllCommands().at(index).erase();
+}
+
 void Chipset::execution()
 {
     Memory memo;
     CPU cpu;
-    int cpt = this->getAllCommands().size();
-
+    // for (int i = 0; i < this->getAllCommands().size(); i++) {}
     
-
-    this->showCommands();
-    // for (int i = 0; i < cpt; i++) 
-    // {
-    //     std::string ola = this->getCommandAtIndex(i);
-    //     switch() {
-    //     }
-    // }
+    
 }

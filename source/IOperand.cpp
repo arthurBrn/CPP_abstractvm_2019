@@ -8,10 +8,10 @@
 #include "abstractvm.hh"
 #include "IOperand.hh"
 
-IOperand::eOperandType getType()
-{
-    // get the enum
-}
+// IOperand::eOperandType getType()
+// {
+    //get the enum
+// }
 
 IOperand IOperand::*operator+(const IOperand &rhs)
 {
