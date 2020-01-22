@@ -17,14 +17,16 @@
 
 int main(int ac, char **av)
 {
-    Input *in = new Input();
+    Input *in = new Input();    
     Chipset *chip = new Chipset;
 
+
     try {
-        in->read(av, chip);
-        in->getFileError();
+        in->select_input(ac, av, chip);
+        in->getFileError(chip);
     } catch(AbstractVmException error) {
         std::cout << error.getErrorMessage() << std::endl;
     }
-    return 0;   
+
+    return 0;
 }

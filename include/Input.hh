@@ -21,14 +21,13 @@ public:
     void setLine(std::string);
     void read(Chipset *chip);
     void read(char **av, Chipset *chip);
-    void printFileError();
-    int getFileError();
+    int getFileError(Chipset *chip);
     void setFileError(int value);
     void checkFile(Chipset *chip);
+    void select_input(int ac, char **av, Chipset *chip);
+    int syntax(std::string str);
 
 private:
-    std::vector<std::string> keywords;
-    std::vector<std::string> commands;
     std::string line;
     int fileError;
 };
