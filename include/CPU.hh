@@ -7,6 +7,7 @@
 
 #include "abstractvm.hh"
 #include "IOperand.hh"
+#include "Chipset.hh"
 #include "Memory.hh"
 
 
