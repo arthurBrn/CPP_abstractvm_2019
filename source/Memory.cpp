@@ -95,10 +95,11 @@ void Memory::swap()
 void Memory::dump()
 {
     Output out;
+    std::vector<IOperand*>::iterator ptr;
 
-    // Use toString method here
-    // for (auto iterator = this->getAllStack().begin(); iterator != this->getAllStack().end(); ++iterator)
-        // out.print(iterator);
+    // USE TOSTRING()
+    // for (ptr = this->getAllStack().begin(); ptr < this->getAllStack().end(); ptr++)
+        // out.print(*ptr);
 }
 
 void Memory::print()

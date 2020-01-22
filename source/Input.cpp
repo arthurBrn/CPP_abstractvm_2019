@@ -83,8 +83,6 @@ void Input::read(char **av, Chipset *chip)
         if (file.is_open())
             while (getline(file, command))
                 chip->setCommand(command);
-        // else 
-            // throw ("ERROR: File not open");
         this->checkFile(chip);
     }
     else
