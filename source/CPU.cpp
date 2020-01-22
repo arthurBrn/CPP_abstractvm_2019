@@ -44,11 +44,7 @@ void CPU::setRegistreStackAtIndex(int index, std::string someStack)
 
 void CPU::push(Memory memo, Chipset chip)
 {
-    // We will use the Memory object memo to acces the vector
-    // And stack the push result
     Factory fact;
-    // call Factory method on the string in chip command
-    
 }
 
 void CPU::store(Memory memo, Chipset chip)
