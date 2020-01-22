@@ -40,6 +40,11 @@ std::vector<IOperand*> Memory::getAllStack()
     return (this->stack);
 }
 
+void Memory::setStack(IOperand* obj)
+{
+    this->stack.push_back(obj);
+}
+
 void Memory::pop()
 {
     AbstractVmException exception;

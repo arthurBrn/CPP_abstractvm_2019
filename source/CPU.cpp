@@ -11,6 +11,7 @@
 #include "Memory.hh"
 #include "Chipset.hh"
 #include "Output.hh"
+#include "Factory.hh"
 
 CPU::CPU()
 {
@@ -41,19 +42,24 @@ void CPU::setRegistreStackAtIndex(int index, std::string someStack)
     this->registre.at(index) = someStack;
 }
 
-void CPU::push(IOperand &object)
+void CPU::push(Memory memo, Chipset chip)
+{
+    // We will use the Memory object memo to acces the vector
+    // And stack the push result
+    Factory fact;
+    // call Factory method on the string in chip command
+    
+}
+
+void CPU::store(Memory memo, Chipset chip)
 {
     // do smthg
 }
-void CPU::store(IOperand &object)
+void CPU::load(Memory memo, Chipset chip)
 {
     // do smthg
 }
-void CPU::load(IOperand &object)
-{
-    // do smthg
-}
-void CPU::assert(IOperand &object)
+void CPU::assert(Memory memo, Chipset chip)
 {
     // do smthg
 }

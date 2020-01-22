@@ -7,15 +7,15 @@
 
 NAME	=	unit_test
 
-SRC_TEST	=	test_run_board.c			\
+SRC_TEST	=	test_memory.cpp			\
 
 
 
-SRC		=	../src/run_start.c					\
+SRC		=	../source/Memory.cpp					\
 
-OBJ 	=	$(SRC:.c=.o)
+OBJ 	=	$(SRC:.cpp=.o)
 
-INCLUDE	=	-I../include
+INCLUDE	=	-I../include/ -std=c++11
 
 CFLAGS	=	$(INCLUDE) --coverage -O0
 

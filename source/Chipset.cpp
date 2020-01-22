@@ -42,8 +42,7 @@ void Chipset::setCommand(std::string command)
 
 void Chipset::execution()
 {
-    // Point here would be to instantiate a CPU object
-    // Then execute the commands until we've gone through the commands vector
+    Memory memo;
     CPU cpu;
     int cpt = this->getAllCommands().size();
 
