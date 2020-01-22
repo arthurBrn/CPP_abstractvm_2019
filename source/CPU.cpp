@@ -6,12 +6,6 @@
 */
 
 #include "abstractvm.hh"
-#include "CPU.hh"
-#include "IOperand.hh"
-#include "Memory.hh"
-#include "Chipset.hh"
-#include "Output.hh"
-#include "Factory.hh"
 
 CPU::CPU()
 {

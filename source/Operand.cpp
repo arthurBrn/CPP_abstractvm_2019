@@ -6,9 +6,6 @@
 */
 
 #include "abstractvm.hh"
-#include "Operand.hh"
-#include "CPU.hh"
-#include "Memory.hh"
 
 class Operand
 {

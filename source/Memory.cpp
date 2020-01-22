@@ -6,9 +6,6 @@
 */
 
 #include "abstractvm.hh"
-#include "Output.hh"
-#include "Memory.hh"
-#include "AbstractVmException.hh"
 
 int Memory::getStackSize()
 {

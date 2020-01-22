@@ -6,8 +6,6 @@
 */
 
 #include "abstractvm.hh"
-#include "IOperand.hh"
-#include <iostream>
 
 IOperand *createInt8(const std::string &value)
 {

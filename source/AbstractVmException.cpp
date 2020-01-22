@@ -6,7 +6,6 @@
 */
 
 #include "abstractvm.hh"
-#include "AbstractVmException.hh"
 
 
 

@@ -12,6 +12,20 @@
 #include <string.h>
 #include <cstring>
 #include <vector>
+#include <map>
+#include <fstream>
+#include <stdbool.h>
+#include <regex>
+
+#include "AbstractVmException.hh"
+#include "Chipset.hh"
+#include "Operand.hh"
+#include "CPU.hh"
+#include "Factory.hh"
+#include "IOperand.hh"
+#include "Input.hh"
+#include "Output.hh"
+#include "Memory.hh"
 
 int read_file(int ac, char **av);
 #endif

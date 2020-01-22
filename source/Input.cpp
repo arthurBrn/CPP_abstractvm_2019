@@ -6,11 +6,6 @@
 */
 
 #include "abstractvm.hh"
-#include "Input.hh"
-#include "Chipset.hh"
-#include "AbstractVmException.hh"
-#include <fstream>
-#include <regex>
 
 Input::Input()
 {

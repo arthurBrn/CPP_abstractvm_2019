@@ -10,7 +10,6 @@
 #include "Chipset.hh"
 #include "Memory.hh"
 
-
 #ifndef _CPU_HH_
 #define _CPU_HH_
 
