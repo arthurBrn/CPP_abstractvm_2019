@@ -54,7 +54,7 @@ void Input::checkFile(Chipset *chip)
     commands = chip->getAllCommands();
     bool res;
     int max = commands.size() - 1;
-    
+    auto iterator = 0;
 
     for (int i = 0; i < commands.size(); i++) {
         res = syntax(commands.at(i));
@@ -63,7 +63,12 @@ void Input::checkFile(Chipset *chip)
             exception.setErrorMessage("ERROR: syntax error in the file.");
             throw(exception);
         }
+        if (commands.at(i).empty()) {
+            //chip->getIndexCommand
+        }
+        //iterator++;
     }
+    
     if (commands.at(max).compare("exit") != 0)
         std::cout << "finish by exit plz" << std::endl;
 }
@@ -83,7 +88,7 @@ void Input::read(char **av, Chipset *chip)
 
 int Input::syntax(std::string str)
 {
-    std::regex reg("(^pop|^dump|^clear|^dup|^swap|^add|^sub|^mul|^div|^mod|^print|^exit|^;.*)|((^push|^assert|^laod|^store) (int(8|16|32)\\([-]?[0-9]+\\)|(float|double|bigdecimal)\\([-]?[0-9]+[.]?[0-9]*\\)))");
+    std::regex reg("(^pop|^dump|^clear|^dup|^swap|^add|^sub|^mul|^div|^mod|^print|^exit|^;.*|^)|((^push|^assert|^laod|^store) (int(8|16|32)\\([-]?[0-9]+\\)|(float|double|bigdecimal)\\([-]?[0-9]+[.]?[0-9]*\\)))");
     
     int res;
     if (std::regex_match(str, reg))
@@ -100,10 +105,14 @@ void Input::read(Chipset *chip)
         getline(std::cin, one_line);
         res = syntax(one_line);
 
-        if (res == 1)
-            chip->setCommand(one_line);
+        if (res == 1) {
+            if (!one_line.empty())
+                chip->setCommand(one_line);
+
+        }
         else
             std::cout << "Syntax Error" << std::endl;
+        
         if (one_line.compare("exit") == 0)
             break;
     }

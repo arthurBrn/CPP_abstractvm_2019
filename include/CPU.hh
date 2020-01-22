@@ -10,7 +10,6 @@
 #include "Chipset.hh"
 #include "Memory.hh"
 
-
 #ifndef _CPU_HH_
 #define _CPU_HH_
 
@@ -28,7 +27,7 @@ class CPU {
         void assert(Memory memo, Chipset chip);
         void exit();
     private:
-        std::vector<std::string> registre;
+        std::vector<std::string>registre;
 };
 
 #endif

@@ -24,6 +24,8 @@ int main(int ac, char **av)
     try {
         in->select_input(ac, av, chip);
         in->getFileError(chip);
+        for (int i = 0; i < chip->getAllCommands().size(); i++)
+            std::cout << chip->getCommandAtIndex(i) << std::endl;
     } catch(AbstractVmException error) {
         std::cout << error.getErrorMessage() << std::endl;
     }
