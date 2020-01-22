@@ -42,14 +42,36 @@ void Chipset::setCommand(std::string command)
 
 void Chipset::deleteStackAtIndex(int index)
 {
-    std::vector<std::string>::iterator it = this->commands.begin;
+    std::vector<std::string>::iterator it = this->commands.begin();
     std::advance(it, index);
     this->commands.erase(it);
 }
 
 void Chipset::execution()
 {
+    auto iterator = this->getAllCommands().begin();
     Memory memo;
     CPU cpu;
-    // for (int i = 0; i < this->getAllCommands().size(); i++) {}
+    std::string str;
+    std::string instruction;
+    std::string value;
+    int escape = 0;
+    int brackets = 0;
+
+    for (int i = 0; i < this->getAllCommands().size(); i++)
+    {
+        str = this->getCommandAtIndex(i);
+        std::cout << str << std::endl;
+        escape = str.find_first_of(" ");
+        instruction = str.substr(0, escape);
+
+        // if (instruction.compare(";") != 0) {
+            // std::cout << instruction << std::endl;
+        // }
+        if (str.size() > escape) {
+            value = str.substr(escape, str.size());
+            std::cout << value << std::endl;
+        }
+        // Parcour le tableau et les matchs avec tableau de pointeur sur fonction ?
+    }
 }
