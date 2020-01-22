@@ -33,11 +33,12 @@ void Input::setLine(std::string someLine)
 int Input::getFileError(Chipset *chip)
 {
     std::string error;
-    std::vector<std::string>commands = chip->getAllCommands();
+    std::vector<std::string> commands = chip->getAllCommands();
 
-    if (this->fileError > 0) {
+    if (this->fileError > 0)
+    {
         error = ", unknow : " + commands.at(fileError - 1);
-        std::cout << "Error line " <<  fileError << error << std::endl;
+        std::cout << "Error line " << fileError << error << std::endl;
     }
     return this->fileError;
 }
@@ -50,21 +51,23 @@ void Input::setFileError(int newValue)
 void Input::checkFile(Chipset *chip)
 {
     AbstractVmException exception;
-    std::vector<std::string>commands;
+    std::vector<std::string> commands;
     commands = chip->getAllCommands();
     bool res;
     int max = commands.size() - 1;
     auto iterator = 0;
 
-    for (int i = 0; i < commands.size(); i++) {
+    for (int i = 0; i < commands.size(); i++)
+    {
         res = syntax(commands.at(i));
-        if (res == 0) {
+        if (res == 0)
+        {
             this->fileError = i + 1;
             exception.setErrorMessage("ERROR: syntax error in the file.");
             throw(exception);
         }
         if (commands.at(i).empty()) {
-            //chip->getIndexCommand
+            commands = chip->deleteStackAtIndex(i);
         }
         //iterator++;
     }
@@ -101,14 +104,14 @@ void Input::read(Chipset *chip)
     std::string one_line;
     int res;
 
-     while (std::cin) {
+    while (std::cin)
+    {
         getline(std::cin, one_line);
         res = syntax(one_line);
 
         if (res == 1) {
             if (!one_line.empty())
                 chip->setCommand(one_line);
-
         }
         else
             std::cout << "Syntax Error" << std::endl;
@@ -118,11 +121,12 @@ void Input::read(Chipset *chip)
     }
 }
 
-void Input::select_input(int ac, char **av, Chipset *chip) {
+void Input::select_input(int ac, char **av, Chipset *chip)
+{
     if (ac == 2)
         this->read(av, chip);
     else if (ac == 1)
         this->read(chip);
     else
-        std::cout << "wrong argument number" << std::endl;   
+        std::cout << "wrong argument number" << std::endl;
 }

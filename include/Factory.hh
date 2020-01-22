@@ -14,7 +14,8 @@
 class Factory 
 {
     public:
-        // static IOperand* createOperand(eOperandType type, const std::string& value);
+        static IOperand* createOperand(eOperandType type, const std::string& value);
+    private:
         IOperand* createInt8(const std::string& value);
         IOperand* createInt16(const std::string& value);
         IOperand* createInt32(const std::string& value);

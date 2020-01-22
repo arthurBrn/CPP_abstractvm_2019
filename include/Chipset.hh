@@ -19,6 +19,7 @@ public:
     ~Chipset();
     std::vector<std::string> getAllCommands();
     std::string getCommandAtIndex(int index);
+    std::vector<std::string> deleteStackAtIndex(int index);
     void setCommand(std::string);
     void showCommands();
     void execution();

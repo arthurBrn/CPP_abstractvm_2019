@@ -31,9 +31,30 @@ IOperand *createFloat(const std::string &value)
     return ((IOperand*)nb);
 }
 IOperand *createDouble(const std::string &value)
-{
+{   
 }
 
 IOperand *createBigDecimal(const std::string &value)
 {
+}
+
+static IOperand* createOperand(eOperandType type, const std::string& value)
+{
+    switch(type)
+    {
+        case  'INT8':
+            createInt8(value);
+        case 'INT16':
+            createInt16(value);
+        case 'INT32':
+            createInt32(value);
+        case 'FLOAT':
+            createFloat(value);
+        case 'DOUBLE':
+            createDouble(value);
+        case 'BIGDECIMAL':
+            createBigDecimal(value);
+        default:
+            std::cout << "SWITCH ERROR" << std::endl;
+    }
 }

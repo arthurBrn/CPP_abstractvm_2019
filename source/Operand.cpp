@@ -14,7 +14,7 @@ class Operand
 {
     IOperand *Operand::getValue()
     {
-        return (this->);
+        // return (this->);
     }
     void Operand::setValue(IOperand *newValue)
     {
