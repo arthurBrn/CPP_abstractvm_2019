@@ -66,10 +66,6 @@ void Input::checkFile(Chipset *chip)
             exception.setErrorMessage("ERROR: syntax error in the file.");
             throw(exception);
         }
-        if (commands.at(i).empty()) {
-            commands = chip->deleteStackAtIndex(i);
-        }
-        //iterator++;
     }
     
     if (commands.at(max).compare("exit") != 0)
@@ -83,8 +79,10 @@ void Input::read(char **av, Chipset *chip)
 
     file.open(av[1]);
     if (file.is_open())
-        while (getline(file, command))
-            chip->setCommand(command);
+        while (getline(file, command)) {
+            if (!command.empty())
+                chip->setCommand(command);
+        }
     this->checkFile(chip);
     file.close();
 }

@@ -5,10 +5,10 @@
 ** ...
 */
 
+#include "AbstractVmException.hh"
 #include "abstractvm.hh"
 #include "Chipset.hh"
 #include <fstream>
-#include "AbstractVmException.hh"
 #include "CPU.hh"
 
 Chipset::Chipset()
@@ -42,7 +42,9 @@ void Chipset::setCommand(std::string command)
 
 std::vector<std::string> Chipset::deleteStackAtIndex(int index)
 {
-    this->getAllCommands().at(index).erase();
+    std::vector<std::string>::iterator it = this->commands.begin();
+    std::advance(it, index);
+    this->commands.erase(it);
     return this->commands;
 }
 
@@ -51,6 +53,4 @@ void Chipset::execution()
     Memory memo;
     CPU cpu;
     // for (int i = 0; i < this->getAllCommands().size(); i++) {}
-    
-    
 }
