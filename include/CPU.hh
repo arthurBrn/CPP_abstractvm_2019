@@ -25,12 +25,6 @@ class CPU {
         void store(IOperand &object);
         void load(IOperand &object);
         void assert(IOperand &object);
-        void dup(std::vector<IOperand*> vector);
-        void swap(Memory memoryObject);
-        void pop(std::vector<IOperand*> stack) throw();
-        void add();
-        void dump(Memory memoryObject);
-        void clear(std::vector<IOperand*> stack);
         void exit();
     private:
         std::vector<std::string> registre;

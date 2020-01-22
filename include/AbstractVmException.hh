@@ -13,7 +13,10 @@
 class AbstractVmException : public std::exception 
 {   
     public:
-        static std::string getErrorMessage(std::string errorMessage) throw();
+        std::string getErrorMessage();
+        void setErrorMessage(std::string errorMessage);
+    private:
+        std::string errorMessage;
 };
 
 #endif

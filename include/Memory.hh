@@ -19,8 +19,12 @@ public:
     IOperand* getStackAtIndexX(int index);
     IOperand* setStackAtIndexX(int index, IOperand* value);
     std::vector<IOperand*> getAllStack();
-    void addStack(IOperand &object);
-    void popTheStack();
+    void pop();
+    void clear();
+    void dup();
+    void swap();
+    void dump();
+    void print();
 private:
     std::vector<IOperand*> stack;
 };

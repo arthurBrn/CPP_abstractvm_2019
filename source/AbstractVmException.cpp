@@ -10,6 +10,12 @@
 
 
 
-std::string AbstractVmException::getErrorMessage(std::string errorMessage) throw() {
+std::string AbstractVmException::getErrorMessage(){
     return (errorMessage);
 }
+
+void AbstractVmException::setErrorMessage(std::string msg)
+{  
+    this->errorMessage = msg;
+}
+

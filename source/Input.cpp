@@ -8,6 +8,7 @@
 #include "abstractvm.hh"
 #include "Input.hh"
 #include "Chipset.hh"
+#include "AbstractVmException.hh"
 #include <fstream>
 #include <regex>
 
@@ -55,6 +56,7 @@ void Input::printFileError()
 
 void Input::checkFile(Chipset *chip)
 {
+    AbstractVmException exception;
     std::vector<std::string>commands;
     commands = chip->getAllCommands();
     int res;
@@ -62,8 +64,11 @@ void Input::checkFile(Chipset *chip)
 
     for (int i = 0; i < commands.size(); i++) {
         res = std::regex_match(commands.at(i), reg);
-        if (!res)
+        if (!res) {
             this->fileError = i + 1;
+            exception.setErrorMessage("ERROR: syntax error in the file.");
+            throw(exception);
+        }
     }
     this->commands = commands;
 }
@@ -78,6 +83,8 @@ void Input::read(char **av, Chipset *chip)
         if (file.is_open())
             while (getline(file, command))
                 chip->setCommand(command);
+        // else 
+            // throw ("ERROR: File not open");
         this->checkFile(chip);
     }
     else
