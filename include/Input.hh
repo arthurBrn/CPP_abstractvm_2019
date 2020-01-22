@@ -28,7 +28,6 @@ public:
     int syntax(std::string str);
 
 private:
-    std::vector<std::string>commands;
     std::string line;
     int fileError;
 };

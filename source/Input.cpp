@@ -8,6 +8,7 @@
 #include "abstractvm.hh"
 #include "Input.hh"
 #include "Chipset.hh"
+#include "AbstractVmException.hh"
 #include <fstream>
 #include <regex>
 
@@ -32,9 +33,10 @@ void Input::setLine(std::string someLine)
 int Input::getFileError(Chipset *chip)
 {
     std::string error;
+    std::vector<std::string>commands = chip->getAllCommands();
 
     if (this->fileError > 0) {
-        error = ", unknow : " + this->commands.at(fileError - 1);
+        error = ", unknow : " + commands.at(fileError - 1);
         std::cout << "Error line " <<  fileError << error << std::endl;
     }
     return this->fileError;
@@ -47,6 +49,7 @@ void Input::setFileError(int newValue)
 
 void Input::checkFile(Chipset *chip)
 {
+    AbstractVmException exception;
     std::vector<std::string>commands;
     commands = chip->getAllCommands();
     bool res;
@@ -55,12 +58,14 @@ void Input::checkFile(Chipset *chip)
 
     for (int i = 0; i < commands.size(); i++) {
         res = syntax(commands.at(i));
-        if (res == 0)
+        if (res == 0) {
             this->fileError = i + 1;
+            exception.setErrorMessage("ERROR: syntax error in the file.");
+            throw(exception);
+        }
     }
     if (commands.at(max).compare("exit") != 0)
         std::cout << "finish by exit plz" << std::endl;
-    this->commands = commands;
 }
 
 void Input::read(char **av, Chipset *chip)

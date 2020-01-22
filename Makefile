@@ -19,6 +19,8 @@ SRCS	=	./source/main.cpp		\
 
 OBJS	=	$(SRCS:.cpp=.o)
 
+TEST_DIR	=	tests/
+
 CFLAGS +=	-Wall
 
 CPPFLAGS = -I./include/ -std=c++11
@@ -33,5 +35,13 @@ clean:
 
 fclean: clean
 	$(RM) $(NAME)
+	$(MAKE) -C $(TEST_DIR) fclean
+
+tests_run:
+	$(MAKE) -C $(TEST_DIR)
+	./$(TEST_DIR)unit_test
+
+coverage:
+	gcovr --exclude tests --branch
 
 re: fclean all

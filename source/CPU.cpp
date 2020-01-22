@@ -11,6 +11,7 @@
 #include "Memory.hh"
 #include "Chipset.hh"
 #include "Output.hh"
+#include "Factory.hh"
 
 CPU::CPU()
 {
@@ -41,65 +42,26 @@ void CPU::setRegistreStackAtIndex(int index, std::string someStack)
     this->registre.at(index) = someStack;
 }
 
-void CPU::push(IOperand &object)
+void CPU::push(Memory memo, Chipset chip)
+{
+    // We will use the Memory object memo to acces the vector
+    // And stack the push result
+    Factory fact;
+    // call Factory method on the string in chip command
+    
+}
+
+void CPU::store(Memory memo, Chipset chip)
 {
     // do smthg
 }
-void CPU::store(IOperand &object)
+void CPU::load(Memory memo, Chipset chip)
 {
     // do smthg
 }
-void CPU::load(IOperand &object)
+void CPU::assert(Memory memo, Chipset chip)
 {
     // do smthg
-}
-void CPU::assert(IOperand &object)
-{
-    // do smthg
-}
-void CPU::dup(std::vector<IOperand *> vector)
-{
-    // Duplicates the value on the top of stack and copy the stack of the value
-}
-
-void CPU::swap(Memory objMemory)
-{
-    int stackSize = objMemory.getStackSize();
-    IOperand *fstValueHolder = objMemory.getStackAtIndexX(stackSize);
-    IOperand *sndValueHolder = objMemory.getStackAtIndexX((stackSize - 1));
-
-    objMemory.setStackAtIndexX(stackSize, sndValueHolder);
-    objMemory.setStackAtIndexX((stackSize - 1), fstValueHolder);
-}
-
-void CPU::pop(std::vector<IOperand *> stack) throw()
-{
-    if (stack.empty())
-    {
-        throw("STACK IS EMPTY ERROR");
-    }
-    // stack.erase(stack.size());
-}
-
-void CPU::add()
-{
-    // do smthg
-}
-
-void CPU::clear(std::vector<IOperand *> stack)
-{
-    auto iterator = stack.begin();
-
-    while (iterator != stack.end())
-        iterator = stack.erase(iterator);
-}
-
-void CPU::dump(Memory memoryObject)
-{
-    // Create an Output object, to use its function print
-    Output *out = new Output();
-    // for (auto iterator = memoryObject.getAllStack().begin(); iterator != memoryObject.getAllStack().end(); ++iterator)
-    // out->print(memoryObject.getAllStack().at(iterator));
 }
 
 void CPU::exit()

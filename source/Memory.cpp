@@ -6,7 +6,9 @@
 */
 
 #include "abstractvm.hh"
+#include "Output.hh"
 #include "Memory.hh"
+#include "AbstractVmException.hh"
 
 int Memory::getStackSize()
 {
@@ -38,12 +40,68 @@ std::vector<IOperand*> Memory::getAllStack()
     return (this->stack);
 }
 
-void addStack(IOperand &object)
+void Memory::setStack(IOperand* obj)
 {
-    // do smthg
+    this->stack.push_back(obj);
 }
 
-void popTheStack()
+void Memory::pop()
 {
-    // do smthg
+    AbstractVmException exception;
+    auto iterator = this->getAllStack().begin();
+
+    exception.setErrorMessage("ERROR: pop() error. Stack is empty");
+    if (getAllStack().empty())
+        throw(exception);
+    this->getAllStack().erase(iterator);
+}
+
+void Memory::clear()
+{
+    this->getAllStack().clear();
+}
+
+/**
+ * NOT SURE THIS WORK, TEST IT 
+ * */
+void Memory::dup()
+{
+    // NOT SURE BETWEEN begin() or end()
+    auto iterator = this->getAllStack().begin();
+    AbstractVmException exception;
+
+    exception.setErrorMessage("ERROR: can not dup() on empty stack");
+    if (this->getAllStack().empty())
+        throw (exception);
+    IOperand *copiedValue = this->getStackTopPile();
+    this->stack.push_back(copiedValue);
+}
+
+// NOT TESTED EITHER 
+void Memory::swap()
+{
+    int stackSize = this->getStackSize();
+    IOperand *fstValueHolder = this->getStackAtIndexX(stackSize);
+    IOperand *sndValueHolder = this->getStackAtIndexX((stackSize - 1));
+    AbstractVmException exception;
+
+    exception.setErrorMessage("ERROR: can not swap() on stack with less than two elements.");
+    if (this->getStackSize() < 2)
+        throw(exception);
+    this->setStackAtIndexX(stackSize, sndValueHolder);
+    this->setStackAtIndexX((stackSize - 1), fstValueHolder);
+}
+
+void Memory::dump()
+{
+    Output out;
+
+    // Use toString method here
+    // for (auto iterator = this->getAllStack().begin(); iterator != this->getAllStack().end(); ++iterator)
+        // out.print(iterator);
+}
+
+void Memory::print()
+{
+    
 }

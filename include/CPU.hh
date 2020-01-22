@@ -7,6 +7,7 @@
 
 #include "abstractvm.hh"
 #include "IOperand.hh"
+#include "Chipset.hh"
 #include "Memory.hh"
 
 
@@ -21,16 +22,10 @@ class CPU {
         std::vector<std::string> getFullRegistre();
         std::string getRegistreStackAtIndex(int index);
         void setRegistreStackAtIndex(int index, std::string newStack);
-        void push(IOperand &object);
-        void store(IOperand &object);
-        void load(IOperand &object);
-        void assert(IOperand &object);
-        void dup(std::vector<IOperand*> vector);
-        void swap(Memory memoryObject);
-        void pop(std::vector<IOperand*> stack) throw();
-        void add();
-        void dump(Memory memoryObject);
-        void clear(std::vector<IOperand*> stack);
+        void push(Memory memo, Chipset chip);
+        void store(Memory memo, Chipset chip);
+        void load(Memory memo, Chipset chip);
+        void assert(Memory memo, Chipset chip);
         void exit();
     private:
         std::vector<std::string> registre;
