@@ -9,22 +9,34 @@
 
 IOperand *Factory::createInt8(const std::string &value)
 {
+    IOperand *obj;
+    return (obj);
 }
 
 IOperand *Factory::createInt16(const std::string &value)
 {
+    IOperand *obj;
+    return (obj);
 }
 IOperand *Factory::createInt32(const std::string &value)
 {
+    IOperand *obj;
+    return (obj);
 }
 IOperand *Factory::createFloat(const std::string &value)
 {
+    IOperand *obj;
+    return (obj);
 }
 IOperand *Factory::createDouble(const std::string &value)
 {
+    IOperand *obj;
+    return (obj);
 }
 IOperand *Factory::createBigDecimal(const std::string &value)
 {
+    IOperand *obj;
+    return (obj);
 }
 
 IOperand *Factory::createOperand(eOperandType type, const std::string &value)
