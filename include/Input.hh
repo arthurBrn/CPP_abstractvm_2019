@@ -21,7 +21,7 @@ public:
     void setLine(std::string);
     void read(Chipset *chip);
     void read(char **av, Chipset *chip);
-    int getFileError(Chipset *chip);
+    void getFileError(Chipset *chip);
     void setFileError(int value);
     void checkFile(Chipset *chip);
     void select_input(int ac, char **av, Chipset *chip);

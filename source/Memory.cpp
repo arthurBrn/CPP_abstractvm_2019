@@ -106,3 +106,5 @@ void Memory::print()
 {
     
 }
+
+void Memory::

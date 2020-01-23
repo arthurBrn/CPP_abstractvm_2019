@@ -29,6 +29,5 @@ int main(int ac, char **av)
     } catch(AbstractVmException error) {
         std::cout << error.getErrorMessage() << std::endl;
     }
-
     return 0;
 }
