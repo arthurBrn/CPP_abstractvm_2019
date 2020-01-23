@@ -36,11 +36,12 @@ void Chipset::setCommand(std::string command)
     this->commands.push_back(command);
 }
 
-void Chipset::deleteStackAtIndex(int index)
+std::vector<std::string> Chipset::deleteStackAtIndex(int index)
 {
     std::vector<std::string>::iterator it = this->commands.begin();
     std::advance(it, index);
     this->commands.erase(it);
+    return this->commands;
 }
 
 std::map<std::string, int> Chipset::getFullCommandMap()

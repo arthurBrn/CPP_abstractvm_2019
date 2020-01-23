@@ -25,17 +25,13 @@ void Input::setLine(std::string someLine)
     this->line = someLine;
 }
 
-int Input::getFileError(Chipset *chip)
+void Input::getFileError(Chipset *chip)
 {
     std::string error;
     std::vector<std::string> commands = chip->getAllCommands();
 
     if (this->fileError > 0)
-    {
-        error = ", unknow : " + commands.at(fileError - 1);
-        std::cout << "Error line " << fileError << error << std::endl;
-    }
-    return this->fileError;
+        throw new AbstractVmException("Syntax error line " + std::to_string(fileError + 1));
 }
 
 void Input::setFileError(int newValue)
@@ -49,6 +45,7 @@ void Input::checkFile(Chipset *chip)
     commands = chip->getAllCommands();
     bool res;
     int max = commands.size() - 1;
+    auto iterator = 0;
 
     for (int i = 0; i < commands.size(); i++)
     {
@@ -59,26 +56,33 @@ void Input::checkFile(Chipset *chip)
             throw new AbstractVmException("ERROR: syntax error in the file.");
         }
     }
+
     if (commands.at(max).compare("exit") != 0)
-        std::cout << "finish by exit plz" << std::endl;
+        throw new AbstractVmException("The file must finish by \"exit\"");
 }
 
-void Input::read(char **av, Chipset *chip)
+void Input::read(std::string path, Chipset *chip)
 {
+    std::string file_name = path;
     std::ifstream file;
     std::string command;
 
-    file.open(av[1]);
+    if (file_name.compare((file_name.size() - 4), 4, ".avm") != 0)
+        throw new AbstractVmException("The extension need to be .avm");
+    file.open(path);
     if (file.is_open())
         while (getline(file, command))
-            chip->setCommand(command);
+        {
+            if (!command.empty())
+                chip->setCommand(command);
+        }
     this->checkFile(chip);
     file.close();
 }
 
 int Input::syntax(std::string str)
 {
-    std::regex reg("(^pop|^dump|^clear|^dup|^swap|^add|^sub|^mul|^div|^mod|^print|^exit|^;.*)|((^push|^assert|^laod|^store) (int(8|16|32)\\([-]?[0-9]+\\)|(float|double|bigdecimal)\\([-]?[0-9]+[.]?[0-9]*\\)))");
+    std::regex reg("(^pop|^dump|^clear|^dup|^swap|^add|^sub|^mul|^div|^mod|^print|^exit|^;.*|^)|((^push|^assert|^laod|^store) (int(8|16|32)\\([-]?[0-9]+\\)|(float|double|bigdecimal)\\([-]?[0-9]+[.]?[0-9]*\\)))");
 
     int res;
     if (std::regex_match(str, reg))
@@ -95,22 +99,28 @@ void Input::read(Chipset *chip)
     {
         getline(std::cin, one_line);
         res = syntax(one_line);
-
         if (res == 1)
-            chip->setCommand(one_line);
-        else
-            std::cout << "Syntax Error" << std::endl;
+            if (!one_line.empty())
+                chip->setCommand(one_line);
+            else
+                throw new AbstractVmException("Syntax error");
         if (one_line.compare("exit") == 0)
-            break;
+        {
+            getline(std::cin, one_line);
+            if (one_line.compare(";;") == 0)
+                break;
+            else
+                throw new AbstractVmException("You must finish by \";;\"");
+        }
     }
 }
 
 void Input::select_input(int ac, char **av, Chipset *chip)
 {
     if (ac == 2)
-        this->read(av, chip);
+        this->read(av[1], chip);
     else if (ac == 1)
         this->read(chip);
     else
-        std::cout << "wrong argument number" << std::endl;
+        throw new AbstractVmException("wrong arguments number");
 }

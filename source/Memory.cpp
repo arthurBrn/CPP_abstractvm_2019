@@ -95,5 +95,15 @@ void Memory::dump()
 
 void Memory::print()
 {
-    
+    std::cout << "test" << std::endl;
+    std::cout << "test" << std::endl;
+    std::cout << "test" << std::endl;
+    std::cout << "test" << std::endl;
+    std::cout << "test" << std::endl;
+    std::cout << "test" << std::endl;
+    std::cout << "test" << std::endl;
+    std::cout << "test" << std::endl;
+    std::cout << "test" << std::endl;
+    std::cout << "test" << std::endl;
+
 }
