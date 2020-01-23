@@ -7,8 +7,6 @@
 
 #include "abstractvm.hh"
 
-class Operand
-{
     IOperand *Operand::getValue()
     {
         // return (this->);
@@ -28,4 +26,3 @@ class Operand
     void Operand::mod(Memory objMemory, CPU objCPU)
     {
     }
-};

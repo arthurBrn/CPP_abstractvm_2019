@@ -81,12 +81,15 @@ void Chipset::execution()
     auto iterator = this->getAllCommands().begin();
     Memory memory;
     CPU cpu;
-    Operand operand;
+    // Operand operand;
     std::string str;
     std::string instruction;
     std::string value;
+    std::string type;
     int escape = 0;
     int brackets = 0;
+    int fstBrack = 0;
+    int sndBrack = 0;
     std::map<std::string, int>::iterator itr;
 
     for (int i = 0; i < this->getAllCommands().size(); i++)
@@ -96,14 +99,21 @@ void Chipset::execution()
         escape = str.find_first_of(" ");
         if (str.substr(0, escape)[0] != ';')
             instruction = str.substr(0, escape);
-        if (str.size() > escape)
-            value = str.substr(escape, str.size());
-        // std::cout << instruction << std::endl;
+        if (str.size() > escape && str[0] != ';') {
+            type = str.substr(escape, str.size());
+            fstBrack = type.find_first_of("(");
+            sndBrack = type.find_first_of(")");
+            value = type.substr((fstBrack + 1), (sndBrack -1));
+            type = str.substr(escape, fstBrack);
+            std::cout << "type : " + type << std::endl;
+            std::cout << "value : " + value << std::endl;
+        }
         for (itr = this->cmdMap.begin(); itr != this->cmdMap.end(); itr++)
         {
             if (instruction == itr->first)
-            {
                 std::cout << "Instruction : " + instruction + " match : " + itr->first << std::endl;
+            if (instruction == "push") {
+                cpu.push(memory, type, value);
             }
         }
     }

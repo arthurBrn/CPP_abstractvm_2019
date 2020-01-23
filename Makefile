@@ -16,6 +16,9 @@ SRCS	=	./source/main.cpp		\
 		./source/Memory.cpp	\
 		./source/Input.cpp	\
 		./source/Output.cpp	\
+		./source/Factory.cpp	\
+		./source/Operand.cpp	\
+		./source/IOperand.cpp	\
 
 OBJS	=	$(SRCS:.cpp=.o)
 

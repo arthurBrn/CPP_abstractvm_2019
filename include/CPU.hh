@@ -18,16 +18,17 @@ class CPU {
         CPU();
         ~CPU();
         int getRegistreSize();
-        std::vector<std::string> getFullRegistre();
-        std::string getRegistreStackAtIndex(int index);
-        void setRegistreStackAtIndex(int index, std::string newStack);
-        void push(Memory memo, Chipset chip, std::string value);
+        std::vector<IOperand*> getFullRegistre();
+        IOperand* getRegistreStackAtIndex(int index);
+        eOperandType defineEnum(std::string type);
+        void setRegistre(IOperand *object);
+        void setRegistreStackAtIndex(int index, IOperand* object);
+        void push(Memory memo, std::string type, std::string value);
         void store(Memory memo, Chipset chip, std::string value);
         void load(Memory memo, Chipset chip, std::string value);
         void assert(Memory memo, Chipset chip, std::string value);
         void exit();
     private:
-        std::vector<std::string> registre;
+        std::vector<IOperand*> registre;
 };
-
 #endif

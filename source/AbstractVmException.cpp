@@ -7,7 +7,15 @@
 
 #include "abstractvm.hh"
 
+AbstractVmException::AbstractVmException(std::string value)
+{
+    this->errorMessage = value;
+}
 
+AbstractVmException::~AbstractVmException()
+{
+    
+}
 
 std::string AbstractVmException::getErrorMessage(){
     return (errorMessage);

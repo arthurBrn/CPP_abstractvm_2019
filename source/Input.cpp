@@ -45,7 +45,6 @@ void Input::setFileError(int newValue)
 
 void Input::checkFile(Chipset *chip)
 {
-    AbstractVmException exception;
     std::vector<std::string> commands;
     commands = chip->getAllCommands();
     bool res;
@@ -57,8 +56,7 @@ void Input::checkFile(Chipset *chip)
         if (res == 0)
         {
             this->fileError = i + 1;
-            exception.setErrorMessage("ERROR: syntax error in the file.");
-            throw(exception);
+            throw new AbstractVmException("ERROR: syntax error in the file.");
         }
     }
     if (commands.at(max).compare("exit") != 0)

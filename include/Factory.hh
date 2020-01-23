@@ -1,12 +1,12 @@
 /*
 ** EPITECH PROJECT, 2020
-** Memory.hh
+** Factory.hh
 ** File description:
 ** ...
 */
 
-#ifndef _PAIR_
-#define _PAIR_
+#ifndef _FACTORY__HH_
+#define _FACTORY__HH_
 
 #include "abstractvm.hh"
 #include "IOperand.hh"
@@ -14,7 +14,7 @@
 class Factory 
 {
     public:
-        static IOperand* createOperand(eOperandType type, const std::string& value);
+        IOperand* createOperand(eOperandType type, const std::string& value);
     private:
         IOperand* createInt8(const std::string& value);
         IOperand* createInt16(const std::string& value);

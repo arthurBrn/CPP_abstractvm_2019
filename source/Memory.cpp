@@ -44,12 +44,10 @@ void Memory::setStack(IOperand* obj)
 
 void Memory::pop()
 {
-    AbstractVmException exception;
     auto iterator = this->getAllStack().begin();
 
-    exception.setErrorMessage("ERROR: pop() error. Stack is empty");
     if (getAllStack().empty())
-        throw(exception);
+        throw new AbstractVmException("ERROR: pop() error. Stack is empty");
     this->getAllStack().erase(iterator);
 }
 
@@ -65,11 +63,9 @@ void Memory::dup()
 {
     // NOT SURE BETWEEN begin() or end()
     auto iterator = this->getAllStack().begin();
-    AbstractVmException exception;
 
-    exception.setErrorMessage("ERROR: can not dup() on empty stack");
     if (this->getAllStack().empty())
-        throw (exception);
+        throw new AbstractVmException("ERROR: can not dup() on empty stack");
     IOperand *copiedValue = this->getStackTopPile();
     this->stack.push_back(copiedValue);
 }
@@ -80,11 +76,9 @@ void Memory::swap()
     int stackSize = this->getStackSize();
     IOperand *fstValueHolder = this->getStackAtIndexX(stackSize);
     IOperand *sndValueHolder = this->getStackAtIndexX((stackSize - 1));
-    AbstractVmException exception;
 
-    exception.setErrorMessage("ERROR: can not swap() on stack with less than two elements.");
     if (this->getStackSize() < 2)
-        throw(exception);
+        throw new AbstractVmException("ERROR: can not swap() on stack with less than two elements.");
     this->setStackAtIndexX(stackSize, sndValueHolder);
     this->setStackAtIndexX((stackSize - 1), fstValueHolder);
 }

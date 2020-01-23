@@ -14,7 +14,7 @@
 #ifndef _OPERAND_HH_
 #define _OPERAND_HH_
 
-class Operand
+class Operand : public IOperand
 {
     public:
         IOperand* getValue();
