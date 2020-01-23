@@ -65,9 +65,9 @@ void Input::checkFile(Chipset *chip)
     }
 }
 
-void Input::read(char **av, Chipset *chip)
+void Input::read(std::string path, Chipset *chip)
 {
-    std::string file_name = av[1];
+    std::string file_name = path;
     std::ifstream file;
     std::string command;
     AbstractVmException exception;
@@ -75,7 +75,7 @@ void Input::read(char **av, Chipset *chip)
     exception.setErrorMessage("The extension need to be .avm");
     if (file_name.compare((file_name.size() - 4),4, ".avm") != 0)
         throw(exception);
-    file.open(av[1]);
+    file.open(path);
     if (file.is_open())
         while (getline(file, command)) {
             if (!command.empty())
@@ -99,6 +99,7 @@ void Input::read(Chipset *chip)
 {
     std::string one_line;
     int res;
+    AbstractVmException exception;
 
     while (std::cin)
     {
@@ -108,10 +109,19 @@ void Input::read(Chipset *chip)
             if (!one_line.empty())
                 chip->setCommand(one_line);
         }
-        else
-            std::cout << "Syntax Error" << std::endl;
-        if (one_line.compare("exit") == 0)
-            break;
+        else {
+            exception.setErrorMessage("Syntax error");
+            throw(exception);
+        }
+        if (one_line.compare("exit") == 0) {
+            getline(std::cin, one_line);
+            if (one_line.compare(";;") == 0)
+                break;
+            else {
+                exception.setErrorMessage("You must finish by \";;\"");
+                throw(exception);
+            }
+        }
     }
 }
 
@@ -120,7 +130,7 @@ void Input::select_input(int ac, char **av, Chipset *chip)
     AbstractVmException exception;
 
     if (ac == 2)
-        this->read(av, chip);
+        this->read(av[1], chip);
     else if (ac == 1)
         this->read(chip);
     else {
