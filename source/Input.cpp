@@ -6,11 +6,6 @@
 */
 
 #include "abstractvm.hh"
-#include "Input.hh"
-#include "Chipset.hh"
-#include "AbstractVmException.hh"
-#include <fstream>
-#include <regex>
 
 Input::Input()
 {
@@ -72,9 +67,14 @@ void Input::checkFile(Chipset *chip)
 
 void Input::read(char **av, Chipset *chip)
 {
+    std::string file_name = av[1];
     std::ifstream file;
     std::string command;
+    AbstractVmException exception;
 
+    exception.setErrorMessage("The extension need to be .avm");
+    if (file_name.compare((file_name.size() - 4),4, ".avm") != 0)
+        throw(exception);
     file.open(av[1]);
     if (file.is_open())
         while (getline(file, command)) {

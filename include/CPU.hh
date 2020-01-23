@@ -21,10 +21,10 @@ class CPU {
         std::vector<std::string> getFullRegistre();
         std::string getRegistreStackAtIndex(int index);
         void setRegistreStackAtIndex(int index, std::string newStack);
-        void push(Memory memo, Chipset chip);
-        void store(Memory memo, Chipset chip);
-        void load(Memory memo, Chipset chip);
-        void assert(Memory memo, Chipset chip);
+        void push(Memory memo, Chipset chip, std::string value);
+        void store(Memory memo, Chipset chip, std::string value);
+        void load(Memory memo, Chipset chip, std::string value);
+        void assert(Memory memo, Chipset chip, std::string value);
         void exit();
     private:
         std::vector<std::string>registre;

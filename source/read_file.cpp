@@ -5,8 +5,6 @@
 ** store commands in a vector
 */
 
-#include <fstream>
-#include <iostream>
 #include "abstractvm.hh"
 
 int check_file_error_name(char **av)

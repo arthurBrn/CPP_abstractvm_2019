@@ -6,12 +6,6 @@
 */
 
 #include "abstractvm.hh"
-#include "CPU.hh"
-#include "IOperand.hh"
-#include "Memory.hh"
-#include "Chipset.hh"
-#include "Output.hh"
-#include "Factory.hh"
 
 CPU::CPU()
 {
@@ -42,20 +36,21 @@ void CPU::setRegistreStackAtIndex(int index, std::string someStack)
     this->registre.at(index) = someStack;
 }
 
-void CPU::push(Memory memo, Chipset chip)
-{
-    Factory fact;
+void CPU::push(Memory memo, Chipset chip, std::string instruction)
+{   
+    // Factory::createOperand(stringone, value);
+    // Turn value into 
 }
 
-void CPU::store(Memory memo, Chipset chip)
+void CPU::store(Memory memo, Chipset chip, std::string value)
 {
     // do smthg
 }
-void CPU::load(Memory memo, Chipset chip)
+void CPU::load(Memory memo, Chipset chip, std::string value)
 {
     // do smthg
 }
-void CPU::assert(Memory memo, Chipset chip)
+void CPU::assert(Memory memo, Chipset chip, std::string value)
 {
     // do smthg
 }

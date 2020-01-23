@@ -6,8 +6,6 @@
 */
 
 #include "abstractvm.hh"
-#include "IOperand.hh"
-#include <iostream>
 
 IOperand *createInt8(const std::string &value)
 {
@@ -42,7 +40,7 @@ static IOperand* createOperand(eOperandType type, const std::string& value)
 {
     switch(type)
     {
-        case  'INT8':
+        case 'INT8':
             return (createInt8(value));
         case 'INT16':
             return (createInt16(value));

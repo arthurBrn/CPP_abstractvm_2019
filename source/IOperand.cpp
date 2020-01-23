@@ -6,7 +6,6 @@
 */
 
 #include "abstractvm.hh"
-#include "IOperand.hh"
 
 // IOperand::eOperandType getType()
 // {

@@ -6,7 +6,6 @@
 */
 
 #include "abstractvm.hh"
-#include <fstream>
 #include "Chipset.hh"
 
 #ifndef _INPUT_HH_

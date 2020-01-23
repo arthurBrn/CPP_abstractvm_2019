@@ -6,8 +6,7 @@
 */
 
 #include "abstractvm.hh"
-#include "IOperand.hh"
-#include <stdbool.h>
+#include "Memory.hh"
 
 #ifndef _CHIPSET_HH_
 #define _CHIPSET_HH_
@@ -23,8 +22,12 @@ public:
     void setCommand(std::string);
     void showCommands();
     void execution();
+    void initCommandMap(Memory memory);
+    std::map<std::string, int> getFullCommandMap();
+    void setCommandMap(std::string cmd, int nb);
 private:
     std::vector<std::string> commands;
+    std::map<std::string, int> cmdMap;
 };
 
 #endif
