@@ -22,12 +22,11 @@ public:
     void setCommand(std::string);
     void showCommands();
     void execution();
-    void initCommandMap(Memory memory);
-    std::map<std::string, int> getFullCommandMap();
-    void setCommandMap(std::string cmd, int nb);
+    std::string getCommandInstruction(std::string cmd);
+    std::string getCommandValue(std::string cmd);
+    std::string getCommandType(std::string cmd);
 private:
     std::vector<std::string> commands;
-    std::map<std::string, int> cmdMap;
 };
 
 #endif

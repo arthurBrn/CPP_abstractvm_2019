@@ -7,6 +7,14 @@
 
 #include "abstractvm.hh"
 
+Factory::Factory()
+{
+}
+
+Factory::~Factory()
+{
+}
+
 IOperand *Factory::createInt8(const std::string &value)
 {
     IOperand *obj;
@@ -56,8 +64,6 @@ IOperand *Factory::createOperand(eOperandType type, const std::string &value)
         res = createDouble(value);
     case eOperandType::BIGDECIMAL:
         res = createBigDecimal(value);
-    default:
-        std::cout << "SWITCH ERROR" << std::endl;
     }
     return (res);
 }

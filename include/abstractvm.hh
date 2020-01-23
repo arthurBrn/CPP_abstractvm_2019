@@ -20,12 +20,11 @@
 #include "AbstractVmException.hh"
 #include "Chipset.hh"
 #include "Operand.hh"
-#include "CPU.hh"
+// #include "CPU.hh"
 #include "Factory.hh"
 #include "IOperand.hh"
 #include "Input.hh"
 #include "Output.hh"
 #include "Memory.hh"
 
-int read_file(int ac, char **av);
 #endif

@@ -14,6 +14,8 @@
 class Factory 
 {
     public:
+        Factory();
+        ~Factory();
         IOperand* createOperand(eOperandType type, const std::string& value);
     private:
         IOperand* createInt8(const std::string& value);

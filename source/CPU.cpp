@@ -6,6 +6,7 @@
 */
 
 #include "abstractvm.hh"
+// using namespace std;
 // #include "Factory.hh"
 
 CPU::CPU()
@@ -41,6 +42,11 @@ void CPU::setRegistre(IOperand *object)
     this->registre.push_back(object);
 }
 
+std::map<std::string, void (CPU::*)(Memory, std::string, std::string)> CPU::getCpuCmd()
+{
+    return (this->cmdCpu);
+}
+
 eOperandType CPU::defineEnum(std::string type)
 {
     eOperandType value;
@@ -68,13 +74,22 @@ void CPU::push(Memory memo, std::string type, std::string value)
     memo.setStack(obj);
 }
 
-void CPU::store(Memory memo, Chipset chip, std::string value)
+
+void CPU::setCpuCmd(CPU *cpu)
+{
+    cpu->cmdCpu["push"] = &CPU::push;
+    cpu->cmdCpu["store"] = &CPU::store;
+    cpu->cmdCpu["load"] = &CPU::load;
+    cpu->cmdCpu["assert"] = &CPU::assert;
+}
+
+void CPU::store(Memory memo, std::string type, std::string value)
 {
     IOperand *holder = memo.getStackTopPile();
     this->setRegistre(holder);
 }
 
-void CPU::load(Memory memo, Chipset chip, std::string value)
+void CPU::load(Memory memo, std::string type, std::string value)
 {
     if (this->registre.size() < 1)
         throw new AbstractVmException("Can't load register. Register is empty");
@@ -82,10 +97,9 @@ void CPU::load(Memory memo, Chipset chip, std::string value)
     memo.setStack(obj);
 }
 
-void CPU::assert(Memory memo, Chipset chip, std::string value)
+void CPU::assert(Memory memo, std::string type, std::string value)
 {
     // verify that v is equal to the value at the top of the stack
-
     // For that we'll use getType form IOperand
 }
 

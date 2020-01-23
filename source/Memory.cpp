@@ -107,3 +107,18 @@ void Memory::print()
     std::cout << "test" << std::endl;
 
 }
+
+void Memory::setMemoryCmd(Memory *memory)
+{
+    memory->memoryCmd["pop"] = &Memory::pop;
+    memory->memoryCmd["clear"] = &Memory::clear;
+    memory->memoryCmd["dup"] = &Memory::dup;
+    memory->memoryCmd["swap"] = &Memory::swap;
+    memory->memoryCmd["dump"] = &Memory::dump;
+    memory->memoryCmd["print"] = &Memory::print;
+}
+
+std::map<std::string, void (Memory::*)()> Memory::getMemoryCmd()
+{
+    return (this->memoryCmd);
+}

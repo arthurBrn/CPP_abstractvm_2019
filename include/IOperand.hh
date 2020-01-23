@@ -31,7 +31,7 @@ public:
       virtual IOperand *operator/(const IOperand &rhs) const = 0;
       virtual IOperand *operator%(const IOperand &rhs) const = 0;
 
-      // virtual - IOperand() {}
+      virtual ~ IOperand() {}
 };
 
 #endif

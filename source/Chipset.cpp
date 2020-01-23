@@ -44,78 +44,74 @@ std::vector<std::string> Chipset::deleteStackAtIndex(int index)
     return this->commands;
 }
 
-std::map<std::string, int> Chipset::getFullCommandMap()
+std::string Chipset::getCommandInstruction(std::string cmd)
 {
-    return (this->cmdMap);
+    int escape = 0;
+    std::string str;
+
+    escape = cmd.find_first_of(" ");
+    str = cmd.substr(0, escape);
+    return (str);
 }
 
-void Chipset::initCommandMap(Memory memory)
+std::string Chipset::getCommandType(std::string cmd)
 {
-    // void (*fun_ptr)(void);
-    // fun_ptr = memory.clear(); 
+    std::string type;
+    int escape = 0;
+    int fstBracket = 0;
 
-    this->cmdMap.insert({"push", 1});
-    this->cmdMap.insert({"pop", 1});
-    this->cmdMap.insert({"clear", 1});
-    this->cmdMap.insert({"dup", 1});
-    this->cmdMap.insert({"swap", 1});
-    this->cmdMap.insert({"dump", 1});
-    this->cmdMap.insert({"assert", 1});
-    this->cmdMap.insert({"add", 1});
-    this->cmdMap.insert({"sub", 1});
-    this->cmdMap.insert({"mul", 1});
-    this->cmdMap.insert({"div", 1});
-    this->cmdMap.insert({"mod", 1});
-    this->cmdMap.insert({"load", 1});
-    this->cmdMap.insert({"store", 1});
-    this->cmdMap.insert({"print", 1});
-    this->cmdMap.insert({"exit", 1});
+    escape = cmd.find_first_of(" ");
+    fstBracket = cmd.find_first_of(")");
+    type = cmd.substr(escape, fstBracket);
+    return (type);
 }
 
-void Chipset::setCommandMap(std::string cmd, int nb)
+std::string Chipset::getCommandValue(std::string cmd)
 {
-    this->cmdMap.insert({cmd, nb});
+    std::string value;
+    int fstBracket = 0;
+    int sndBracket = 0;
+
+    fstBracket = cmd.find_first_of("(");
+    sndBracket = cmd.find_first_of(")");
+    value = cmd.substr(fstBracket, fstBracket);
+    return (value);
 }
 
 void Chipset::execution()
 {
     auto iterator = this->getAllCommands().begin();
-    Memory memory;
-    CPU cpu;
-    // Operand operand;
-    std::string str;
-    std::string instruction;
-    std::string value;
-    std::string type;
-    int escape = 0;
-    int brackets = 0;
-    int fstBrack = 0;
-    int sndBrack = 0;
     std::map<std::string, int>::iterator itr;
+    // Operand *operand = new Operand();
+    Memory *memory = new Memory();
+    CPU *cpu = new CPU();
+    std::string instruction;
+    std::string value = "no";
+    std::string type = "no";
+    std::string str;
+    int escape = 0;
+    std::map<std::string, void (Memory::*)()>::iterator it;
 
+    memory->setMemoryCmd(memory);
+    // it = memory->getMemoryCmd().begin();
     for (int i = 0; i < this->getAllCommands().size(); i++)
     {
-        this->initCommandMap(memory);
         str = this->getCommandAtIndex(i);
         escape = str.find_first_of(" ");
-        if (str.substr(0, escape)[0] != ';')
-            instruction = str.substr(0, escape);
-        if (str.size() > escape && str[0] != ';') {
-            type = str.substr(escape, str.size());
-            fstBrack = type.find_first_of("(");
-            sndBrack = type.find_first_of(")");
-            value = type.substr((fstBrack + 1), (sndBrack -1));
-            type = str.substr(escape, fstBrack);
-            std::cout << "type : " + type << std::endl;
-            std::cout << "value : " + value << std::endl;
+        if (str[0] != ';') {
+            instruction = this->getCommandInstruction(this->getCommandAtIndex(i));
+            std::cout << "Instruction : " + instruction << std::endl;
         }
-        for (itr = this->cmdMap.begin(); itr != this->cmdMap.end(); itr++)
+        if (str.size() > escape && str[0] != ';')
         {
-            if (instruction == itr->first)
-                std::cout << "Instruction : " + instruction + " match : " + itr->first << std::endl;
-            if (instruction == "push") {
-                cpu.push(memory, type, value);
-            }
+            value = this->getCommandValue(this->getCommandAtIndex(i));
+            type = this->getCommandType(this->getCommandAtIndex(i));
+            std::cout << "Value : " + value << std::endl;
+            std::cout << "Type : " + type << std::endl;
         }
+        for (it = memory->memoryCmd.begin(); it != memory->memoryCmd.end(); it++)
+            // if (instruction.compare(it->first) == 0)
+            if (instruction == it->first)
+                std::cout << "match" << std::endl;
     }
 }

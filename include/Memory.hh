@@ -26,6 +26,9 @@ public:
     void swap();
     void dump();
     void print();
+    void setMemoryCmd(Memory *memory);
+    std::map<std::string, void (Memory::*)()> getMemoryCmd();
+    std::map<std::string, void (Memory::*)()> memoryCmd;
 private:
     std::vector<IOperand*> stack;
 };

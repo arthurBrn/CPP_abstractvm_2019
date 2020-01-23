@@ -56,7 +56,6 @@ void Input::checkFile(Chipset *chip)
             throw new AbstractVmException("ERROR: syntax error in the file.");
         }
     }
-
     if (commands.at(max).compare("exit") != 0)
         throw new AbstractVmException("The file must finish by \"exit\"");
 }
