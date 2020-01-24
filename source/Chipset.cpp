@@ -78,7 +78,7 @@ std::string Chipset::getCommandValue(std::string cmd)
     return (value);
 }
 
-void Chipset::execution()
+void Chipset::execute()
 {
     auto iterator = this->getAllCommands().begin();
     std::map<std::string, int>::iterator itr;

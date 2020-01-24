@@ -21,7 +21,7 @@ public:
     std::vector<std::string> deleteStackAtIndex(int index);
     void setCommand(std::string);
     void showCommands();
-    void execution();
+    void execute();
     std::string getCommandInstruction(std::string cmd);
     std::string getCommandValue(std::string cmd);
     std::string getCommandType(std::string cmd);

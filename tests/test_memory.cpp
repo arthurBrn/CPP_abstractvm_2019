@@ -17,10 +17,7 @@ Test(getStackSize, recover_stack_size)
     cr_assert_eq(mem.getStackSize(), mem.getAllStack().size());
 }
 
-Test(getStackAtIndexX, verify_return_stack_at_index){
-
-    
-}
+Test(getStackAtIndexX, verify_return_stack_at_index){}
 Test(setStackAtIndexX, verify_set_stack_at_index){}
 Test(getAllStack, verify_this_return_all_stack){}
 Test(setStack, verify_stack_being_set){}

@@ -20,6 +20,6 @@ int main(int ac, char **av)
     } catch(AbstractVmException error) {
         std::cout << error.getErrorMessage() << std::endl;
     }
-    chip->execution();
+    chip->execute();
     return 0;
 }

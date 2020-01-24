@@ -18,32 +18,45 @@ Factory::~Factory()
 IOperand *Factory::createInt8(const std::string &value)
 {
     IOperand *obj;
+
+    obj->type = eOperandType::INT8;
     return (obj);
 }
-
 IOperand *Factory::createInt16(const std::string &value)
 {
     IOperand *obj;
+
+    obj->type = eOperandType::INT16;
+
     return (obj);
 }
 IOperand *Factory::createInt32(const std::string &value)
 {
     IOperand *obj;
+
+    obj->type = eOperandType::INT32;
     return (obj);
 }
 IOperand *Factory::createFloat(const std::string &value)
 {
     IOperand *obj;
+
+    obj->type = eOperandType::FLOAT;
     return (obj);
 }
 IOperand *Factory::createDouble(const std::string &value)
 {
     IOperand *obj;
+
+    obj->type = eOperandType::DOUBLE;
     return (obj);
 }
 IOperand *Factory::createBigDecimal(const std::string &value)
 {
     IOperand *obj;
+
+    // obj->value = value;
+    obj->type = eOperandType::BIGDECIMAL;
     return (obj);
 }
 
