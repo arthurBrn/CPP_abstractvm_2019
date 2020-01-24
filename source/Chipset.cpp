@@ -97,12 +97,12 @@ void Chipset::execute()
         if (str[0] != ';')
         {
             instruction = this->getCommandInstruction(str);
-            std::cout << "Instruction : " + instruction << std::endl;
+            //std::cout << "Instruction : " + instruction << std::endl;
             for (it = memory->memoryCmd.begin(); it != memory->memoryCmd.end(); it++)
             {
                 if (instruction.compare(it->first) == 0)
                 {
-                    std::cout << "match : " + it->first << std::endl;
+                    //std::cout << "match : " + it->first << std::endl;
                     void (Memory::*ptr)() = memory->memoryCmd[instruction];
                     (memory->*ptr)();
                 }

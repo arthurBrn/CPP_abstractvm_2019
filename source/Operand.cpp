@@ -17,16 +17,6 @@ Operand::~Operand()
 {
 }
 
-std::string Operand::getValue()
-{
-    return (this->value);
-}
-
-void Operand::setValue(std::string newValue)
-{
-    this->value = newValue;
-}
-
 void Operand::setOperandCmd(Operand *operand)
 {
     operand->cmdOperand["add"] = &Operand::add;
@@ -50,24 +40,36 @@ std::map<std::string, void (Operand::*)(Memory, CPU)> Operand::getOperandCmd()
 
 eOperandType Operand::getType()
 {
-    return (this->getType());
-}
-
-void Operand::setType(eOperandType typ)
-{
-    this->type = type;
-}
-
-void Operand::talk()
-{
-    std::cout << "je suis une virtuelle pure haha" << std::endl;
+    
+    /*std::cout << "je suis une virtuelle pure haha" << std::endl;
     eOperandType type = this->type;
     std::ostringstream eOperandType;
     eOperandType << type;
     std::string mySerializedObject = eOperandType.str();
     std::cout << mySerializedObject << std::endl;
-    std::cout << "value : " + this->value << std::endl;
+    std::cout << "value : " + this->value << std::endl;*/ 
+    return (this->type);
 }
+
+std::string Operand::getValue()
+{
+    return (this->value);
+}
+
+void Operand::setValue(std::string& val)
+{
+    this->value = val;
+}
+
+void Operand::setType(eOperandType& typ)
+{
+    this->type = typ;
+}
+
+// void Operand::setType(std::string value)
+// {
+
+// }
 
 // IOperand Operand::*operator+(const IOperand &rhs)
 // {

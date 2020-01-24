@@ -21,13 +21,12 @@ class Operand : public IOperand
 public:
     Operand(eOperandType type, std::string value);
     ~Operand();
-    std::string getValue();
-    void setValue(std::string newValue);
     void setOperandCmd(Operand *operand);
     std::string toString() const override;
-    eOperandType getType();
-    void talk() override;
-    void setType(eOperandType type);
+    eOperandType getType() override;
+    std::string getValue() override;
+    void setValue(std::string&) override;
+    void setType(eOperandType&) override;
     std::map<std::string, void (Operand::*)(Memory, CPU)> getOperandCmd();
     void add(Memory objMemory, CPU objCPU);
     void sub(Memory objMemory, CPU objCPU);

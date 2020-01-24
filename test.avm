@@ -1,19 +1,2 @@
-; ---------------
-; - example.avm -
-; ---------------
-push int8(33)
-push int16(42)
-;add
-;push float(44.55)
-;mul
-;push double(42.42)
-;push int32(42)
-;dump
-;pop
-;clear
-;dump
-;swap
-;dup
-;print
-;assert double(42.42)
+push int32(42)
 exit
