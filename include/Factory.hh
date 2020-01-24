@@ -10,6 +10,9 @@
 
 #include "abstractvm.hh"
 #include "IOperand.hh"
+#include "Operand.hh"
+#include "eOperandType.hh"
+
 
 class Factory 
 {

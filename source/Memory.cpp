@@ -5,7 +5,7 @@
 ** ...
 */
 
-#include "abstractvm.hh"
+#include "Memory.hh"
 
 int Memory::getStackSize()
 {

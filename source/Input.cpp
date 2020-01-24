@@ -5,7 +5,7 @@
 ** ...
 */
 
-#include "abstractvm.hh"
+#include "Input.hh"
 
 Input::Input()
 {

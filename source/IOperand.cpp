@@ -5,5 +5,5 @@
 ** IOperand file
 */
 
-#include "abstractvm.hh"
+#include "IOperand.hh"
 

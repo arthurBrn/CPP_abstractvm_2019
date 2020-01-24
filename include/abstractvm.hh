@@ -16,15 +16,16 @@
 #include <fstream>
 #include <stdbool.h>
 #include <regex>
+#include <stdexcept>
 
-#include "AbstractVmException.hh"
-#include "Chipset.hh"
-#include "Operand.hh"
+// #include "AbstractVmException.hh"
+// #include "Chipset.hh"
+// #include "Operand.hh"
 // #include "CPU.hh"
-#include "Factory.hh"
-#include "IOperand.hh"
-#include "Input.hh"
-#include "Output.hh"
-#include "Memory.hh"
+// #include "Factory.hh"
+// #include "IOperand.hh"
+// #include "Input.hh"
+// #include "Output.hh"
+// #include "Memory.hh"
 
 #endif

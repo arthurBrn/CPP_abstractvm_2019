@@ -5,7 +5,7 @@
 ** ...
 */
 
-#include "abstractvm.hh"
+#include "AbstractVmException.hh"
 
 AbstractVmException::AbstractVmException(std::string value)
 {

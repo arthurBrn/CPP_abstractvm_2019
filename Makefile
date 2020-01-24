@@ -9,7 +9,7 @@ NAME	=	abstractVM
 
 CC	=	g++
 
-SRCS	=	./source/main.cpp		\
+SRCS	=	./source/main.cpp	\
 		./source/Chipset.cpp	\
 		./source/AbstractVmException.cpp	\
 		./source/CPU.cpp	\

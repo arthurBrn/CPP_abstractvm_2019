@@ -5,10 +5,10 @@
 ** ...
 */
 
-#include "abstractvm.hh"
-
 #ifndef _OUTPUT_HH_
 #define _OUTPUT_HH_
+
+#include "abstractvm.hh"
 
 class Output
 {

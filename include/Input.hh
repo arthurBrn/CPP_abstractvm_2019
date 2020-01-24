@@ -5,11 +5,11 @@
 ** ...
 */
 
-#include "abstractvm.hh"
-#include "Chipset.hh"
-
 #ifndef _INPUT_HH_
 #define _INPUT_HH_
+
+#include "abstractvm.hh"
+#include "Chipset.hh"
 
 class Input
 {

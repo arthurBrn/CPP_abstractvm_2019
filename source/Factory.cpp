@@ -5,7 +5,7 @@
 ** ...
 */
 
-#include "abstractvm.hh"
+#include "Factory.hh"
 
 Factory::Factory()
 {
@@ -17,46 +17,52 @@ Factory::~Factory()
 
 IOperand *Factory::createInt8(const std::string &value)
 {
-    IOperand *obj;
+    Operand *obj;
 
-    obj->type = eOperandType::INT8;
+    obj->setType(eOperandType::INT8);
+    obj->setValue(value);
+
     return (obj);
 }
+
 IOperand *Factory::createInt16(const std::string &value)
 {
-    IOperand *obj;
+    Operand *obj;
 
-    obj->type = eOperandType::INT16;
-
+    obj->setType(eOperandType::INT16);
+    obj->setValue(value);
     return (obj);
 }
 IOperand *Factory::createInt32(const std::string &value)
 {
-    IOperand *obj;
+    Operand *obj;
 
-    obj->type = eOperandType::INT32;
+    obj->setType(eOperandType::INT32);
+    obj->setValue(value);
     return (obj);
 }
 IOperand *Factory::createFloat(const std::string &value)
 {
-    IOperand *obj;
+    Operand *obj;
 
-    obj->type = eOperandType::FLOAT;
+    obj->setType(eOperandType::FLOAT);
+    obj->setValue(value);
     return (obj);
 }
 IOperand *Factory::createDouble(const std::string &value)
 {
-    IOperand *obj;
+    Operand *obj;
 
-    obj->type = eOperandType::DOUBLE;
+    obj->setType(eOperandType::DOUBLE);
+    obj->setValue(value);
     return (obj);
 }
 IOperand *Factory::createBigDecimal(const std::string &value)
 {
-    IOperand *obj;
+    Operand *obj;
 
-    // obj->value = value;
-    obj->type = eOperandType::BIGDECIMAL;
+    obj->setType(eOperandType::BIGDECIMAL);
+    obj->setValue(value);
     return (obj);
 }
 

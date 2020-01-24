@@ -5,9 +5,7 @@
 ** IOperand file
 */
 
-#include <stdexcept>
-#include "abstractvm.hh"
-#include "IOperand.hh"
+#include "Operand.hh"
 
 Operand::Operand()
 {
@@ -17,12 +15,12 @@ Operand::~Operand()
 {
 }
 
-IOperand* Operand::getValue()
+std::string Operand::getValue()
 {
     return (this->value);
 }
 
-void Operand::setValue(IOperand *newValue)
+void Operand::setValue(std::string newValue)
 {
     this->value = newValue;
 }
@@ -48,16 +46,21 @@ std::map<std::string, void (Operand::*)(Memory, CPU)> Operand::getOperandCmd()
     return (this->cmdOperand);
 }
 
-eOperandType Operand::getType() const
+eOperandType Operand::getType()
 {
     return (this->getType());
 }
 
+void Operand::setType(eOperandType typ)
+{
+    this->type = typ;
+}
+
 // IOperand Operand::*operator+(const IOperand &rhs)
 // {
-    // IOperand *aoo;
-// 
-    // aoo->value = aoo->value + rhs.value;
+//     IOperand *aoo;
+
+//     // aoo->value = aoo->value + rhs.value;
 // }
 
 // IOperand Operand::*operator-(const IOperand &rhs)

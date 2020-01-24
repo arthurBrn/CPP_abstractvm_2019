@@ -5,7 +5,7 @@
 ** ...
 */
 
-#include "abstractvm.hh"
+#include "Output.hh"
 
 Output::Output()
 {

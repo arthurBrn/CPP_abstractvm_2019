@@ -5,17 +5,16 @@
 ** ...
 */
 
-#include "abstractvm.hh"
-#include "IOperand.hh"
-
 #ifndef _MEMORY_HH_
 #define _MEMORY_HH_
+
+#include "abstractvm.hh"
+#include "IOperand.hh"
 
 class Memory
 {
 public:
     int getStackSize();
-    // IOperand* getStackTopPile();
     void setStack(IOperand* obj);
     IOperand* getStackAtIndexX(int index);
     IOperand* setStackAtIndexX(int index, IOperand* value);

@@ -5,11 +5,12 @@
 ** ...
 */
 
-#include "abstractvm.hh"
-#include "Memory.hh"
-
 #ifndef _CHIPSET_HH_
 #define _CHIPSET_HH_
+
+#include "abstractvm.hh"
+#include "Memory.hh"
+#include "CPU.hh"
 
 class Chipset
 {

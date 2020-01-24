@@ -5,9 +5,7 @@
 ** ...
 */
 
-#include "abstractvm.hh"
-// using namespace std;
-// #include "Factory.hh"
+#include "CPU.hh"
 
 CPU::CPU()
 {

@@ -1,9 +1,0 @@
-*.o
-*.gcno
-*.gcda
-*~
-#*
-readme.txt
-abstractVM
-example.avmempty.avm
-.vscode/settings.json

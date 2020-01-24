@@ -5,13 +5,18 @@
 ** ...
 */
 
-#include "abstractvm.hh"
-#include "IOperand.hh"
-#include "Chipset.hh"
-#include "Memory.hh"
-
 #ifndef _CPU_HH_
 #define _CPU_HH_
+
+#include "abstractvm.hh"
+#include "AbstractVmException.hh"
+#include "Factory.hh"
+#include "Operand.hh"
+#include "Memory.hh"
+#include "IOperand.hh"
+#include "eOperandType.hh"
+
+class Operand;
 
 class CPU
 {
@@ -34,6 +39,7 @@ public:
 private:
     std::vector<IOperand *> registre;
     std::map<std::string, void (CPU::*)(Memory, std::string, std::string)> cmdCpu;
+    Operand *_operand;
 };
 
 #endif
