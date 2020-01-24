@@ -8,12 +8,13 @@
 #ifndef _ABSTRACT_VM_EXCEPTION_HH_
 #define _ABSTRACT_VM_EXCEPTION_HH_
 
+
 #include "abstractvm.hh"
 
 class AbstractVmException : public std::exception 
 {   
     public:
-        AbstractVmException(std::string);
+        AbstractVmException();
         ~AbstractVmException();
         std::string getErrorMessage();
         void setErrorMessage(std::string errorMessage);

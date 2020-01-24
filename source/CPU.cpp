@@ -92,8 +92,11 @@ void CPU::store(Memory *memo, std::string type, std::string value)
 
 void CPU::load(Memory *memo, std::string type, std::string value)
 {
-    if (this->registre.size() < 1)
-        throw new AbstractVmException("Can't load register. Register is empty");
+    AbstractVmException exception;
+    if (this->registre.size() < 1) {
+        exception.setErrorMessage("Can't load register. Register is empty");
+        throw exception;
+    }
     IOperand* obj = this->getRegistreStackAtIndex(this->registre.size());
     memo->setStack(obj);
 }

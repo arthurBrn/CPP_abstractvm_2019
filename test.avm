@@ -1,8 +1,9 @@
 ; ---------------
 ; - example.avm -
 ; ---------------
-push int32(33)
-;push int32(42)
+push int8(33)
+push int16(42)
+;add
 ;push float(44.55)
 ;mul
 ;push double(42.42)

@@ -18,7 +18,7 @@
 #include <regex>
 #include <stdexcept>
 
-// #include "AbstractVmException.hh"
+#include "AbstractVmException.hh"
 // #include "Chipset.hh"
 // #include "Operand.hh"
 // #include "CPU.hh"

@@ -60,9 +60,6 @@ void Operand::setType(eOperandType typ)
 
 // IOperand Operand::*operator+(const IOperand &rhs)
 // {
-//     IOperand *aoo;
-
-//     // aoo->value = aoo->value + rhs.value;
 // }
 
 // IOperand Operand::*operator-(const IOperand &rhs)

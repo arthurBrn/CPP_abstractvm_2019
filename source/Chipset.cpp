@@ -59,7 +59,6 @@ std::string Chipset::getCommandType(std::string cmd)
     std::string type;
     int escape = 0;
     int fstBracket = 0;
-
     fstBracket = cmd.find("(");
     type = cmd.substr(0, cmd.find("("));
     return (type.substr(type.find(" "), type.size()));
@@ -68,7 +67,6 @@ std::string Chipset::getCommandType(std::string cmd)
 std::string Chipset::getCommandValue(std::string cmd)
 {
     std::string value;
-
     std::string delimiter = ")";
     std::string delimiter_two = "(";
     value = cmd.substr(0, cmd.find(delimiter));
@@ -125,6 +123,8 @@ void Chipset::execute()
                     void (CPU::*cpuPtr)(Memory*, std::string, std::string) = cpu->cmdCpu[instruction];
                     (cpu->*cpuPtr)(memory, type, value);
                 }
+                // Factory fac;
+            IOperand *nb = fac.createOperand(cpu->defineEnum("type"), value);
             }
         }
     }
