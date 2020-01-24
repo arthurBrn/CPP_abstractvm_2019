@@ -7,7 +7,7 @@
 
 #include "Chipset.hh"
 #include "Input.hh"
-#include "AbstractVmException.hh"
+#include "abstractvm.hh"
 
 int main(int ac, char **av)
 {
@@ -19,7 +19,10 @@ int main(int ac, char **av)
         in->getFileError(chip);
     } catch(AbstractVmException error) {
         std::cout << error.getErrorMessage() << std::endl;
-    }
+    
+        }
+    for (int i = 0; i < chip->getAllCommands().size(); i++) 
+        std::cout << chip->getCommandAtIndex(i) << std::endl;
     chip->execute();
     return 0;
 }

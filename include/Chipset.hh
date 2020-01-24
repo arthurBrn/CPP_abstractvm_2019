@@ -9,6 +9,7 @@
 #define _CHIPSET_HH_
 
 #include "abstractvm.hh"
+#include "Factory.hh"
 #include "Memory.hh"
 #include "CPU.hh"
 

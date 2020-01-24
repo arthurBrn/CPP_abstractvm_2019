@@ -59,22 +59,20 @@ std::string Chipset::getCommandType(std::string cmd)
     std::string type;
     int escape = 0;
     int fstBracket = 0;
-
-    escape = cmd.find_first_of(" ");
-    fstBracket = cmd.find_first_of(")");
-    type = cmd.substr(escape, fstBracket);
-    return (type);
+    
+    fstBracket = cmd.find("(");
+    type = cmd.substr(0, cmd.find("("));
+    return (type.substr(type.find(" "), type.size()));
 }
 
 std::string Chipset::getCommandValue(std::string cmd)
 {
     std::string value;
-    int fstBracket = 0;
-    int sndBracket = 0;
-
-    fstBracket = cmd.find_first_of("(");
-    sndBracket = cmd.find_first_of(")");
-    value = cmd.substr(fstBracket, fstBracket);
+    
+    std::string delimiter = ")";
+    std::string delimiter_two = "(";
+    value = cmd.substr(0, cmd.find(delimiter));
+    value = value.substr((value.find(delimiter_two) + 1), value.size());
     return (value);
 }
 
@@ -117,6 +115,8 @@ void Chipset::execute()
             type = this->getCommandType(this->getCommandAtIndex(i));
             std::cout << "Value : " + value << std::endl;
             std::cout << "Type : " + type << std::endl;
+            Factory fac;
+            IOperand *nb = fac.createOperand(cpu->defineEnum("type"), value);
         }
         
     }

@@ -19,7 +19,7 @@ class CPU;
 class Operand : public IOperand
 {
 public:
-    Operand();
+    Operand(eOperandType, std::string);
     ~Operand();
     std::string getValue();
     void setValue(std::string newValue);

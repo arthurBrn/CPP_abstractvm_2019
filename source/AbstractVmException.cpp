@@ -7,9 +7,9 @@
 
 #include "AbstractVmException.hh"
 
-AbstractVmException::AbstractVmException(std::string value)
+AbstractVmException::AbstractVmException()
 {
-    this->errorMessage = value;
+    
 }
 
 AbstractVmException::~AbstractVmException()

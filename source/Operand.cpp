@@ -7,8 +7,10 @@
 
 #include "Operand.hh"
 
-Operand::Operand()
+Operand::Operand(eOperandType type, std::string value)
 {
+    this->type = type;
+    this->value = value;
 }
 
 Operand::~Operand()
@@ -58,9 +60,6 @@ void Operand::setType(eOperandType typ)
 
 // IOperand Operand::*operator+(const IOperand &rhs)
 // {
-//     IOperand *aoo;
-
-//     // aoo->value = aoo->value + rhs.value;
 // }
 
 // IOperand Operand::*operator-(const IOperand &rhs)
