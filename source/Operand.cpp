@@ -55,7 +55,18 @@ eOperandType Operand::getType()
 
 void Operand::setType(eOperandType typ)
 {
-    this->type = typ;
+    this->type = type;
+}
+
+void Operand::talk()
+{
+    std::cout << "je suis une virtuelle pure haha" << std::endl;
+    eOperandType type = this->type;
+    std::ostringstream eOperandType;
+    eOperandType << type;
+    std::string mySerializedObject = eOperandType.str();
+    std::cout << mySerializedObject << std::endl;
+    std::cout << "value : " + this->value << std::endl;
 }
 
 // IOperand Operand::*operator+(const IOperand &rhs)

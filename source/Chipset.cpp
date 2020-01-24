@@ -61,7 +61,7 @@ std::string Chipset::getCommandType(std::string cmd)
     int fstBracket = 0;
     fstBracket = cmd.find("(");
     type = cmd.substr(0, cmd.find("("));
-    return (type.substr(type.find(" "), type.size()));
+    return (type.substr(type.find(" ") + 1, type.size()));
 }
 
 std::string Chipset::getCommandValue(std::string cmd)
@@ -112,19 +112,20 @@ void Chipset::execute()
         {
             value = this->getCommandValue(str);
             type = this->getCommandType(str);
-            std::cout << "Value : " + value << std::endl;
-            std::cout << "Type : " + type << std::endl;
+            // std::cout << "Value : " + value << std::endl;
+            // std::cout << "Type : " + type << std::endl;
             for (cpuIt = cpu->cmdCpu.begin(); cpuIt != cpu->cmdCpu.end(); cpuIt++)
             {
                 if (instruction.compare(cpuIt->first) == 0)
                 {
-                    std::cout << "Match cpu : " + instruction << std::endl;
-                    std::cout << "type : " + type + " | value : " + value << std::endl;
+                    // std::cout << "Match cpu : " + instruction << std::endl;
+                    // std::cout << "type : " + type + " | value : " + value << std::endl;
                     void (CPU::*cpuPtr)(Memory*, std::string, std::string) = cpu->cmdCpu[instruction];
                     (cpu->*cpuPtr)(memory, type, value);
+                    Factory fac;
+                    IOperand *nb = fac.createOperand(cpu->defineEnum("type"), value);
                 }
-                // Factory fac;
-            IOperand *nb = fac.createOperand(cpu->defineEnum("type"), value);
+
             }
         }
     }

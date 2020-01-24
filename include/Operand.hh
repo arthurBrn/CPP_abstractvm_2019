@@ -26,6 +26,7 @@ public:
     void setOperandCmd(Operand *operand);
     std::string toString() const override;
     eOperandType getType();
+    void talk() override;
     void setType(eOperandType type);
     std::map<std::string, void (Operand::*)(Memory, CPU)> getOperandCmd();
     void add(Memory objMemory, CPU objCPU);
