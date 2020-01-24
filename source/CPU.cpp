@@ -85,7 +85,7 @@ void CPU::setCpuCmd(CPU *cpu)
 
 void CPU::store(Memory memo, std::string type, std::string value)
 {
-    IOperand *holder = memo.getStackTopPile();
+    IOperand *holder = memo.getAllStack().front();
     this->setRegistre(holder);
 }
 

@@ -15,7 +15,7 @@ class Memory
 {
 public:
     int getStackSize();
-    IOperand* getStackTopPile();
+    // IOperand* getStackTopPile();
     void setStack(IOperand* obj);
     IOperand* getStackAtIndexX(int index);
     IOperand* setStackAtIndexX(int index, IOperand* value);

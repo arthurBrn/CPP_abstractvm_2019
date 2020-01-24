@@ -93,12 +93,12 @@ void Chipset::execution()
     std::map<std::string, void (Memory::*)()>::iterator it;
 
     memory->setMemoryCmd(memory);
-    // it = memory->getMemoryCmd().begin();
     for (int i = 0; i < this->getAllCommands().size(); i++)
     {
         str = this->getCommandAtIndex(i);
         escape = str.find_first_of(" ");
-        if (str[0] != ';') {
+        if (str[0] != ';')
+        {
             instruction = this->getCommandInstruction(this->getCommandAtIndex(i));
             std::cout << "Instruction : " + instruction << std::endl;
         }
@@ -110,8 +110,13 @@ void Chipset::execution()
             std::cout << "Type : " + type << std::endl;
         }
         for (it = memory->memoryCmd.begin(); it != memory->memoryCmd.end(); it++)
-            // if (instruction.compare(it->first) == 0)
-            if (instruction == it->first)
-                std::cout << "match" << std::endl;
+        {
+            if (instruction.compare(it->first) == 0)
+            {
+                std::cout << "match : " + it->first << std::endl;
+                void (Memory::* ptr)() = memory->memoryCmd[instruction];
+                (memory->*ptr)();
+            }
+        }
     }
 }

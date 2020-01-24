@@ -31,7 +31,7 @@ CPPFLAGS = -I./include/ -std=c++11
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	 $(CC) $(OBJS) -o $(NAME)
+	$(CC) $(OBJS) -o $(NAME)
 
 clean:
 	$(RM) $(OBJS)

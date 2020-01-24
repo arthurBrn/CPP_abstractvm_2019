@@ -5,23 +5,23 @@
 ## Makefile test
 ##
 
+#-std=c++11
+
 NAME	=	unit_test
 
-SRC_TEST	=	test_memory.cpp			\
+SRC_TEST	=	test_memory.cpp		\
 
-
-
-SRC		=	../source/Memory.cpp					\
+SRC		=	../source/Memory.cpp	\
 
 OBJ 	=	$(SRC:.cpp=.o)
 
-INCLUDE	=	-I../include/ -std=c++11
+INCLUDE	=	-I../include/
 
 CFLAGS	=	$(INCLUDE) --coverage -O0
 
 LDFLAGS	=	-lcriterion -lgcov
 
-CC	=	gcc
+CC	=	g++
 
 all:	$(NAME)
 
