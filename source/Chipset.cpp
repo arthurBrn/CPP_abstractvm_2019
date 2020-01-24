@@ -101,6 +101,15 @@ void Chipset::execute()
         {
             instruction = this->getCommandInstruction(this->getCommandAtIndex(i));
             std::cout << "Instruction : " + instruction << std::endl;
+            for (it = memory->memoryCmd.begin(); it != memory->memoryCmd.end(); it++)
+            {
+                if (instruction.compare(it->first) == 0)
+                {
+                    std::cout << "match : " + it->first << std::endl;
+                    void (Memory::* ptr)() = memory->memoryCmd[instruction];
+                    (memory->*ptr)();
+                }
+            }
         }
         if (str.size() > escape && str[0] != ';')
         {
@@ -109,14 +118,6 @@ void Chipset::execute()
             std::cout << "Value : " + value << std::endl;
             std::cout << "Type : " + type << std::endl;
         }
-        for (it = memory->memoryCmd.begin(); it != memory->memoryCmd.end(); it++)
-        {
-            if (instruction.compare(it->first) == 0)
-            {
-                std::cout << "match : " + it->first << std::endl;
-                void (Memory::* ptr)() = memory->memoryCmd[instruction];
-                (memory->*ptr)();
-            }
-        }
+        
     }
 }
