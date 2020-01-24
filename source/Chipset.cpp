@@ -47,11 +47,11 @@ std::vector<std::string> Chipset::deleteStackAtIndex(int index)
 std::string Chipset::getCommandInstruction(std::string cmd)
 {
     int escape = 0;
-    std::string str;
+    std::string instruction;
 
     escape = cmd.find_first_of(" ");
-    str = cmd.substr(0, escape);
-    return (str);
+    instruction = cmd.substr(0, escape);
+    return (instruction);
 }
 
 std::string Chipset::getCommandType(std::string cmd)
@@ -60,29 +60,26 @@ std::string Chipset::getCommandType(std::string cmd)
     int escape = 0;
     int fstBracket = 0;
 
-    escape = cmd.find_first_of(" ");
-    fstBracket = cmd.find_first_of(")");
-    type = cmd.substr(escape, fstBracket);
-    return (type);
+    fstBracket = cmd.find("(");
+    type = cmd.substr(0, cmd.find("("));
+    return (type.substr(type.find(" "), type.size()));
 }
 
 std::string Chipset::getCommandValue(std::string cmd)
 {
     std::string value;
-    int fstBracket = 0;
-    int sndBracket = 0;
 
-    fstBracket = cmd.find_first_of("(");
-    sndBracket = cmd.find_first_of(")");
-    value = cmd.substr(fstBracket, fstBracket);
+    std::string delimiter = ")";
+    std::string delimiter_two = "(";
+    value = cmd.substr(0, cmd.find(delimiter));
+    value = value.substr((value.find(delimiter_two) + 1), value.size());
     return (value);
 }
 
 void Chipset::execute()
-{
+{ 
     auto iterator = this->getAllCommands().begin();
     std::map<std::string, int>::iterator itr;
-    // Operand *operand = new Operand();
     Memory *memory = new Memory();
     CPU *cpu = new CPU();
     std::string instruction;
@@ -91,31 +88,43 @@ void Chipset::execute()
     std::string str;
     int escape = 0;
     std::map<std::string, void (Memory::*)()>::iterator it;
+    std::map<std::string, void (CPU::*)(Memory*, std::string, std::string)>::iterator cpuIt;
 
     memory->setMemoryCmd(memory);
+    cpu->setCpuCmd(cpu);
     for (int i = 0; i < this->getAllCommands().size(); i++)
     {
         str = this->getCommandAtIndex(i);
         escape = str.find_first_of(" ");
         if (str[0] != ';')
         {
-            instruction = this->getCommandInstruction(this->getCommandAtIndex(i));
+            instruction = this->getCommandInstruction(str);
             std::cout << "Instruction : " + instruction << std::endl;
+            for (it = memory->memoryCmd.begin(); it != memory->memoryCmd.end(); it++)
+            {
+                if (instruction.compare(it->first) == 0)
+                {
+                    std::cout << "match : " + it->first << std::endl;
+                    void (Memory::*ptr)() = memory->memoryCmd[instruction];
+                    (memory->*ptr)();
+                }
+            }
         }
         if (str.size() > escape && str[0] != ';')
         {
-            value = this->getCommandValue(this->getCommandAtIndex(i));
-            type = this->getCommandType(this->getCommandAtIndex(i));
+            value = this->getCommandValue(str);
+            type = this->getCommandType(str);
             std::cout << "Value : " + value << std::endl;
             std::cout << "Type : " + type << std::endl;
-        }
-        for (it = memory->memoryCmd.begin(); it != memory->memoryCmd.end(); it++)
-        {
-            if (instruction.compare(it->first) == 0)
+            for (cpuIt = cpu->cmdCpu.begin(); cpuIt != cpu->cmdCpu.end(); cpuIt++)
             {
-                std::cout << "match : " + it->first << std::endl;
-                void (Memory::* ptr)() = memory->memoryCmd[instruction];
-                (memory->*ptr)();
+                if (instruction.compare(cpuIt->first) == 0)
+                {
+                    std::cout << "Match cpu : " + instruction << std::endl;
+                    std::cout << "type : " + type + " | value : " + value << std::endl;
+                    void (CPU::*cpuPtr)(Memory*, std::string, std::string) = cpu->cmdCpu[instruction];
+                    (cpu->*cpuPtr)(memory, type, value);
+                }
             }
         }
     }

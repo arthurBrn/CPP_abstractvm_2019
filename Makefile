@@ -24,14 +24,14 @@ OBJS	=	$(SRCS:.cpp=.o)
 
 TEST_DIR	=	tests/
 
-CFLAGS +=	-Wall
+CFLAGS +=	-W -Wall -Wpedantic -Wextra -Wshadow -Wstrict-overflow=5 -Wmissing-declarations -Wundef 
 
 CPPFLAGS = -I./include/ -std=c++11
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) $(OBJS) -o $(NAME)
+	$(CC) $(OBJS) -o $(NAME) $(CFLAGS)
 
 clean:
 	$(RM) $(OBJS)

@@ -7,8 +7,10 @@
 
 #include "Operand.hh"
 
-Operand::Operand()
+Operand::Operand(eOperandType type, std::string value)
 {
+    this->type = type;
+    this->value = value;
 }
 
 Operand::~Operand()
