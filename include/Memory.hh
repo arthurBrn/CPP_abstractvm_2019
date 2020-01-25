@@ -21,6 +21,7 @@ public:
     IOperand* getStackAtIndexX(int index);
     void setStackAtIndexX(int index, IOperand *obj);
     std::vector<IOperand*> getAllStack();
+    IOperand *unstackAtIndex(int index);
     void pop();
     void clear();
     void dup();

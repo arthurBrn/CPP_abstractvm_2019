@@ -26,6 +26,7 @@ void Operand::setOperandCmd(Operand *operand)
     operand->cmdOperand["mod"] = &Operand::mod;
 }
 
+
 std::string Operand::toString() const
 {
     std::ostringstream ss;

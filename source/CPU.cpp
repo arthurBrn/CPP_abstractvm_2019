@@ -122,7 +122,7 @@ void CPU::assert(Memory *memo, std::string type, std::string value)
     exception.setErrorMessage("Assert: the value does not match the stack top value.");
     IOperand *obj = fact.createOperand(this->defineEnum(type), value);
     IOperand *topStack = memo->getAllStack().front();
-    if ((obj->getType() != topStack->getType()) && (obj->getValue() != topStack->getValue()))
+    if ((obj->getType() != topStack->getType()) || (obj->getValue() != topStack->getValue()))
         throw(exception);
 }
 

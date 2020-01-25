@@ -86,10 +86,41 @@ void Chipset::cleanCommands()
     }
 }
 
+void Chipset::callMemoryMap(Memory *memory, std::string instruction)
+{
+    std::map<std::string, void (Memory::*)()>::iterator memoryIt;
+
+    for (memoryIt = memory->memoryCmd.begin(); memoryIt != memory->memoryCmd.end(); memoryIt++)
+    {
+        if (instruction.compare(memoryIt->first) == 0)
+        {
+            void (Memory::*ptr)() = memory->memoryCmd[instruction];
+            (memory->*ptr)();
+        }
+    }
+}
+
+void Chipset::callCpuMap(CPU *cpu, Memory *memory, std::string str)
+{
+    std::string instruction = this->getCommandInstruction(str);
+    std::string type = this->getCommandType(str);
+    std::string value = this->getCommandValue(str);
+
+    std::map<std::string, void (CPU::*)(Memory *, std::string, std::string)>::iterator cpuIt;
+    for (cpuIt = cpu->cmdCpu.begin(); cpuIt != cpu->cmdCpu.end(); cpuIt++)
+    {
+        if (instruction.compare(cpuIt->first) == 0)
+        {
+            void (CPU::*cpuPtr)(Memory *, std::string, std::string) = cpu->cmdCpu[instruction];
+            (cpu->*cpuPtr)(memory, type, value);
+        }
+    }
+}
+
+// On lui passe str
+
 int Chipset::execute()
 {
-    auto iterator = this->getAllCommands().begin();
-    std::map<std::string, int>::iterator itr;
     // Operand *operand = new Operand();
     Memory *memory = new Memory();
     CPU *cpu = new CPU();
@@ -98,13 +129,16 @@ int Chipset::execute()
     std::string type = "no";
     std::string str;
     int escape = 0;
-    std::map<std::string, void (Memory::*)()>::iterator memoryIt;
-    std::map<std::string, void (CPU::*)(Memory *, std::string, std::string)>::iterator cpuIt;
-    // std::map<std::string, void (Operand::*)(Memory, CPU)> cmdOperand;
+    auto iterator = this->getAllCommands().begin();
+    std::map<std::string, int>::iterator itr;
+    // std::map<std::string, void (Memory::*)()>::iterator memoryIt;
+    // std::map<std::string, void (CPU::*)(Memory *, std::string, std::string)>::iterator cpuIt;
 
     this->cleanCommands();
     memory->setMemoryCmd(memory);
     cpu->setCpuCmd(cpu);
+    Factory fac;
+    IOperand *nb = fac.createOperand(eOperandType::INT32, "34");
     for (int i = 0; i < this->getAllCommands().size(); i++)
     {
         str = this->getCommandAtIndex(i);
@@ -114,28 +148,10 @@ int Chipset::execute()
             instruction = this->getCommandInstruction(str);
             if (instruction.compare("exit") == 0)
                 cpu->exit();
-            for (memoryIt = memory->memoryCmd.begin(); memoryIt != memory->memoryCmd.end(); memoryIt++)
-            {
-                if (instruction.compare(memoryIt->first) == 0)
-                {
-                    void (Memory::*ptr)() = memory->memoryCmd[instruction];
-                    (memory->*ptr)();
-                }
-            }
+            this->callMemoryMap(memory, instruction);
         }
         if (str.size() > escape && str[0] != ';')
-        {
-            value = this->getCommandValue(str);
-            type = this->getCommandType(str);
-            for (cpuIt = cpu->cmdCpu.begin(); cpuIt != cpu->cmdCpu.end(); cpuIt++)
-            {
-                if (instruction.compare(cpuIt->first) == 0)
-                {
-                    void (CPU::*cpuPtr)(Memory *, std::string, std::string) = cpu->cmdCpu[instruction];
-                    (cpu->*cpuPtr)(memory, type, value);
-                }
-            }
-        }
+            this->callCpuMap(cpu, memory, str);
     }
     return (0);
 }

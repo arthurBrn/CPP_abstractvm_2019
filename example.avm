@@ -4,5 +4,8 @@
 push int8(2)
 push int16(3)
 push int32(5)
+;assert int32(6)
+dump
+pop
 dump
 exit

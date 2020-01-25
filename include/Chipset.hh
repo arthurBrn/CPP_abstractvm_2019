@@ -21,6 +21,8 @@ public:
     std::vector<std::string> getAllCommands();
     std::string getCommandAtIndex(int index);
     std::vector<std::string> deleteStackAtIndex(int index);
+    void callMemoryMap(Memory *memory, std::string instruction);
+    void callCpuMap(CPU *cpu, Memory *memory, std::string str);
     void setCommand(std::string);
     void showCommands();
     int execute();
