@@ -58,8 +58,7 @@ IOperand *Factory::createBigDecimal(const std::string &value)
 }
 
 IOperand *Factory::createOperand(eOperandType type, const std::string &value)
-{
-   
+{   
     IOperand *res;
     switch (type)
     {

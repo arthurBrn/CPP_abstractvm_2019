@@ -13,16 +13,23 @@ int main(int ac, char **av)
 {
     Input *in = new Input();    
     Chipset *chip = new Chipset;
+    AbstractVmException exception;
 
     try {
-        in->select_input(ac, av, chip);
-        in->getFileError(chip);
-    } catch(AbstractVmException error) {
-        std::cout << error.getErrorMessage() << std::endl;
-    
+        try
+        {
+            in->select_input(ac, av, chip);
+            in->getFileError(chip);
         }
-    for (int i = 0; i < chip->getAllCommands().size(); i++) 
-        std::cout << chip->getCommandAtIndex(i) << std::endl;
+        catch(AbstractVmException error)
+        {
+            exception.setErrorMessage("syntax error");
+            throw exception;
+        }
+        
     chip->execute();
+    } catch(AbstractVmException exception) {
+        std::cout << exception.getErrorMessage() << std::endl;
+    }
     return 0;
 }
