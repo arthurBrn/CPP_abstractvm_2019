@@ -17,13 +17,16 @@ Operand::~Operand()
 {
 }
 
-void Operand::setOperandCmd(Operand *operand)
+IOperand *Operand::operator+(const IOperand& rhs) const
 {
-    operand->cmdOperand["add"] = &Operand::add;
-    operand->cmdOperand["sub"] = &Operand::sub;
-    operand->cmdOperand["mul"] = &Operand::mul;
-    operand->cmdOperand["div"] = &Operand::div;
-    operand->cmdOperand["mod"] = &Operand::mod;
+    std::string value1 = this->toString();
+    std::string value2 = rhs.toString();
+    int nb1;
+    int nb2;
+    nb1 = std::stoi(value1);
+    nb2 = std::stoi(value2);
+    std::cout <<  nb1 << std::endl;
+    std::cout <<  nb2 << std::endl;
 }
 
 std::string Operand::toString() const
@@ -31,11 +34,6 @@ std::string Operand::toString() const
     std::ostringstream ss;
     ss << this->value;
     return (ss.str());
-}
-
-std::map<std::string, void (Operand::*)(Memory, CPU)> Operand::getOperandCmd()
-{
-    return (this->cmdOperand);
 }
 
 void Operand::debug_obj()
@@ -48,12 +46,12 @@ void Operand::debug_obj()
     std::cout << "value : " + this->value << std::endl;
 }
 
-eOperandType Operand::getType()
+eOperandType Operand::getType() const
 {
     return (this->type);
 }
 
-std::string Operand::getValue()
+std::string Operand::getValue () const
 {
     return (this->value);
 }
@@ -68,43 +66,5 @@ void Operand::setType(eOperandType typ)
     this->type = typ;
 }
 
-// void Operand::setType(std::string value)
-// {
 
-// }
 
-// IOperand Operand::*operator+(const IOperand &rhs)
-// {
-// }
-
-// IOperand Operand::*operator-(const IOperand &rhs)
-// {
-// }
-
-// IOperand Operand::*operator*(const IOperand &rhs)
-// {
-// }   
-
-// IOperand Operand::*operator/(const IOperand &rhs)
-// {
-// }
-
-// IOperand Operand::*operator%(const IOperand &rhs)
-// {
-// }
-
-void Operand::add(Memory memory, CPU cpu)
-{
-}
-void Operand::sub(Memory objMemory, CPU objCPU)
-{
-}
-void Operand::mul(Memory objMemory, CPU objCPU)
-{
-}
-void Operand::div(Memory objMemory, CPU objCPU)
-{
-}
-void Operand::mod(Memory objMemory, CPU objCPU)
-{
-}

@@ -75,10 +75,10 @@ void CPU::push(Memory *memo, std::string type, std::string value)
     IOperand *obj = fact.createOperand(this->defineEnum(type), value);
     IOperand *holder;
     memo->setStack(obj);
-    std::cout << "MEMORY STACK PUSH" << std::endl;
+    // std::cout << "MEMORY STACK PUSH" << std::endl;
     for (int i = 0; i < memo->getAllStack().size(); i++)
     {
-        std::cout << "Iteration : " + i << std::endl;
+        // std::cout << "Iteration : " + i << std::endl;
         holder = memo->getStackAtIndexX(i);
         holder->debug_obj();
     }
@@ -94,7 +94,7 @@ void CPU::setCpuCmd(CPU *cpu)
 
 void CPU::store(Memory *memo, std::string type, std::string value)
 {
-    std::cout << "===== CPU STORE ====" << std::endl;
+    // std::cout << "===== CPU STORE ====" << std::endl;
     // est-ce qu'on doit vkérifier si la stack est vide ou non ???
     IOperand *holder = memo->getAllStack().front();
     this->setRegistre(holder);
@@ -122,4 +122,15 @@ void CPU::assert(Memory *memo, std::string type, std::string value)
 void CPU::exit()
 {
     // do smthg
+}
+
+void CPU::add(Memory *memory)
+{
+    std::cout << "===print calcul"<< std::endl;
+    IOperand *nb1 = Factory::createOperand(eOperandType::INT16, "15");
+    IOperand *nb2 = Factory::createOperand(eOperandType::INT16, "10");
+    nb1->debug_obj();
+    nb2->debug_obj();
+    IOperand *nb3 = *nb1 + *nb2;
+   
 }

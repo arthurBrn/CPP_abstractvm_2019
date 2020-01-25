@@ -32,6 +32,7 @@ public:
     void print();
     // void store();
     void setMemoryCmd(Memory *memory);
+    IOperand* unstackAtIndex(int index);
     std::map<std::string, void (Memory::*)()> getMemoryCmd();
     std::map<std::string, void (Memory::*)()> memoryCmd;
 private:

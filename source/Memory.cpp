@@ -18,6 +18,20 @@ int Memory::getStackSize()
 //     return (this->stack.at(this->getStackSize()));
 // }
 
+IOperand* Memory::unstackAtIndex(int index)
+{
+    AbstractVmException exception;
+    std::vector<IOperand*>::iterator it = this->stack.begin();
+    
+    exception.setErrorMessage("Error unstacking a memory stack. The index is greater than the stack.");
+    if ((this->getStackSize() < index) || (index < 0))
+    throw (exception);
+    IOperand *obj = this->getStackAtIndexX(index);
+    std::advance(it, index);
+    this->stack.erase(it);
+    return (obj);
+}
+
 IOperand* Memory::getStackAtIndexX(int index)
 {
     std::vector<IOperand*>::iterator it = this->stack.begin();

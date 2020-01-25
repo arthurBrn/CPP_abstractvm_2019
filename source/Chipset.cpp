@@ -134,14 +134,15 @@ int Chipset::execute()
         {
             value = this->getCommandValue(str);
             type = this->getCommandType(str);
+
             for (cpuIt = cpu->cmdCpu.begin(); cpuIt != cpu->cmdCpu.end(); cpuIt++)
             {
                 if (instruction.compare(cpuIt->first) == 0)
                 {
                     void (CPU::*cpuPtr)(Memory *, std::string, std::string) = cpu->cmdCpu[instruction];
                     (cpu->*cpuPtr)(memory, type, value);
-                    // Factory fac;    
-                    // IOperand *nb = fac.createOperand(cpu->defineEnum(type), value);
+                    cpu->add(memory);
+
                 }
             }
         }

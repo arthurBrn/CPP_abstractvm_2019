@@ -9,7 +9,6 @@
 #define _CPU_HH_
 
 #include "abstractvm.hh"
-#include "AbstractVmException.hh"
 #include "Factory.hh"
 #include "Operand.hh"
 #include "Memory.hh"
@@ -37,6 +36,7 @@ public:
     void load(Memory *memo, std::string type, std::string value);
     void assert(Memory *memo, std::string type, std::string value);
     void exit();
+    void add(Memory *memory);
     std::map<std::string, void (CPU::*)(Memory*, std::string, std::string)> cmdCpu;
 private:
     std::vector<IOperand *> registre;

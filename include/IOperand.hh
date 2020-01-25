@@ -15,17 +15,13 @@
 class IOperand
 {
 public:
+    virtual IOperand *operator+(const IOperand& rhs) const = 0; // sum
     virtual std::string toString() const = 0;
-    virtual eOperandType getType() = 0;
-    virtual std::string getValue() = 0;
+    virtual eOperandType getType() const = 0;
+    virtual std::string getValue() const = 0;
     virtual void setValue(std::string&) = 0;
     virtual void setType(eOperandType) = 0;
     virtual void debug_obj() = 0;
-    // virtual IOperand *operator+(const IOperand &rhs) const = 0;
-    // virtual IOperand *operator-(const IOperand &rhs) const = 0;
-    // virtual IOperand *operator*(const IOperand &rhs) const = 0;
-    // virtual IOperand *operator/(const IOperand &rhs) const = 0;
-    // virtual IOperand *operator%(const IOperand &rhs) const = 0;
     virtual ~IOperand() {}
 };
 

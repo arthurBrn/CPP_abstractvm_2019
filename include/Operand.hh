@@ -21,30 +21,14 @@ class Operand : public IOperand
 public:
     Operand(eOperandType type, std::string value);
     ~Operand();
-    void setOperandCmd(Operand *operand);
+    IOperand *operator+(const IOperand& rhs) const override;
     std::string toString() const override;
-    eOperandType getType() override;
-    std::string getValue() override;
+    eOperandType getType() const override;
+    std::string getValue() const override;
     void setValue(std::string&) override;
     void setType(eOperandType) override;
     void debug_obj() override;
-    std::map<std::string, void (Operand::*)(Memory, CPU)> getOperandCmd();
-    void add(Memory objMemory, CPU objCPU);
-    void sub(Memory objMemory, CPU objCPU);
-    void mul(Memory objMemory, CPU objCPU);
-    void div(Memory objMemory, CPU objCPU);
-    void mod(Memory objMemory, CPU objCPU);
-    // eOperandType getType() const override;
-    // void setType(std::string type, Operand *op) const override;
-    // std::string getValue() const override;
-    // void setValue(std::string newValue, Operand *op) const override;
-    // IOperand *operator+(const IOperand &rhs) const override;
-    // IOperand *operator-(const IOperand &rhs) const override;
-    // IOperand *operator*(const IOperand &rhs) const override;
-    // IOperand *operator/(const IOperand &rhs) const override;
-    // IOperand *operator%(const IOperand &rhs) const override;
 private:
-    std::map<std::string, void (Operand::*)(Memory, CPU)> cmdOperand;
     CPU *_cpu;
     std::string value;
     eOperandType type;
