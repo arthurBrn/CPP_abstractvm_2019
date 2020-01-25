@@ -105,7 +105,9 @@ void Chipset::callCpuMap(CPU *cpu, Memory *memory, std::string str)
     std::string instruction = this->getCommandInstruction(str);
     std::string type = this->getCommandType(str);
     std::string value = this->getCommandValue(str);
+    AbstractVmException exception;
 
+    exception.setErrorMessage("Calcul Error");
     std::map<std::string, void (CPU::*)(Memory *, std::string, std::string)>::iterator cpuIt;
     for (cpuIt = cpu->cmdCpu.begin(); cpuIt != cpu->cmdCpu.end(); cpuIt++)
     {
@@ -113,7 +115,16 @@ void Chipset::callCpuMap(CPU *cpu, Memory *memory, std::string str)
         {
             void (CPU::*cpuPtr)(Memory *, std::string, std::string) = cpu->cmdCpu[instruction];
             (cpu->*cpuPtr)(memory, type, value);
-            cpu->add(memory);
+            try
+            {
+                cpu->mul(memory);
+            }
+            catch(const std::exception& e)
+            {
+                throw exception;
+            }
+            
+                  
         }
     }
 }

@@ -6,6 +6,7 @@
 */
 
 #include "Operand.hh"
+#include <regex>
 
 Operand::Operand(eOperandType type, std::string value)
 {
@@ -17,18 +18,68 @@ Operand::~Operand()
 {
 }
 
-IOperand *Operand::operator+(const IOperand& rhs) const
+eOperandType choose_type(eOperandType type1, eOperandType type2)
 {
-    std::string value1 = this->toString();
-    std::string value2 = rhs.toString();
-    int nb1;
-    int nb2;
-    nb1 = std::stoi(value1);
-    nb2 = std::stoi(value2);
-    std::cout <<  nb1 << std::endl;
-    std::cout <<  nb2 << std::endl;
+    if (type1 >= type2)
+        return (type1);
+    return (type2);
 }
 
+double Operand::create_nb_1() const
+{
+    std::string value = this->toString();
+    double nb1 = std::stod(value);
+    return (nb1);
+}
+
+IOperand *Operand::operator+(const IOperand& rhs) const
+{
+    std::string value = rhs.toString();
+    double nb2 = std::stod(value);
+
+    double nb3 = create_nb_1() + nb2;
+    eOperandType type = choose_type(this->getType(), rhs.getType());
+    IOperand *nb = Factory::createOperand(type, std::to_string(nb3));
+    return (nb);
+}
+
+IOperand *Operand::operator-(const IOperand& rhs) const
+{
+    std::string value = rhs.toString();
+    double nb2 = std::stod(value);
+
+    double nb3 = create_nb_1() - nb2;
+    eOperandType type = choose_type(this->getType(), rhs.getType());
+    IOperand *nb = Factory::createOperand(type, std::to_string(nb3));
+    return (nb);
+}
+
+IOperand *Operand::operator*(const IOperand& rhs) const
+{
+    std::string value = rhs.toString();
+    double nb2 = std::stod(value);
+
+    double nb3 = create_nb_1() * nb2;
+    eOperandType type = choose_type(this->getType(), rhs.getType());
+    IOperand *nb = Factory::createOperand(type, std::to_string(nb3));
+    return (nb);
+}
+
+// IOperand *Operand::operator/(const IOperand& rhs) const
+// {
+//     std::string value = rhs.toString();
+//     AbstractVmException exception;
+//     int res = std::stoi(value);
+//     double nb2;
+//     if (nb2 != 0)
+//         nb2 = std::stod(value);
+//     else
+//         throw exception;
+//     double nb3 = create_nb_1() * nb2;
+//     eOperandType type = choose_type(this->getType(), rhs.getType());
+//     IOperand *nb = Factory::createOperand(type, std::to_string(nb3));
+//     return (nb);
+// }
 
 std::string Operand::toString() const
 {

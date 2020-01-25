@@ -36,6 +36,9 @@ public:
     void assert(Memory *memo, std::string type, std::string value);
     int exit();
     void add(Memory *memory);
+    void sub(Memory *memory);
+    void mul(Memory *memory);
+    // void div(Memory *memory);
     std::map<std::string, void (CPU::*)(Memory*, std::string, std::string)> cmdCpu;
 private:
     std::vector<IOperand *> registre;

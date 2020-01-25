@@ -138,11 +138,55 @@ int CPU::exit()
 
 void CPU::add(Memory *memory)
 {
-    std::cout << "===print calcul"<< std::endl;
-    IOperand *nb1 = Factory::createOperand(eOperandType::INT16, "15");
+    std::cout << "===addtion ====="<< std::endl;
+    IOperand *nb1 = Factory::createOperand(eOperandType::DOUBLE, "15.5");
     IOperand *nb2 = Factory::createOperand(eOperandType::INT16, "10");
     nb1->debug_obj();
     nb2->debug_obj();
     IOperand *nb3 = *nb1 + *nb2;
-   
+    nb3->debug_obj();
 }
+
+void CPU::sub(Memory *memory)
+{
+    std::cout << "===substraction===="<< std::endl;
+    IOperand *nb1 = Factory::createOperand(eOperandType::DOUBLE, "15.5");
+    IOperand *nb2 = Factory::createOperand(eOperandType::INT16, "10");
+    nb1->debug_obj();
+    nb2->debug_obj();
+    IOperand *nb3 = *nb1 - *nb2;
+    nb3->debug_obj();
+}
+
+void CPU::mul(Memory *memory)
+{
+    std::cout << "===multiplication===="<< std::endl;
+    IOperand *nb1 = Factory::createOperand(eOperandType::DOUBLE, "15.5");
+    IOperand *nb2 = Factory::createOperand(eOperandType::INT16, "10");
+    nb1->debug_obj();
+    nb2->debug_obj();
+    IOperand *nb3 = *nb1 * *nb2;
+    nb3->debug_obj();
+}
+
+// void CPU::div(Memory *memory)
+// {
+//     AbstractVmException exception;
+
+//     exception.setErrorMessage("division by zero");
+
+//     std::cout << "===division===="<< std::endl;
+//     IOperand *nb1 = Factory::createOperand(eOperandType::DOUBLE, "15");
+//     IOperand *nb2 = Factory::createOperand(eOperandType::INT16, "3");
+//     nb1->debug_obj();
+//     nb2->debug_obj();
+//     try
+//     {
+//         IOperand *nb3 = *nb1 / *nb2;
+//         nb3->debug_obj();
+//     }
+//     catch(const std::exception& e)
+//     {
+//         throw exception;
+//     }  
+// }
