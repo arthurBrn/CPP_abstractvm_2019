@@ -38,7 +38,15 @@ public:
     void assert(Memory *memo, std::string type, std::string value);
     int exit();
     std::map<std::string, void (CPU::*)(Memory*, std::string, std::string)> cmdCpu;
+
+    // std::map<std::string, void (Operand::*)(Memory, CPU)> getOperandCmd();
+    // void add(Memory objMemory, CPU objCPU);
+    // void sub(Memory objMemory, CPU objCPU);
+    // void mul(Memory objMemory, CPU objCPU);
+    // void div(Memory objMemory, CPU objCPU);
+    // void mod(Memory objMemory, CPU objCPU);
 private:
+    // std::map<std::string, void (Operand::*)(Memory, CPU)> cmdOperand;
     std::vector<IOperand *> registre;
     Operand *_operand;
 };

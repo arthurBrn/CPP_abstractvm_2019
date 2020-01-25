@@ -27,7 +27,9 @@ std::vector<IOperand *> CPU::getFullRegistre()
 
 IOperand *CPU::getRegistreStackAtIndex(int index)
 {
-    return (this->registre.at(index));
+    // std::vector<IOperand*>::iterator it = this->registre.begin();
+    // std::advance(it, index);
+    return (this->getFullRegistre().at(index));
 }
 
 void CPU::setRegistreStackAtIndex(int index, IOperand *ioperandobject)
@@ -45,7 +47,9 @@ void CPU::displayRegistre()
     std::cout << "===== REGISTRE =====" << std::endl;
     for (int i = 0; i < this->registre.size(); i++)
     {
+        std::cout << "Registre value : ";
         std::cout << this->registre.at(i)->getValue() << std::endl;
+        std::cout << "Registre type : ";
         std::cout << this->registre.at(i)->getType() << std::endl;
     }
 }
@@ -79,28 +83,25 @@ void CPU::setCpuCmd(CPU *cpu)
 void CPU::push(Memory *memo, std::string type, std::string value)
 {
     Factory fact;
-
-    IOperand *obj = fact.createOperand(this->defineEnum(type), value);
+    IOperand *obj;
     IOperand *holder;
+
+    obj = fact.createOperand(this->defineEnum(type), value);
     memo->setStack(obj);
     for (int i = 0; i < memo->getAllStack().size(); i++)
-    {
         holder = memo->getStackAtIndexX(i);
-        // holder->debug_obj();
-    }
 }
 
-void CPU::store(Memory *memo, std::string type, std::string value)
+void CPU::store(Memory *memory, std::string type, std::string value)
 {
-    Factory fact;
-    IOperand *holder = fact.createOperand(this->defineEnum(type), value);
-    // store first value of stack to register
-    // this->setRegistre(memo->getAllStack().front());
-    // unstack first value from stack
-    // memo->pop();
-    // OU
+    AbstractVmException exception;
+    IOperand *holder;
 
-    this->displayRegistre();
+    exception.setErrorMessage("ERROR Store : Can not execute store on empty stack");
+    if (memory->getAllStack().empty())
+        throw (exception);
+    holder = memory->unstackAtIndex(0);
+    this->setRegistre(holder);
 }
 
 void CPU::load(Memory *memo, std::string type, std::string value)
@@ -108,9 +109,13 @@ void CPU::load(Memory *memo, std::string type, std::string value)
     AbstractVmException exception;
     Factory fact;
     IOperand *stacked;
-    exception.setErrorMessage("Can't load register. Register is empty");
+    std::vector<IOperand*>::iterator it = this->registre.begin();
+    exception.setErrorMessage("Error : can't execute load on empty register");
 
-    stacked = fact.createOperand(this->defineEnum(type), value);
+    if (this->getRegistreSize() < 1)
+        throw (exception);
+    stacked = this->getRegistreStackAtIndex(0);
+    this->registre.erase(it);
     memo->setStack(stacked);
 }
 
@@ -118,10 +123,12 @@ void CPU::assert(Memory *memo, std::string type, std::string value)
 {
     AbstractVmException exception;
     Factory fact;
+    IOperand *obj;
+    IOperand *topStack;
 
     exception.setErrorMessage("Assert: the value does not match the stack top value.");
-    IOperand *obj = fact.createOperand(this->defineEnum(type), value);
-    IOperand *topStack = memo->getAllStack().front();
+    obj = fact.createOperand(this->defineEnum(type), value);
+    topStack = memo->getAllStack().front();
     if ((obj->getType() != topStack->getType()) || (obj->getValue() != topStack->getValue()))
         throw(exception);
 }
@@ -130,3 +137,34 @@ int CPU::exit()
 {
     return (0);
 }
+
+
+// void Operand::setOperandCmd(Operand *operand)
+// {
+    // operand->cmdOperand["add"] = &Operand::add;
+    // operand->cmdOperand["sub"] = &Operand::sub;
+    // operand->cmdOperand["mul"] = &Operand::mul;
+    // operand->cmdOperand["div"] = &Operand::div;
+    // operand->cmdOperand["mod"] = &Operand::mod;
+// }
+
+// std::map<std::string, void (Operand::*)(Memory, CPU)> Operand::getOperandCmd()
+// {
+    // return (this->cmdOperand);
+// }
+
+// void Operand::add(Memory memory, CPU cpu)
+// {
+// }
+// void Operand::sub(Memory objMemory, CPU objCPU)
+// {
+// }
+// void Operand::mul(Memory objMemory, CPU objCPU)
+// {
+// }
+// void Operand::div(Memory objMemory, CPU objCPU)
+// {
+// }
+// void Operand::mod(Memory objMemory, CPU objCPU)
+// {
+// }

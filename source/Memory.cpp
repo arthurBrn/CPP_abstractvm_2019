@@ -15,8 +15,8 @@ int Memory::getStackSize()
 
 IOperand *Memory::getStackAtIndexX(int index)
 {
-    std::vector<IOperand *>::iterator it = this->stack.begin();
-    std::advance(it, index);
+    // std::vector<IOperand *>::iterator it = this->stack.begin();
+    // std::advance(it, index);
     IOperand *obj = this->getAllStack().at(index);
     return (obj);
 }
@@ -56,7 +56,7 @@ void Memory::pop()
 {
     AbstractVmException exception;
 
-    exception.setErrorMessage("ERROR: pop() error. Stack is empty");
+    exception.setErrorMessage("ERROR: can't pop on empty stack.");
     if (this->stack.empty())
         throw(exception);
     std::vector<IOperand *>::iterator it = this->stack.begin();

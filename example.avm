@@ -2,10 +2,15 @@
 ; - example.avm -
 ; --------------
 push int8(2)
+dump
+store int8(2)
+dump
 push int16(3)
 push int32(5)
+dump
+load int32(3)
 ;assert int32(6)
 dump
-pop
-dump
+;pop
+;dump
 exit

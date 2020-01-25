@@ -151,7 +151,7 @@ int Chipset::execute()
             this->callMemoryMap(memory, instruction);
         }
         if (str.size() > escape && str[0] != ';')
-            this->callCpuMap(cpu, memory, str);
+            this->callCpuMap(cpu, memory, str); 
     }
     return (0);
 }
