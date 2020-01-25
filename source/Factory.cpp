@@ -34,8 +34,14 @@ IOperand *Factory::createInt16(const std::string &value)
 }
 IOperand *Factory::createInt32(const std::string &value)
 {
+    std::string nb = "10";
+
     std::cout << "création de l'objet 32" << std::endl;
     IOperand *res = new Operand(eOperandType::INT32, value);
+    res->debug_obj();
+    res->setType(eOperandType::INT8);
+    res->setValue(nb);
+    res->debug_obj();
     return (res);
 }
 

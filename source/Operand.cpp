@@ -38,16 +38,18 @@ std::map<std::string, void (Operand::*)(Memory, CPU)> Operand::getOperandCmd()
     return (this->cmdOperand);
 }
 
-eOperandType Operand::getType()
+void Operand::debug_obj()
 {
-    
-    /*std::cout << "je suis une virtuelle pure haha" << std::endl;
     eOperandType type = this->type;
     std::ostringstream eOperandType;
     eOperandType << type;
-    std::string mySerializedObject = eOperandType.str();
-    std::cout << mySerializedObject << std::endl;
-    std::cout << "value : " + this->value << std::endl;*/ 
+    std::string type_s = eOperandType.str();
+    std::cout << "type : " + type_s << std::endl;
+    std::cout << "value : " + this->value << std::endl;
+}
+
+eOperandType Operand::getType()
+{
     return (this->type);
 }
 
@@ -61,7 +63,7 @@ void Operand::setValue(std::string& val)
     this->value = val;
 }
 
-void Operand::setType(eOperandType& typ)
+void Operand::setType(eOperandType typ)
 {
     this->type = typ;
 }

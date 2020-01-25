@@ -26,7 +26,8 @@ public:
     eOperandType getType() override;
     std::string getValue() override;
     void setValue(std::string&) override;
-    void setType(eOperandType&) override;
+    void setType(eOperandType) override;
+    void debug_obj() override;
     std::map<std::string, void (Operand::*)(Memory, CPU)> getOperandCmd();
     void add(Memory objMemory, CPU objCPU);
     void sub(Memory objMemory, CPU objCPU);
