@@ -68,22 +68,6 @@ eOperandType CPU::defineEnum(std::string type)
     return (value);
 }
 
-void CPU::push(Memory *memo, std::string type, std::string value)
-{
-    Factory fact;
-
-    IOperand *obj = fact.createOperand(this->defineEnum(type), value);
-    IOperand *holder;
-    memo->setStack(obj);
-    std::cout << "MEMORY STACK PUSH" << std::endl;
-    for (int i = 0; i < memo->getAllStack().size(); i++)
-    {
-        std::cout << "Iteration : " + i << std::endl;
-        holder = memo->getStackAtIndexX(i);
-        holder->debug_obj();
-    }
-}
-
 void CPU::setCpuCmd(CPU *cpu)
 {
     cpu->cmdCpu["push"] = &CPU::push;
@@ -92,34 +76,57 @@ void CPU::setCpuCmd(CPU *cpu)
     cpu->cmdCpu["assert"] = &CPU::assert;
 }
 
+void CPU::push(Memory *memo, std::string type, std::string value)
+{
+    Factory fact;
+
+    IOperand *obj = fact.createOperand(this->defineEnum(type), value);
+    IOperand *holder;
+    memo->setStack(obj);
+    for (int i = 0; i < memo->getAllStack().size(); i++)
+    {
+        holder = memo->getStackAtIndexX(i);
+        // holder->debug_obj();
+    }
+}
+
 void CPU::store(Memory *memo, std::string type, std::string value)
 {
-    std::cout << "===== CPU STORE ====" << std::endl;
-    // est-ce qu'on doit vkérifier si la stack est vide ou non ???
-    IOperand *holder = memo->getAllStack().front();
-    this->setRegistre(holder);
+    Factory fact;
+    IOperand *holder = fact.createOperand(this->defineEnum(type), value);
+    // store first value of stack to register
+    // this->setRegistre(memo->getAllStack().front());
+    // unstack first value from stack
+    // memo->pop();
+    // OU
+
     this->displayRegistre();
 }
 
 void CPU::load(Memory *memo, std::string type, std::string value)
 {
     AbstractVmException exception;
-    if (this->registre.empty())
-    {
-        exception.setErrorMessage("Can't load register. Register is empty");
-        throw exception;
-    }
-    IOperand *obj = this->getRegistreStackAtIndex(this->registre.size());
-    memo->setStack(obj);
+    Factory fact;
+    IOperand *stacked;
+    exception.setErrorMessage("Can't load register. Register is empty");
+
+    stacked = fact.createOperand(this->defineEnum(type), value);
+    memo->setStack(stacked);
 }
 
 void CPU::assert(Memory *memo, std::string type, std::string value)
 {
-    // verify that v is equal to the value at the top of the stack
-    // For that we'll use getType form IOperand
+    AbstractVmException exception;
+    Factory fact;
+
+    exception.setErrorMessage("Assert: the value does not match the stack top value.");
+    IOperand *obj = fact.createOperand(this->defineEnum(type), value);
+    IOperand *topStack = memo->getAllStack().front();
+    if ((obj->getType() != topStack->getType()) && (obj->getValue() != topStack->getValue()))
+        throw(exception);
 }
 
-void CPU::exit()
+int CPU::exit()
 {
-    // do smthg
+    return (0);
 }

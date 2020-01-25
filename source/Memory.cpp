@@ -13,14 +13,9 @@ int Memory::getStackSize()
     return (this->stack.size());
 }
 
-// IOperand* Memory::getStackTopPile()
-// {   
-//     return (this->stack.at(this->getStackSize()));
-// }
-
-IOperand* Memory::getStackAtIndexX(int index)
+IOperand *Memory::getStackAtIndexX(int index)
 {
-    std::vector<IOperand*>::iterator it = this->stack.begin();
+    std::vector<IOperand *>::iterator it = this->stack.begin();
     std::advance(it, index);
     IOperand *obj = this->getAllStack().at(index);
     return (obj);
@@ -28,77 +23,56 @@ IOperand* Memory::getStackAtIndexX(int index)
 
 void Memory::setStackAtIndexX(int index, IOperand *obj)
 {
-    std::vector<IOperand*>::iterator it = this->stack.begin() + index;
+    std::vector<IOperand *>::iterator it = this->stack.begin() + index;
 
     this->stack.insert(it, obj);
 }
 
-
-std::vector<IOperand*> Memory::getAllStack()
+std::vector<IOperand *> Memory::getAllStack()
 {
     return (this->stack);
 }
 
-void Memory::setStack(IOperand* obj)
+void Memory::setStack(IOperand *obj)
 {
-    this->stack.push_back(obj);
+    this->setStackAtIndexX(0, obj);
 }
 
 void Memory::pop()
 {
-    std::cout << "POP MEMORY" << std::endl;
     AbstractVmException exception;
 
     exception.setErrorMessage("ERROR: pop() error. Stack is empty");
     if (this->stack.empty())
-        throw (exception);
-
-    std::vector<IOperand*>::iterator it = this->stack.begin();
+        throw(exception);
+    std::vector<IOperand *>::iterator it = this->stack.begin();
     this->stack.erase(it);
 }
 
 void Memory::clear()
 {
-    std::cout << "STACK SIZE : ";
-    std::cout << this->getAllStack().size() << std::endl;
-    std::cout << "CLEAR from memory" << std::endl;
     this->stack.clear();
-    std::cout << "STACK SIZE : ";
-    std::cout << this->getAllStack().size() << std::endl;
 }
 
 void Memory::dup()
 {
-    std::cout << "DUP MEMORY" << std::endl; 
     AbstractVmException exception;
     exception.setErrorMessage("ERROR: can not dup() on empty stack");
 
-    std::vector<IOperand*>::iterator it = this->stack.begin();
-    // Change to insert on top
+    std::vector<IOperand *>::iterator it = this->stack.begin();
     this->stack.insert(it, this->stack.front());
 }
 
-// void Memory::store()
-// {
-    // std::cout << "===== CPU STORE ====" << std::endl;
-    // est-ce qu'on doit vérifier si la stack est vide ou non ???
-    // IOperand *holder = memo->getAllStack().front();
-    // this->setRegistre(holder);
-    // this->displayRegistre();
-// }
-
 void Memory::swap()
 {
-    std::cout << "SWAP from memory" << std::endl;
     std::string holding_value;
     eOperandType holding_type;
     AbstractVmException exception;
-    std::vector<IOperand*>::iterator it = this->stack.begin() + 1;
+    std::vector<IOperand *>::iterator it = this->stack.begin() + 1;
 
     exception.setErrorMessage("ERROR: can not swap() on stack with less than two elements.");
     if (this->stack.size() < 2)
-        throw (exception);
-    // hold the value of the first stack
+        throw(exception);
     holding_value = this->getStackAtIndexX(0)->getValue();
     holding_type = this->getStackAtIndexX(0)->getType();
     std::string valSndObj = this->getStackAtIndexX(1)->getValue();
@@ -107,28 +81,39 @@ void Memory::swap()
     this->getStackAtIndexX(0)->setType(typeSndObj);
     this->getStackAtIndexX(1)->setValue(holding_value);
     this->getStackAtIndexX(1)->setType(holding_type);
-
-    // IOperand *fstValueHolder = this->getStackAtIndexX(this->stack.size());
-    // IOperand *sndValueHolder = this->getStackAtIndexX((this->stack.size() - 1));
 }
 
 void Memory::dump()
 {
     Output out;
     IOperand *obj;
-    
-    std::cout << "DUMP from memory" << std::endl;
+
     for (int i = 0; i < this->getAllStack().size(); i++)
     {
         obj = this->getStackAtIndexX(i);
-        std::cout << i;
         std::cout << obj->getValue() << std::endl;
     }
 }
 
 void Memory::print()
 {
-    std::cout << "PRINT MEMORY " << std::endl;
+    AbstractVmException exception;
+
+    exception.setErrorMessage("Top stack value is not 8 bit integer");
+    eOperandType op = this->getAllStack().front()->getType();
+    IOperand *obj = this->getAllStack().front();
+    if (!(this->stack.empty()))
+    {
+        if (op != 0)
+            throw(exception);
+        else
+            std::cout << obj->getValue() << std::endl;
+    }
+    else
+    {
+        exception.setErrorMessage("EMPTY STACK, can't print");
+        throw(exception);
+    }
 }
 
 void Memory::setMemoryCmd(Memory *memory)

@@ -26,7 +26,6 @@ int main(int ac, char **av)
             exception.setErrorMessage("syntax error");
             throw exception;
         }
-        
         if (chip->execute() == 0)
             return (0);
     } catch(AbstractVmException exception) {

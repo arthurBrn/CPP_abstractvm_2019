@@ -10,11 +10,8 @@
 
 #include "abstractvm.hh"
 #include "IOperand.hh"
-// #include "Operand.hh"
 #include "AbstractVmException.hh"
 #include "Output.hh"
-
-// class IOperand;
 
 class Memory
 {
@@ -30,13 +27,11 @@ public:
     void swap();
     void dump();
     void print();
-    // void store();
     void setMemoryCmd(Memory *memory);
     std::map<std::string, void (Memory::*)()> getMemoryCmd();
     std::map<std::string, void (Memory::*)()> memoryCmd;
 private:
     std::vector<IOperand*> stack;
-    // IOperand *_ioperand;
 };
 
 #endif
