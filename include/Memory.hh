@@ -11,6 +11,8 @@
 #include "abstractvm.hh"
 #include "IOperand.hh"
 
+// class IOperand;
+
 class Memory
 {
 public:
@@ -30,6 +32,7 @@ public:
     std::map<std::string, void (Memory::*)()> memoryCmd;
 private:
     std::vector<IOperand*> stack;
+    // IOperand *_ioperand;
 };
 
 #endif

@@ -17,23 +17,36 @@ Operand::~Operand()
 {
 }
 
-std::string Operand::getValue()
+eOperandType Operand::getType() const
 {
-    return (this->value);
+    return (this->type);
 }
 
-void Operand::setValue(std::string newValue)
+void Operand::setType(std::string newType, Operand *op) const 
 {
-    this->value = newValue;
+    eOperandType value;
+    if (newType.compare("int8") == 0)
+        op->type = eOperandType::INT8;
+    else if (newType.compare("int16") == 0)
+        op->type = eOperandType::INT16;
+    else if (newType.compare("int32") == 0)
+        op->type = eOperandType::INT32;
+    else if (newType.compare("float") == 0)
+        op->type = eOperandType::FLOAT;
+    else if (newType.compare("double") == 0)
+        op->type = eOperandType::DOUBLE;
+    else if (newType.compare("bigdecimal") == 0)
+        op->type = eOperandType::BIGDECIMAL;
 }
 
-void Operand::setOperandCmd(Operand *operand)
+std::string Operand::getValue() const
 {
-    operand->cmdOperand["add"] = &Operand::add;
-    operand->cmdOperand["sub"] = &Operand::sub;
-    operand->cmdOperand["mul"] = &Operand::mul;
-    operand->cmdOperand["div"] = &Operand::div;
-    operand->cmdOperand["mod"] = &Operand::mod;
+    return this->value;
+}
+
+void Operand::setValue(std::string newValue, Operand *op) const
+{
+    op->value = newValue;
 }
 
 std::string Operand::toString() const
@@ -48,14 +61,13 @@ std::map<std::string, void (Operand::*)(Memory, CPU)> Operand::getOperandCmd()
     return (this->cmdOperand);
 }
 
-eOperandType Operand::getType()
+void Operand::setOperandCmd(Operand *operand)
 {
-    return (this->getType());
-}
-
-void Operand::setType(eOperandType typ)
-{
-    this->type = typ;
+    operand->cmdOperand["add"] = &Operand::add;
+    operand->cmdOperand["sub"] = &Operand::sub;
+    operand->cmdOperand["mul"] = &Operand::mul;
+    operand->cmdOperand["div"] = &Operand::div;
+    operand->cmdOperand["mod"] = &Operand::mod;
 }
 
 // IOperand Operand::*operator+(const IOperand &rhs)
@@ -78,6 +90,9 @@ void Operand::setType(eOperandType typ)
 // {
 // }
 
+void Operand::add(Memory memory, CPU cpu)
+{
+}
 void Operand::sub(Memory objMemory, CPU objCPU)
 {
 }
@@ -88,12 +103,5 @@ void Operand::div(Memory objMemory, CPU objCPU)
 {
 }
 void Operand::mod(Memory objMemory, CPU objCPU)
-{
-}
-void Operand::add(Memory memory, CPU cpu)
-{
-}
-
-void setOperandCmd(Operand *operand)
 {
 }

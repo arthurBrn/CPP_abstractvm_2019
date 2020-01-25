@@ -20,12 +20,12 @@ int CPU::getRegistreSize()
     return (this->registre.size());
 }
 
-std::vector<IOperand*> CPU::getFullRegistre()
+std::vector<IOperand *> CPU::getFullRegistre()
 {
     return (this->registre);
 }
 
-IOperand* CPU::getRegistreStackAtIndex(int index)
+IOperand *CPU::getRegistreStackAtIndex(int index)
 {
     return (this->registre.at(index));
 }
@@ -50,31 +50,32 @@ eOperandType CPU::defineEnum(std::string type)
     eOperandType value;
     if (type.compare("int8") == 0)
         value = eOperandType::INT8;
-    if (type.compare("int16") == 0)
+    else if (type.compare("int16") == 0)
         value = eOperandType::INT16;
-    if (type.compare("int32") == 0)
+    else if (type.compare("int32") == 0)
         value = eOperandType::INT32;
-    if (type.compare("float") == 0)
+    else if (type.compare("float") == 0)
         value = eOperandType::FLOAT;
-    if (type.compare("double") == 0)
+    else if (type.compare("double") == 0)
         value = eOperandType::DOUBLE;
-    if (type.compare("bigdecimal") == 0)
+    else if (type.compare("bigdecimal") == 0)
         value = eOperandType::BIGDECIMAL;
     return (value);
 }
-    
+
 void CPU::push(Memory *memo, std::string type, std::string value)
-{   
+{
     eOperandType typeChosen = defineEnum(type);
     Factory fact;
 
     std::cout << "PUSH FUNCTION " << std::endl;
+    std::cout << "type : " + type << std::endl;
+    std::cout << typeChosen << std::endl;
 
     IOperand *obj = fact.createOperand(typeChosen, value);
     // memo->setStack(obj);
     // std::cout << "PUSH : " + type + " | " + value << std::endl;
 }
-
 
 void CPU::setCpuCmd(CPU *cpu)
 {
@@ -93,11 +94,12 @@ void CPU::store(Memory *memo, std::string type, std::string value)
 void CPU::load(Memory *memo, std::string type, std::string value)
 {
     AbstractVmException exception;
-    if (this->registre.size() < 1) {
+    if (this->registre.size() < 1)
+    {
         exception.setErrorMessage("Can't load register. Register is empty");
         throw exception;
     }
-    IOperand* obj = this->getRegistreStackAtIndex(this->registre.size());
+    IOperand *obj = this->getRegistreStackAtIndex(this->registre.size());
     memo->setStack(obj);
 }
 
