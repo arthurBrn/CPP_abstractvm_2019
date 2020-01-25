@@ -94,7 +94,7 @@ void Input::read(std::string path, Chipset *chip)
 
 int Input::syntax(std::string str)
 {
-    std::regex reg("(^pop|^dump|^clear|^dup|^swap|^add|^sub|^mul|^div|^mod|^print|^exit|^;.*|^)|((^push|^assert|^laod|^store) (int(8|16|32)\\([-]?[0-9]+\\)|(float|double|bigdecimal)\\([-]?[0-9]+[.]?[0-9]*\\)))");
+    std::regex reg("(^pop|^dump|^clear|^dup|^swap|^add|^sub|^mul|^div|^mod|^print|^exit|^;.*|^)|((^push|^assert|^load|^store) (int(8|16|32)\\([-]?[0-9]+\\)|(float|double|bigdecimal)\\([-]?[0-9]+[.]?[0-9]*\\)))");
 
     int res;
     if (std::regex_match(str, reg))

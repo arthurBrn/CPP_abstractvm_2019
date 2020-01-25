@@ -30,12 +30,11 @@ public:
     void setRegistreStackAtIndex(int index, IOperand *object);
     void displayRegistre();
     void setCpuCmd(CPU *cpu);
-    // std::map<std::string, void (CPU::*)(Memory, std::string, std::string)> getCpuCmd();
     void push(Memory *memo, std::string type, std::string value);
     void store(Memory *memo, std::string type, std::string value);
     void load(Memory *memo, std::string type, std::string value);
     void assert(Memory *memo, std::string type, std::string value);
-    void exit();
+    int exit();
     void add(Memory *memory);
     std::map<std::string, void (CPU::*)(Memory*, std::string, std::string)> cmdCpu;
 private:

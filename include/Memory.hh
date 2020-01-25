@@ -10,11 +10,8 @@
 
 #include "abstractvm.hh"
 #include "IOperand.hh"
-// #include "Operand.hh"
 #include "AbstractVmException.hh"
 #include "Output.hh"
-
-// class IOperand;
 
 class Memory
 {
@@ -24,20 +21,18 @@ public:
     IOperand* getStackAtIndexX(int index);
     void setStackAtIndexX(int index, IOperand *obj);
     std::vector<IOperand*> getAllStack();
+    IOperand *unstackAtIndex(int index);
     void pop();
     void clear();
     void dup();
     void swap();
     void dump();
     void print();
-    // void store();
     void setMemoryCmd(Memory *memory);
-    IOperand* unstackAtIndex(int index);
     std::map<std::string, void (Memory::*)()> getMemoryCmd();
     std::map<std::string, void (Memory::*)()> memoryCmd;
 private:
     std::vector<IOperand*> stack;
-    // IOperand *_ioperand;
 };
 
 #endif

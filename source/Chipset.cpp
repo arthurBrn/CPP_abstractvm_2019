@@ -76,26 +76,51 @@ std::string Chipset::getCommandValue(std::string cmd)
 
 void Chipset::cleanCommands()
 {
-    std::cout << "SIZE : ";
-    std::cout << this->getAllCommands().size() << std::endl;
     for (int i = 0; i < this->getAllCommands().size(); i++)
     {
         if (this->getAllCommands().at(i)[0] == ';')
         {
-            std::cout << "match ; " << std::endl;
-            std::cout << "Command : " + this->getAllCommands().at(i) << std::endl;
             this->deleteStackAtIndex(i);
             i = 0;
         }
     }
-    std::cout << "SIZE : ";
-    std::cout << this->getAllCommands().size() << std::endl;
 }
+
+void Chipset::callMemoryMap(Memory *memory, std::string instruction)
+{
+    std::map<std::string, void (Memory::*)()>::iterator memoryIt;
+
+    for (memoryIt = memory->memoryCmd.begin(); memoryIt != memory->memoryCmd.end(); memoryIt++)
+    {
+        if (instruction.compare(memoryIt->first) == 0)
+        {
+            void (Memory::*ptr)() = memory->memoryCmd[instruction];
+            (memory->*ptr)();
+        }
+    }
+}
+
+void Chipset::callCpuMap(CPU *cpu, Memory *memory, std::string str)
+{
+    std::string instruction = this->getCommandInstruction(str);
+    std::string type = this->getCommandType(str);
+    std::string value = this->getCommandValue(str);
+
+    std::map<std::string, void (CPU::*)(Memory *, std::string, std::string)>::iterator cpuIt;
+    for (cpuIt = cpu->cmdCpu.begin(); cpuIt != cpu->cmdCpu.end(); cpuIt++)
+    {
+        if (instruction.compare(cpuIt->first) == 0)
+        {
+            void (CPU::*cpuPtr)(Memory *, std::string, std::string) = cpu->cmdCpu[instruction];
+            (cpu->*cpuPtr)(memory, type, value);
+            cpu->add(memory);
+        }
+    }
+}
+
 
 int Chipset::execute()
 {
-    auto iterator = this->getAllCommands().begin();
-    std::map<std::string, int>::iterator itr;
     Memory *memory = new Memory();
     CPU *cpu = new CPU();
     std::string instruction;
@@ -103,15 +128,14 @@ int Chipset::execute()
     std::string type = "no";
     std::string str;
     int escape = 0;
-    std::map<std::string, void (Memory::*)()>::iterator memoryIt;
-    std::map<std::string, void (CPU::*)(Memory *, std::string, std::string)>::iterator cpuIt;
+    auto iterator = this->getAllCommands().begin();
+    std::map<std::string, int>::iterator itr;
 
     this->cleanCommands();
-    // this->showCommands();
     memory->setMemoryCmd(memory);
     cpu->setCpuCmd(cpu);
-    std::cout << "SIZE : " << std::endl;
-    std::cout << this->getAllCommands().size() << std::endl;
+    Factory fac;
+    IOperand *nb = fac.createOperand(eOperandType::INT32, "34");
     for (int i = 0; i < this->getAllCommands().size(); i++)
     {
         str = this->getCommandAtIndex(i);
@@ -120,38 +144,11 @@ int Chipset::execute()
         {
             instruction = this->getCommandInstruction(str);
             if (instruction.compare("exit") == 0)
-                return (0);
-            for (memoryIt = memory->memoryCmd.begin(); memoryIt != memory->memoryCmd.end(); memoryIt++)
-            {
-                if (instruction.compare(memoryIt->first) == 0)
-                {
-                    void (Memory::*ptr)() = memory->memoryCmd[instruction];
-                    (memory->*ptr)();
-                }
-            }
+                cpu->exit();
+            this->callMemoryMap(memory, instruction);
         }
         if (str.size() > escape && str[0] != ';')
-        {
-            value = this->getCommandValue(str);
-            type = this->getCommandType(str);
-
-            for (cpuIt = cpu->cmdCpu.begin(); cpuIt != cpu->cmdCpu.end(); cpuIt++)
-            {
-                if (instruction.compare(cpuIt->first) == 0)
-                {
-                    void (CPU::*cpuPtr)(Memory *, std::string, std::string) = cpu->cmdCpu[instruction];
-                    (cpu->*cpuPtr)(memory, type, value);
-                    cpu->add(memory);
-
-                }
-            }
-        }
-
-        std::cout << "Command : " + instruction + " type : " + type + " value : " + value << std::endl;
-        // str = "";
-        // instruction = "";
-        // value = "";
-        // type = "";
+            this->callCpuMap(cpu, memory, str); 
     }
     return (0);
 }

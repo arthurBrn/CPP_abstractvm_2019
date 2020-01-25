@@ -27,7 +27,7 @@ std::vector<IOperand *> CPU::getFullRegistre()
 
 IOperand *CPU::getRegistreStackAtIndex(int index)
 {
-    return (this->registre.at(index));
+    return (this->getFullRegistre().at(index));
 }
 
 void CPU::setRegistreStackAtIndex(int index, IOperand *ioperandobject)
@@ -42,10 +42,11 @@ void CPU::setRegistre(IOperand *object)
 
 void CPU::displayRegistre()
 {
-    std::cout << "===== REGISTRE =====" << std::endl;
     for (int i = 0; i < this->registre.size(); i++)
     {
+        std::cout << "Registre value : ";
         std::cout << this->registre.at(i)->getValue() << std::endl;
+        std::cout << "Registre type : ";
         std::cout << this->registre.at(i)->getType() << std::endl;
     }
 }
@@ -53,6 +54,7 @@ void CPU::displayRegistre()
 eOperandType CPU::defineEnum(std::string type)
 {
     eOperandType value;
+
     if (type.compare("int8") == 0)
         value = eOperandType::INT8;
     else if (type.compare("int16") == 0)
@@ -68,22 +70,6 @@ eOperandType CPU::defineEnum(std::string type)
     return (value);
 }
 
-void CPU::push(Memory *memo, std::string type, std::string value)
-{
-    Factory fact;
-
-    IOperand *obj = fact.createOperand(this->defineEnum(type), value);
-    IOperand *holder;
-    memo->setStack(obj);
-    // std::cout << "MEMORY STACK PUSH" << std::endl;
-    for (int i = 0; i < memo->getAllStack().size(); i++)
-    {
-        // std::cout << "Iteration : " + i << std::endl;
-        holder = memo->getStackAtIndexX(i);
-        holder->debug_obj();
-    }
-}
-
 void CPU::setCpuCmd(CPU *cpu)
 {
     cpu->cmdCpu["push"] = &CPU::push;
@@ -92,36 +78,62 @@ void CPU::setCpuCmd(CPU *cpu)
     cpu->cmdCpu["assert"] = &CPU::assert;
 }
 
-void CPU::store(Memory *memo, std::string type, std::string value)
+void CPU::push(Memory *memo, std::string type, std::string value)
 {
-    // std::cout << "===== CPU STORE ====" << std::endl;
-    // est-ce qu'on doit vkérifier si la stack est vide ou non ???
-    IOperand *holder = memo->getAllStack().front();
+    Factory fact;
+    IOperand *obj;
+    IOperand *holder;
+
+    obj = fact.createOperand(this->defineEnum(type), value);
+    memo->setStack(obj);
+    for (int i = 0; i < memo->getAllStack().size(); i++)
+        holder = memo->getStackAtIndexX(i);
+}
+
+void CPU::store(Memory *memory, std::string type, std::string value)
+{
+    AbstractVmException exception;
+    IOperand *holder;
+
+    exception.setErrorMessage("ERROR Store : Can not execute store on empty stack");
+    if (memory->getAllStack().empty())
+        throw (exception);
+    holder = memory->unstackAtIndex(0);
     this->setRegistre(holder);
-    this->displayRegistre();
 }
 
 void CPU::load(Memory *memo, std::string type, std::string value)
 {
     AbstractVmException exception;
-    if (this->registre.empty())
-    {
-        exception.setErrorMessage("Can't load register. Register is empty");
-        throw exception;
-    }
-    IOperand *obj = this->getRegistreStackAtIndex(this->registre.size());
-    memo->setStack(obj);
+    Factory fact;
+    IOperand *stacked;
+    std::vector<IOperand*>::iterator it = this->registre.begin();
+    exception.setErrorMessage("Error : can't execute load on empty register");
+
+    if (this->getRegistreSize() < 1)
+        throw (exception);
+    stacked = this->getRegistreStackAtIndex(0);
+    this->registre.erase(it);
+    memo->setStack(stacked);
 }
 
 void CPU::assert(Memory *memo, std::string type, std::string value)
 {
-    // verify that v is equal to the value at the top of the stack
-    // For that we'll use getType form IOperand
+    AbstractVmException exception;
+    Factory fact;
+    IOperand *obj;
+    IOperand *topStack;
+
+    exception.setErrorMessage("Assert: the value does not match the stack top value.");
+    obj = fact.createOperand(this->defineEnum(type), value);
+    topStack = memo->getAllStack().front();
+    if ((obj->getType() != topStack->getType()) || (obj->getValue() != topStack->getValue()))
+        throw(exception);
 }
 
-void CPU::exit()
+int CPU::exit()
 {
-    // do smthg
+    return (0);
 }
 
 void CPU::add(Memory *memory)

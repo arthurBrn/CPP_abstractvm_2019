@@ -12,6 +12,11 @@ NAME	=	unit_test
 SRC_TEST	=	test_memory.cpp		\
 
 SRC		=	../source/Memory.cpp	\
+			../source/AbstractVmException.cpp	\
+			../source/IOperand.cpp	\
+			../source/Output.cpp	\
+			../source/Factory.cpp	\
+			../source/Operand.cpp	\
 
 OBJ 	=	$(SRC:.cpp=.o)
 

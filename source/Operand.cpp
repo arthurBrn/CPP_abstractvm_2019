@@ -29,6 +29,7 @@ IOperand *Operand::operator+(const IOperand& rhs) const
     std::cout <<  nb2 << std::endl;
 }
 
+
 std::string Operand::toString() const
 {
     std::ostringstream ss;
