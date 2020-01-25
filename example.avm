@@ -2,7 +2,11 @@
 ; - example.avm -
 ; ---------------
 push int32(33)
+<<<<<<< HEAD
 push int32(42)
+=======
+;push int32(42)
+>>>>>>> 5cfbb0596b1ecd747dfc11ad796e0a9a3a2a6a1c
 push float(44.55)
 ;mul
 push double(42.42)

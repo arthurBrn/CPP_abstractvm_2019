@@ -17,36 +17,13 @@ Operand::~Operand()
 {
 }
 
-eOperandType Operand::getType() const
+void Operand::setOperandCmd(Operand *operand)
 {
-    return (this->type);
-}
-
-void Operand::setType(std::string newType, Operand *op) const 
-{
-    eOperandType value;
-    if (newType.compare("int8") == 0)
-        op->type = eOperandType::INT8;
-    else if (newType.compare("int16") == 0)
-        op->type = eOperandType::INT16;
-    else if (newType.compare("int32") == 0)
-        op->type = eOperandType::INT32;
-    else if (newType.compare("float") == 0)
-        op->type = eOperandType::FLOAT;
-    else if (newType.compare("double") == 0)
-        op->type = eOperandType::DOUBLE;
-    else if (newType.compare("bigdecimal") == 0)
-        op->type = eOperandType::BIGDECIMAL;
-}
-
-std::string Operand::getValue() const
-{
-    return this->value;
-}
-
-void Operand::setValue(std::string newValue, Operand *op) const
-{
-    op->value = newValue;
+    operand->cmdOperand["add"] = &Operand::add;
+    operand->cmdOperand["sub"] = &Operand::sub;
+    operand->cmdOperand["mul"] = &Operand::mul;
+    operand->cmdOperand["div"] = &Operand::div;
+    operand->cmdOperand["mod"] = &Operand::mod;
 }
 
 std::string Operand::toString() const
@@ -61,14 +38,40 @@ std::map<std::string, void (Operand::*)(Memory, CPU)> Operand::getOperandCmd()
     return (this->cmdOperand);
 }
 
-void Operand::setOperandCmd(Operand *operand)
+void Operand::debug_obj()
 {
-    operand->cmdOperand["add"] = &Operand::add;
-    operand->cmdOperand["sub"] = &Operand::sub;
-    operand->cmdOperand["mul"] = &Operand::mul;
-    operand->cmdOperand["div"] = &Operand::div;
-    operand->cmdOperand["mod"] = &Operand::mod;
+    eOperandType type = this->type;
+    std::ostringstream eOperandType;
+    eOperandType << type;
+    std::string type_s = eOperandType.str();
+    std::cout << "type : " + type_s << std::endl;
+    std::cout << "value : " + this->value << std::endl;
 }
+
+eOperandType Operand::getType()
+{
+    return (this->type);
+}
+
+std::string Operand::getValue()
+{
+    return (this->value);
+}
+
+void Operand::setValue(std::string& val)
+{
+    this->value = val;
+}
+
+void Operand::setType(eOperandType typ)
+{
+    this->type = typ;
+}
+
+// void Operand::setType(std::string value)
+// {
+
+// }
 
 // IOperand Operand::*operator+(const IOperand &rhs)
 // {

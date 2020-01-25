@@ -17,26 +17,34 @@ Factory::~Factory()
 
 IOperand *Factory::createInt8(const std::string &value)
 {
-    std::cout << "CREATEINT8" << std::endl;
+    std::cout << "création de l'objet 8" << std::endl;
     IOperand *res;
 
     res = new Operand(eOperandType::INT8, value);
+    return res;    
 }
 
 IOperand *Factory::createInt16(const std::string &value)
 {
-    std::cout << "CREATEINT16" << std::endl;
+    std::cout << "création de l'objet 16" << std::endl;
     IOperand *res;
 
     res = new Operand(eOperandType::INT16, value);
+    return res;
 }
 IOperand *Factory::createInt32(const std::string &value)
 {
-    std::cout << "CREATEINT32" << std::endl;
-    IOperand *res = new Operand(eOperandType::INT32, value);
+    std::string nb = "10";
 
+    std::cout << "création de l'objet 32" << std::endl;
+    IOperand *res = new Operand(eOperandType::INT32, value);
+    res->debug_obj();
+    res->setType(eOperandType::INT8);
+    res->setValue(nb);
+    res->debug_obj();
     return (res);
 }
+
 IOperand *Factory::createFloat(const std::string &value)
 {
     std::cout << "CREATEFLOAT" << std::endl;
@@ -76,7 +84,7 @@ IOperand *Factory::createOperand(eOperandType type, const std::string &value)
         break;
     default:
         std::cout << "ERROORRO" << std::endl;
+        break;
     }
-
     return (res);
 }

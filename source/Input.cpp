@@ -112,7 +112,6 @@ void Input::read(Chipset *chip)
     {
         getline(std::cin, one_line);
         res = syntax(one_line);
-        std::cout << "res : " <<  res << std::endl;
         if (res == 1) {
             if (!one_line.empty())
                 chip->setCommand(one_line);

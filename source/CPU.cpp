@@ -68,9 +68,7 @@ void CPU::push(Memory *memo, std::string type, std::string value)
     eOperandType typeChosen = defineEnum(type);
     Factory fact;
 
-    std::cout << "PUSH FUNCTION " << std::endl;
-    std::cout << "type : " + type << std::endl;
-    std::cout << typeChosen << std::endl;
+    // std::cout << "PUSH FUNCTION " << std::endl;
 
     IOperand *obj = fact.createOperand(typeChosen, value);
     // memo->setStack(obj);
