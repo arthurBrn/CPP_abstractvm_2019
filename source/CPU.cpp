@@ -40,10 +40,15 @@ void CPU::setRegistre(IOperand *object)
     this->registre.push_back(object);
 }
 
-// std::map<std::string, void (CPU::*)(Memory, std::string, std::string)> CPU::getCpuCmd()
-// {
-//     return (this->cmdCpu);
-// }
+void CPU::displayRegistre()
+{
+    std::cout << "===== REGISTRE =====" << std::endl;
+    for (int i = 0; i < this->registre.size(); i++)
+    {
+        std::cout << this->registre.at(i)->getValue() << std::endl;
+        std::cout << this->registre.at(i)->getType() << std::endl;
+    }
+}
 
 eOperandType CPU::defineEnum(std::string type)
 {
@@ -65,14 +70,18 @@ eOperandType CPU::defineEnum(std::string type)
 
 void CPU::push(Memory *memo, std::string type, std::string value)
 {
-    eOperandType typeChosen = defineEnum(type);
     Factory fact;
 
-    // std::cout << "PUSH FUNCTION " << std::endl;
-
-    IOperand *obj = fact.createOperand(typeChosen, value);
-    // memo->setStack(obj);
-    // std::cout << "PUSH : " + type + " | " + value << std::endl;
+    IOperand *obj = fact.createOperand(this->defineEnum(type), value);
+    IOperand *holder;
+    memo->setStack(obj);
+    std::cout << "MEMORY STACK PUSH" << std::endl;
+    for (int i = 0; i < memo->getAllStack().size(); i++)
+    {
+        std::cout << "Iteration : " + i << std::endl;
+        holder = memo->getStackAtIndexX(i);
+        holder->debug_obj();
+    }
 }
 
 void CPU::setCpuCmd(CPU *cpu)
@@ -85,14 +94,17 @@ void CPU::setCpuCmd(CPU *cpu)
 
 void CPU::store(Memory *memo, std::string type, std::string value)
 {
+    std::cout << "===== CPU STORE ====" << std::endl;
+    // est-ce qu'on doit vkérifier si la stack est vide ou non ???
     IOperand *holder = memo->getAllStack().front();
     this->setRegistre(holder);
+    this->displayRegistre();
 }
 
 void CPU::load(Memory *memo, std::string type, std::string value)
 {
     AbstractVmException exception;
-    if (this->registre.size() < 1)
+    if (this->registre.empty())
     {
         exception.setErrorMessage("Can't load register. Register is empty");
         throw exception;

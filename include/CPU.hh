@@ -29,6 +29,7 @@ public:
     eOperandType defineEnum(std::string type);
     void setRegistre(IOperand *object);
     void setRegistreStackAtIndex(int index, IOperand *object);
+    void displayRegistre();
     void setCpuCmd(CPU *cpu);
     // std::map<std::string, void (CPU::*)(Memory, std::string, std::string)> getCpuCmd();
     void push(Memory *memo, std::string type, std::string value);

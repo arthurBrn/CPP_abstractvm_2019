@@ -17,30 +17,43 @@ Factory::~Factory()
 
 IOperand *Factory::createInt8(const std::string &value)
 {
-    std::cout << "création de l'objet 8" << std::endl;
-    IOperand *res;
-
-    res = new Operand(eOperandType::INT8, value);
-    return res;    
+    std::cout << "CREATEINT8" << std::endl;
+    std::string val = value;
+    IOperand *res = new Operand(eOperandType::INT8, value);
+    std::cout << "Debug obj #1 avant setValue/setType" << std::endl;
+    res->debug_obj();
+    res->setType(eOperandType::INT8);
+    res->setValue(val);
+    std::cout << "Debug obj #2 après setValue/setType" << std::endl;
+    res->debug_obj();
+    return (res); 
 }
 
 IOperand *Factory::createInt16(const std::string &value)
 {
-    std::cout << "création de l'objet 16" << std::endl;
-    IOperand *res;
+    std::cout << "CREATEINT16" << std::endl;
+    std::string val = value;
+    IOperand *res = new Operand(eOperandType::INT16, value);
 
-    res = new Operand(eOperandType::INT16, value);
-    return res;
+    std::cout << "Debug obj #1 avant setValue/setType" << std::endl;
+    res->debug_obj();
+    res->setType(eOperandType::INT16);
+    res->setValue(val);
+    std::cout << "Debug obj #2 après setValue/setType" << std::endl;
+    res->debug_obj();
+    return (res);
 }
 IOperand *Factory::createInt32(const std::string &value)
 {
-    std::string nb = "10";
+    std::string val = value;
 
-    std::cout << "création de l'objet 32" << std::endl;
+    std::cout << "CREATEINT32" << std::endl;
     IOperand *res = new Operand(eOperandType::INT32, value);
+    std::cout << "Debug obj #1 avant setValue/setType" << std::endl;
     res->debug_obj();
-    res->setType(eOperandType::INT8);
-    res->setValue(nb);
+    res->setType(eOperandType::INT32);
+    res->setValue(val);
+    std::cout << "Debug obj #2 après setValue/setType" << std::endl;
     res->debug_obj();
     return (res);
 }
@@ -48,19 +61,42 @@ IOperand *Factory::createInt32(const std::string &value)
 IOperand *Factory::createFloat(const std::string &value)
 {
     std::cout << "CREATEFLOAT" << std::endl;
+    std::string val = value;
+    IOperand *res = new Operand(eOperandType::FLOAT, value);
+    std::cout << "Debug obj #1 avant setValue/setType" << std::endl;
+    res->debug_obj();
+    res->setType(eOperandType::FLOAT);
+    res->setValue(val);
+    std::cout << "Debug obj #2 après setValue/setType" << std::endl;
+    res->debug_obj();
+    return (res);
 }
 IOperand *Factory::createDouble(const std::string &value)
 {
     std::cout << "CREATEDOUBLE" << std::endl;
+    std::string val = value;
+    IOperand *res = new Operand(eOperandType::DOUBLE, value);
+    std::cout << "Debug obj #1 avant setValue/setType" << std::endl;
+    res->debug_obj();
+    res->setType(eOperandType::DOUBLE);
+    res->setValue(val);
+    std::cout << "Debug obj #2 après setValue/setType" << std::endl;
+    res->debug_obj();
+    return (res);
 }
 IOperand *Factory::createBigDecimal(const std::string &value)
 {
     std::cout << "CREATEBIGDECIMAL" << std::endl;
+    IOperand *res = new Operand(eOperandType::BIGDECIMAL, value);
 }
 
 IOperand *Factory::createOperand(eOperandType type, const std::string &value)
 {
     std::cout << "===== FACTORY =====" << std::endl;
+    std::cout << "type : ";
+    std::cout << type << std::endl;
+    std::cout << "value : ";
+    std::cout << value << std::endl;
     IOperand *res;
     switch (type)
     {
@@ -83,7 +119,7 @@ IOperand *Factory::createOperand(eOperandType type, const std::string &value)
         res = createBigDecimal(value);
         break;
     default:
-        std::cout << "ERROORRO" << std::endl;
+        std::cout << "ERROR FACTORY SWITCH" << std::endl;
         break;
     }
     return (res);

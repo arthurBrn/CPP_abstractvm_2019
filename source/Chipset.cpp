@@ -74,7 +74,25 @@ std::string Chipset::getCommandValue(std::string cmd)
     return (value);
 }
 
-void Chipset::execute()
+void Chipset::cleanCommands()
+{
+    std::cout << "SIZE : ";
+    std::cout << this->getAllCommands().size() << std::endl;
+    for (int i = 0; i < this->getAllCommands().size(); i++)
+    {
+        if (this->getAllCommands().at(i)[0] == ';')
+        {
+            std::cout << "match ; " << std::endl;
+            std::cout << "Command : " + this->getAllCommands().at(i) << std::endl;
+            this->deleteStackAtIndex(i);
+            i = 0;
+        }
+    }
+    std::cout << "SIZE : ";
+    std::cout << this->getAllCommands().size() << std::endl;
+}
+
+int Chipset::execute()
 {
     auto iterator = this->getAllCommands().begin();
     std::map<std::string, int>::iterator itr;
@@ -85,11 +103,15 @@ void Chipset::execute()
     std::string type = "no";
     std::string str;
     int escape = 0;
-    std::map<std::string, void (Memory::*)()>::iterator it;
+    std::map<std::string, void (Memory::*)()>::iterator memoryIt;
     std::map<std::string, void (CPU::*)(Memory *, std::string, std::string)>::iterator cpuIt;
 
+    this->cleanCommands();
+    // this->showCommands();
     memory->setMemoryCmd(memory);
     cpu->setCpuCmd(cpu);
+    std::cout << "SIZE : " << std::endl;
+    std::cout << this->getAllCommands().size() << std::endl;
     for (int i = 0; i < this->getAllCommands().size(); i++)
     {
         str = this->getCommandAtIndex(i);
@@ -97,12 +119,12 @@ void Chipset::execute()
         if (str[0] != ';')
         {
             instruction = this->getCommandInstruction(str);
-            //std::cout << "Instruction : " + instruction << std::endl;
-            for (it = memory->memoryCmd.begin(); it != memory->memoryCmd.end(); it++)
+            if (instruction.compare("exit") == 0)
+                return (0);
+            for (memoryIt = memory->memoryCmd.begin(); memoryIt != memory->memoryCmd.end(); memoryIt++)
             {
-                if (instruction.compare(it->first) == 0)
+                if (instruction.compare(memoryIt->first) == 0)
                 {
-                    //std::cout << "match : " + it->first << std::endl;
                     void (Memory::*ptr)() = memory->memoryCmd[instruction];
                     (memory->*ptr)();
                 }
@@ -112,20 +134,23 @@ void Chipset::execute()
         {
             value = this->getCommandValue(str);
             type = this->getCommandType(str);
-            // std::cout << "Value : " + value << std::endl;
-            // std::cout << "Type : " + type << std::endl;
             for (cpuIt = cpu->cmdCpu.begin(); cpuIt != cpu->cmdCpu.end(); cpuIt++)
             {
                 if (instruction.compare(cpuIt->first) == 0)
                 {
-                    // std::cout << "Match cpu : " + instruction << std::endl;
-                    // std::cout << "type : " + type + " | value : " + value << std::endl;
-                    void (CPU::*cpuPtr)(Memory*, std::string, std::string) = cpu->cmdCpu[instruction];
+                    void (CPU::*cpuPtr)(Memory *, std::string, std::string) = cpu->cmdCpu[instruction];
                     (cpu->*cpuPtr)(memory, type, value);
-                    Factory fac;
-                    IOperand *nb = fac.createOperand(cpu->defineEnum("type"), value);
+                    // Factory fac;    
+                    // IOperand *nb = fac.createOperand(cpu->defineEnum(type), value);
                 }
             }
         }
+
+        std::cout << "Command : " + instruction + " type : " + type + " value : " + value << std::endl;
+        // str = "";
+        // instruction = "";
+        // value = "";
+        // type = "";
     }
+    return (0);
 }

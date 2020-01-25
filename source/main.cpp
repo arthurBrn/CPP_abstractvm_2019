@@ -27,7 +27,8 @@ int main(int ac, char **av)
             throw exception;
         }
         
-    chip->execute();
+        if (chip->execute() == 0)
+            return (0);
     } catch(AbstractVmException exception) {
         std::cout << exception.getErrorMessage() << std::endl;
     }

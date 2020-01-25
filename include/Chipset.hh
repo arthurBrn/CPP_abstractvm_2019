@@ -23,10 +23,11 @@ public:
     std::vector<std::string> deleteStackAtIndex(int index);
     void setCommand(std::string);
     void showCommands();
-    void execute();
+    int execute();
     std::string getCommandInstruction(std::string cmd);
     std::string getCommandValue(std::string cmd);
     std::string getCommandType(std::string cmd);
+    void cleanCommands();
 private:
     std::vector<std::string> commands;
 };
