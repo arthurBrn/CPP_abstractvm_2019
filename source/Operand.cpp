@@ -18,6 +18,18 @@ Operand::~Operand()
 {
 }
 
+std::string Operand::cleanValue(std::string val) const
+{
+    int i = 0;
+
+    for (int i = val.size(); i > 0; i--)
+        if (val[i] == '0')
+            val.erase(i);
+    if (val[i + 1] == '.')
+        val.erase(i + 1);
+    return (val);
+}
+
 eOperandType choose_type(eOperandType type1, eOperandType type2)
 {
     if (type1 >= type2)
@@ -39,7 +51,7 @@ IOperand *Operand::operator+(const IOperand& rhs) const
 
     double nb3 = create_nb_1() + nb2;
     eOperandType type = choose_type(this->getType(), rhs.getType());
-    IOperand *nb = Factory::createOperand(type, std::to_string(nb3));
+    IOperand *nb = Factory::createOperand(type, this->cleanValue(std::to_string(nb3)));
     return (nb);
 }
 
@@ -50,7 +62,7 @@ IOperand *Operand::operator-(const IOperand& rhs) const
 
     double nb3 = create_nb_1() - nb2;
     eOperandType type = choose_type(this->getType(), rhs.getType());
-    IOperand *nb = Factory::createOperand(type, std::to_string(nb3));
+    IOperand *nb = Factory::createOperand(type, this->cleanValue(std::to_string(nb3)));
     return (nb);
 }
 
@@ -61,7 +73,7 @@ IOperand *Operand::operator*(const IOperand& rhs) const
 
     double nb3 = create_nb_1() * nb2;
     eOperandType type = choose_type(this->getType(), rhs.getType());
-    IOperand *nb = Factory::createOperand(type, std::to_string(nb3));
+    IOperand *nb = Factory::createOperand(type, this->cleanValue(std::to_string(nb3)));
     return (nb);
 }
 
@@ -72,7 +84,7 @@ IOperand *Operand::operator/(const IOperand& rhs) const
 
     double nb3 = create_nb_1() / nb2;
     eOperandType type = choose_type(this->getType(), rhs.getType());
-    IOperand *nb = Factory::createOperand(type, std::to_string(nb3));
+    IOperand *nb = Factory::createOperand(type, this->cleanValue(std::to_string(nb3)));
     return (nb);
 }
 
@@ -85,7 +97,7 @@ IOperand *Operand::operator%(const IOperand& rhs) const
 
     int nb3 = nb1 % nb2;
     eOperandType type = choose_type(this->getType(), rhs.getType());
-    IOperand *nb = Factory::createOperand(type, std::to_string(nb3));
+    IOperand *nb = Factory::createOperand(type, this->cleanValue(std::to_string(nb3)));
     return (nb);
 }
 

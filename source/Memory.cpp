@@ -13,21 +13,21 @@ int Memory::getStackSize()
     return (this->stack.size());
 }
 
-IOperand* Memory::unstackAtIndex(int index)
+IOperand *Memory::unstackAtIndex(int index)
 {
     AbstractVmException exception;
-    std::vector<IOperand*>::iterator it = this->stack.begin();
-    
+    std::vector<IOperand *>::iterator it = this->stack.begin();
+
     exception.setErrorMessage("Error unstacking a memory stack. The index is greater than the stack.");
     if ((this->getStackSize() < index) || (index < 0))
-        throw (exception);
+        throw(exception);
     IOperand *obj = this->getStackAtIndexX(index);
     std::advance(it, index);
     this->stack.erase(it);
     return (obj);
 }
 
-IOperand* Memory::getStackAtIndexX(int index)
+IOperand *Memory::getStackAtIndexX(int index)
 {
     IOperand *obj = this->getAllStack().at(index);
     return (obj);
@@ -54,7 +54,7 @@ void Memory::pop()
 {
     AbstractVmException exception;
 
-    exception.setErrorMessage("ERROR: can't pop on empty stack.");
+    exception.setErrorMessage(STACK_NOT_ENOUGH_ELEMENTS);
     if (this->stack.empty())
         throw(exception);
     std::vector<IOperand *>::iterator it = this->stack.begin();
@@ -69,7 +69,7 @@ void Memory::clear()
 void Memory::dup()
 {
     AbstractVmException exception;
-    exception.setErrorMessage("ERROR: can not dup() on empty stack");
+    exception.setErrorMessage(STACK_NOT_ENOUGH_ELEMENTS);
 
     std::vector<IOperand *>::iterator it = this->stack.begin();
     this->stack.insert(it, this->stack.front());
@@ -82,7 +82,7 @@ void Memory::swap()
     AbstractVmException exception;
     std::vector<IOperand *>::iterator it = this->stack.begin() + 1;
 
-    exception.setErrorMessage("ERROR: can not swap() on stack with less than two elements.");
+    exception.setErrorMessage(STACK_NOT_ENOUGH_ELEMENTS);
     if (this->stack.size() < 2)
         throw(exception);
     holding_value = this->getStackAtIndexX(0)->getValue();
@@ -97,7 +97,6 @@ void Memory::swap()
 
 void Memory::dump()
 {
-    Output out;
     IOperand *obj;
 
     for (int i = 0; i < this->getAllStack().size(); i++)
@@ -123,7 +122,7 @@ void Memory::print()
     }
     else
     {
-        exception.setErrorMessage("EMPTY STACK, can't print");
+        exception.setErrorMessage(STACK_NOT_ENOUGH_ELEMENTS);
         throw(exception);
     }
 }

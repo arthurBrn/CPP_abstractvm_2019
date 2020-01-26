@@ -6,7 +6,6 @@
 */
 
 #include "CPU.hh"
-// #include "abstractvm.hh"
 
 CPU::CPU()
 {
@@ -105,7 +104,7 @@ void CPU::store(Memory *memory, std::string type, std::string value)
     AbstractVmException exception;
     IOperand *holder;
 
-    exception.setErrorMessage(EMPTY_STACK);
+    exception.setErrorMessage(STACK_NOT_ENOUGH_ELEMENTS);
     if (memory->getAllStack().empty())
         throw(exception);
     holder = memory->unstackAtIndex(0);
@@ -148,7 +147,6 @@ int CPU::exit()
 
 void CPU::add(Memory *memory)
 {
-    std::cout << "===addtion =====" << std::endl;
     IOperand *nb1 = memory->getAllStack().at(0);
     IOperand *nb2 = memory->getAllStack().at(1);
     IOperand *nb3 = *nb1 + *nb2;
@@ -159,7 +157,6 @@ void CPU::add(Memory *memory)
 
 void CPU::sub(Memory *memory)
 {
-    std::cout << "===substraction====" << std::endl;
     IOperand *nb1 = memory->getAllStack().at(0);
     IOperand *nb2 = memory->getAllStack().at(1);
     IOperand *nb3 = *nb1 - *nb2;
@@ -170,7 +167,6 @@ void CPU::sub(Memory *memory)
 
 void CPU::mul(Memory *memory)
 {
-    std::cout << "===multiplication====" << std::endl;
     IOperand *nb1 = memory->getAllStack().at(0);
     IOperand *nb2 = memory->getAllStack().at(1);
     IOperand *nb3 = *nb1 * *nb2;
@@ -184,11 +180,8 @@ void CPU::div(Memory *memory)
     AbstractVmException exception;
     exception.setErrorMessage(DIVISION_BY_ZERO);
 
-    std::cout << "===division====" << std::endl;
     IOperand *nb1 = memory->getAllStack().at(0);
     IOperand *nb2 = memory->getAllStack().at(1);
-    if (nb2->getValue().compare("0") == 0)
-        throw (exception);
     IOperand *nb3 = *nb1 / *nb2;
     memory->pop();
     memory->pop();
@@ -199,7 +192,6 @@ void CPU::mod(Memory *memory)
 {
     AbstractVmException exception;
     exception.setErrorMessage(DIVISION_BY_ZERO);
-    std::cout << "===modulo===="<< std::endl;
     IOperand *nb1 = memory->getAllStack().at(0);
     IOperand *nb2 = memory->getAllStack().at(1);
     if (nb2->getValue().compare("0") == 0)

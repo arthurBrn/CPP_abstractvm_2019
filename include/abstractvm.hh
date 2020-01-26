@@ -21,7 +21,8 @@
 #define DIVISION_BY_ZERO "OPERATOR ERROR: Division by zero forbiden.\n"
 #define FALSE_ASSERT "ASSERT ERROR: the value does not match the top stack value.\n"
 #define LOAD_ERROR "LOAD ERROR: can't execute load on empty register.\n"
-#define EMPTY_STACK "STACK ERROR: Can't execute commands on empty stack.\n"
+#define STACK_NOT_ENOUGH_ELEMENTS "STACK ERROR: The stack has not enough elements or is empty.\n"
+
 
 #include "AbstractVmException.hh"
 
