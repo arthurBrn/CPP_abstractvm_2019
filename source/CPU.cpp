@@ -6,6 +6,7 @@
 */
 
 #include "CPU.hh"
+// #include "abstractvm.hh"
 
 CPU::CPU()
 {
@@ -84,7 +85,7 @@ void CPU::setCpuOperatorCmd(CPU *cpu)
     cpu->cpuOperatorMap["sub"] = &CPU::sub;
     cpu->cpuOperatorMap["mul"] = &CPU::mul;
     cpu->cpuOperatorMap["div"] = &CPU::div;
-    // cpu->cpuOperatorMap["mod"] = &CPU::mod;
+    cpu->cpuOperatorMap["mod"] = &CPU::mod;
 }
 
 void CPU::push(Memory *memo, std::string type, std::string value)
@@ -104,7 +105,7 @@ void CPU::store(Memory *memory, std::string type, std::string value)
     AbstractVmException exception;
     IOperand *holder;
 
-    exception.setErrorMessage("ERROR Store : Can not execute store on empty stack");
+    exception.setErrorMessage(EMPTY_STACK);
     if (memory->getAllStack().empty())
         throw(exception);
     holder = memory->unstackAtIndex(0);
@@ -117,7 +118,7 @@ void CPU::load(Memory *memo, std::string type, std::string value)
     Factory fact;
     IOperand *stacked;
     std::vector<IOperand *>::iterator it = this->registre.begin();
-    exception.setErrorMessage("Error : can't execute load on empty register");
+    exception.setErrorMessage(LOAD_ERROR);
 
     if (this->getRegistreSize() < 1)
         throw(exception);
@@ -133,7 +134,7 @@ void CPU::assert(Memory *memo, std::string type, std::string value)
     IOperand *obj;
     IOperand *topStack;
 
-    exception.setErrorMessage("Assert: the value does not match the stack top value.");
+    exception.setErrorMessage(FALSE_ASSERT);
     obj = fact.createOperand(this->defineEnum(type), value);
     topStack = memo->getAllStack().front();
     if ((obj->getType() != topStack->getType()) || (obj->getValue() != topStack->getValue()))
@@ -181,13 +182,29 @@ void CPU::mul(Memory *memory)
 void CPU::div(Memory *memory)
 {
     AbstractVmException exception;
-
-    exception.setErrorMessage("division by zero");
+    exception.setErrorMessage(DIVISION_BY_ZERO);
 
     std::cout << "===division====" << std::endl;
     IOperand *nb1 = memory->getAllStack().at(0);
     IOperand *nb2 = memory->getAllStack().at(1);
+    if (nb2->getValue().compare("0") == 0)
+        throw (exception);
     IOperand *nb3 = *nb1 / *nb2;
+    memory->pop();
+    memory->pop();
+    memory->setStack(nb3);
+}
+
+void CPU::mod(Memory *memory)
+{
+    AbstractVmException exception;
+    exception.setErrorMessage(DIVISION_BY_ZERO);
+    std::cout << "===modulo===="<< std::endl;
+    IOperand *nb1 = memory->getAllStack().at(0);
+    IOperand *nb2 = memory->getAllStack().at(1);
+    if (nb2->getValue().compare("0") == 0)
+        throw(exception);
+    IOperand *nb3 = *nb1 % *nb2;
     memory->pop();
     memory->pop();
     memory->setStack(nb3);

@@ -41,8 +41,9 @@ public:
     void sub(Memory *memory);
     void mul(Memory *memory);
     void div(Memory *memory);
-    std::map<std::string, void (CPU::*)(Memory*, std::string, std::string)> cpuRegularMap;
-    std::map<std::string, void (CPU::*)(Memory*)> cpuOperatorMap;
+    void mod(Memory *memory);
+    std::map<std::string, void (CPU::*)(Memory *, std::string, std::string)> cpuRegularMap;
+    std::map<std::string, void (CPU::*)(Memory *)> cpuOperatorMap;
 private:
     std::vector<IOperand *> registre;
     Operand *_operand;
