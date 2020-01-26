@@ -79,9 +79,13 @@ IOperand *Operand::operator*(const IOperand& rhs) const
 
 IOperand *Operand::operator/(const IOperand& rhs) const
 {
+    AbstractVmException exception;
     std::string value = rhs.toString();
     double nb2 = std::stod(value);
 
+    exception.setErrorMessage("Division by 0 impossible");
+    if (nb2 == 0)
+        throw exception;
     double nb3 = create_nb_1() / nb2;
     eOperandType type = choose_type(this->getType(), rhs.getType());
     IOperand *nb = Factory::createOperand(type, this->cleanValue(std::to_string(nb3)));
@@ -94,10 +98,20 @@ IOperand *Operand::operator%(const IOperand& rhs) const
     int nb1 = std::stoi(value1);
     std::string value2 = rhs.toString();
     int nb2 = std::stoi(value2);
-
-    int nb3 = nb1 % nb2;
+    AbstractVmException exception;
+    int nb3;
+    
+    if (nb2 == 0) {
+        exception.setErrorMessage("Modulo by 0 impossible");
+        throw(exception);
+    } 
     eOperandType type = choose_type(this->getType(), rhs.getType());
-    IOperand *nb = Factory::createOperand(type, this->cleanValue(std::to_string(nb3)));
+    if (type > 2) {
+        exception.setErrorMessage("Modulo only work with int");
+        throw(exception);
+    }
+    nb3 = nb1 % nb2;
+    IOperand *nb = Factory::createOperand(type, std::to_string(nb3));
     return (nb);
 }
 

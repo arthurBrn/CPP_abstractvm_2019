@@ -125,17 +125,23 @@ void Chipset::callCpuOperator(Memory *memory, CPU *cpu, std::string cmds)
 {
     std::string instruction = this->getCommandInstruction(cmds);
     std::map<std::string, void (CPU::*)(Memory *)>::iterator operatorIt;
+    AbstractVmException stack;
 
-    AbstractVmException exception;
-    exception.setErrorMessage("ERROR : Can't add on stack with less than two values.");
     for (operatorIt = cpu->cpuOperatorMap.begin(); operatorIt != cpu->cpuOperatorMap.end(); operatorIt++)
     {
         if (instruction.compare(operatorIt->first) == 0)
         {
-            if (memory->getStackSize() < 2)
-                throw(exception);   
+            if (memory->getStackSize() < 2) {
+                
+                stack.setErrorMessage("ERROR : Can't add on stack with less than two values.");
+                throw(stack);
+            }       
             void (CPU::*opPtr)(Memory *) = cpu->cpuOperatorMap[instruction];
-            (cpu->*opPtr)(memory);
+            try {
+                (cpu->*opPtr)(memory);
+            } catch(AbstractVmException exception) {
+                throw exception;
+            }
         }
     }
 }

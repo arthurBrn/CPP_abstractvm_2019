@@ -177,27 +177,29 @@ void CPU::mul(Memory *memory)
 
 void CPU::div(Memory *memory)
 {
-    AbstractVmException exception;
-    exception.setErrorMessage(DIVISION_BY_ZERO);
-
     IOperand *nb1 = memory->getAllStack().at(0);
     IOperand *nb2 = memory->getAllStack().at(1);
-    IOperand *nb3 = *nb1 / *nb2;
-    memory->pop();
-    memory->pop();
-    memory->setStack(nb3);
+    try {
+        IOperand *nb3 = *nb1 / *nb2;
+        memory->pop();
+        memory->pop();
+        memory->setStack(nb3);
+    } catch(AbstractVmException exception) {
+        throw exception;
+    }
 }
 
 void CPU::mod(Memory *memory)
 {
     AbstractVmException exception;
-    exception.setErrorMessage(DIVISION_BY_ZERO);
     IOperand *nb1 = memory->getAllStack().at(0);
     IOperand *nb2 = memory->getAllStack().at(1);
-    if (nb2->getValue().compare("0") == 0)
-        throw(exception);
-    IOperand *nb3 = *nb1 % *nb2;
-    memory->pop();
-    memory->pop();
-    memory->setStack(nb3);
+    try {
+        IOperand *nb3 = *nb1 % *nb2;
+        memory->pop();
+        memory->pop();
+        memory->setStack(nb3);
+    } catch(AbstractVmException exception) {
+        throw exception;
+    }
 }
