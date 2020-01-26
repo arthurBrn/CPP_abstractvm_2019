@@ -3,4 +3,9 @@
 ; --------------
 push int32(2)
 pop
+push int32(2)
+push int32(3)
+dump
+add
+dump
 exit
