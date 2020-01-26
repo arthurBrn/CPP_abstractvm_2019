@@ -19,9 +19,11 @@ dump
 push int16(10)
 dump
 mul
+push int16(100)
 dump
-add
+div
 dump
+assert int16(5)
 ;pop
 ;dump
 exit

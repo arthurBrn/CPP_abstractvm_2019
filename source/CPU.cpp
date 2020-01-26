@@ -83,7 +83,7 @@ void CPU::setCpuOperatorCmd(CPU *cpu)
     cpu->cpuOperatorMap["add"] = &CPU::add;
     cpu->cpuOperatorMap["sub"] = &CPU::sub;
     cpu->cpuOperatorMap["mul"] = &CPU::mul;
-    // cpu->cpuOperatorMap["div"] = &CPU::div;
+    cpu->cpuOperatorMap["div"] = &CPU::div;
     // cpu->cpuOperatorMap["mod"] = &CPU::mod;
 }
 
@@ -178,24 +178,17 @@ void CPU::mul(Memory *memory)
     memory->setStack(nb3);
 }
 
-// void CPU::div(Memory *memory)
-// {
-//     AbstractVmException exception;
+void CPU::div(Memory *memory)
+{
+    AbstractVmException exception;
 
-//     exception.setErrorMessage("division by zero");
+    exception.setErrorMessage("division by zero");
 
-//     std::cout << "===division===="<< std::endl;
-//     IOperand *nb1 = Factory::createOperand(eOperandType::DOUBLE, "15");
-//     IOperand *nb2 = Factory::createOperand(eOperandType::INT16, "3");
-//     nb1->debug_obj();
-//     nb2->debug_obj();
-//     try
-//     {
-//         IOperand *nb3 = *nb1 / *nb2;
-//         nb3->debug_obj();
-//     }
-//     catch(const std::exception& e)
-//     {
-//         throw exception;
-//     }
-// }
+    std::cout << "===division====" << std::endl;
+    IOperand *nb1 = memory->getAllStack().at(0);
+    IOperand *nb2 = memory->getAllStack().at(1);
+    IOperand *nb3 = *nb1 / *nb2;
+    memory->pop();
+    memory->pop();
+    memory->setStack(nb3);
+}
