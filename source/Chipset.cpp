@@ -115,16 +115,7 @@ void Chipset::callCpuMap(CPU *cpu, Memory *memory, std::string str)
         {
             void (CPU::*cpuPtr)(Memory *, std::string, std::string) = cpu->cmdCpu[instruction];
             (cpu->*cpuPtr)(memory, type, value);
-            try
-            {
-                cpu->mul(memory);
-            }
-            catch(const std::exception& e)
-            {
-                throw exception;
-            }
-            
-                  
+            cpu->div(memory);
         }
     }
 }

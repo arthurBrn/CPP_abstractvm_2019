@@ -65,21 +65,18 @@ IOperand *Operand::operator*(const IOperand& rhs) const
     return (nb);
 }
 
-// IOperand *Operand::operator/(const IOperand& rhs) const
-// {
-//     std::string value = rhs.toString();
-//     AbstractVmException exception;
-//     int res = std::stoi(value);
-//     double nb2;
-//     if (nb2 != 0)
-//         nb2 = std::stod(value);
-//     else
-//         throw exception;
-//     double nb3 = create_nb_1() * nb2;
-//     eOperandType type = choose_type(this->getType(), rhs.getType());
-//     IOperand *nb = Factory::createOperand(type, std::to_string(nb3));
-//     return (nb);
-// }
+IOperand *Operand::operator/(const IOperand& rhs) const
+{
+    std::string value = rhs.toString();
+    int res = std::stoi(value);
+    double nb2;
+    nb2 = std::stod(value);
+
+    double nb3 = create_nb_1() / nb2;
+    eOperandType type = choose_type(this->getType(), rhs.getType());
+    IOperand *nb = Factory::createOperand(type, std::to_string(nb3));
+    return (nb);
+}
 
 std::string Operand::toString() const
 {

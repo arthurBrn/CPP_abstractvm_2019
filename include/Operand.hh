@@ -24,7 +24,7 @@ public:
     IOperand *operator+(const IOperand& rhs) const override;
     IOperand *operator-(const IOperand& rhs) const override;
     IOperand *operator*(const IOperand& rhs) const override;
-    // IOperand *operator/(const IOperand& rhs) const override;
+    IOperand *operator/(const IOperand& rhs) const override;
     double create_nb_1() const;
     std::string toString() const override;
     eOperandType getType() const override;
