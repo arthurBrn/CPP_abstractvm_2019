@@ -105,6 +105,9 @@ void Chipset::callCpuMap(CPU *cpu, Memory *memory, std::string str)
     std::string instruction = this->getCommandInstruction(str);
     std::string type = this->getCommandType(str);
     std::string value = this->getCommandValue(str);
+    AbstractVmException exception;
+
+    exception.setErrorMessage("Calcul Error");
     std::map<std::string, void (CPU::*)(Memory *, std::string, std::string)>::iterator cpuIt;
 
     for (cpuIt = cpu->cpuRegularMap.begin(); cpuIt != cpu->cpuRegularMap.end(); cpuIt++)
@@ -113,6 +116,14 @@ void Chipset::callCpuMap(CPU *cpu, Memory *memory, std::string str)
         {
             void (CPU::*cpuPtr)(Memory *, std::string, std::string) = cpu->cpuRegularMap[instruction];
             (cpu->*cpuPtr)(memory, type, value);
+            // try
+            // {
+            //     cpu->mul(memory);
+            // }
+            // catch(const std::exception& e)
+            // {
+            //     throw exception;
+            // }
         }
     }
 }
@@ -120,14 +131,18 @@ void Chipset::callCpuMap(CPU *cpu, Memory *memory, std::string str)
 void Chipset::callCpuOperator(Memory *memory, CPU *cpu, std::string cmds)
 {
     std::string instruction = this->getCommandInstruction(cmds);
-    std::map<std::string, void (CPU::*)(Memory*, CPU*)>::iterator operatorIt;
+    std::map<std::string, void (CPU::*)(Memory *)>::iterator operatorIt;
 
+    AbstractVmException exception;
+    exception.setErrorMessage("ERROR : Can't add on stack with less than two values.");
     for (operatorIt = cpu->cpuOperatorMap.begin(); operatorIt != cpu->cpuOperatorMap.end(); operatorIt++)
     {
         if (instruction.compare(operatorIt->first) == 0)
         {
-            void (CPU::*opPtr)(Memory*, CPU*) = cpu->cpuOperatorMap[instruction];
-            (cpu->*opPtr)(memory, cpu);
+            if (memory->getStackSize() < 2)
+                throw(exception);   
+            void (CPU::*opPtr)(Memory *) = cpu->cpuOperatorMap[instruction];
+            (cpu->*opPtr)(memory);
         }
     }
 }
@@ -165,7 +180,6 @@ int Chipset::execute()
         }
         if (str.size() > escape && str[0] != ';')
             this->callCpuMap(cpu, memory, str);
-        // this->callCpuMapOpe(cpu, memory, str);
     }
     return (0);
 }

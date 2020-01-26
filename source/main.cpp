@@ -29,7 +29,7 @@ int main(int ac, char **av)
         if (chip->execute() == 0)
             return (0);
     } catch(AbstractVmException exception) {
-        std::cout << exception.getErrorMessage() << std::endl;
+        std::cerr << exception.getErrorMessage() << std::endl;
     }
     return 0;
 }

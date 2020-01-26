@@ -27,8 +27,6 @@ std::vector<IOperand *> CPU::getFullRegistre()
 
 IOperand *CPU::getRegistreStackAtIndex(int index)
 {
-    // std::vector<IOperand*>::iterator it = this->registre.begin();
-    // std::advance(it, index);
     return (this->getFullRegistre().at(index));
 }
 
@@ -44,7 +42,6 @@ void CPU::setRegistre(IOperand *object)
 
 void CPU::displayRegistre()
 {
-    std::cout << "===== REGISTRE =====" << std::endl;
     for (int i = 0; i < this->registre.size(); i++)
     {
         std::cout << "Registre value : ";
@@ -57,6 +54,7 @@ void CPU::displayRegistre()
 eOperandType CPU::defineEnum(std::string type)
 {
     eOperandType value;
+
     if (type.compare("int8") == 0)
         value = eOperandType::INT8;
     else if (type.compare("int16") == 0)
@@ -85,8 +83,8 @@ void CPU::setCpuOperatorCmd(CPU *cpu)
     cpu->cpuOperatorMap["add"] = &CPU::add;
     cpu->cpuOperatorMap["sub"] = &CPU::sub;
     cpu->cpuOperatorMap["mul"] = &CPU::mul;
-    cpu->cpuOperatorMap["div"] = &CPU::div;
-    cpu->cpuOperatorMap["mod"] = &CPU::mod;
+    // cpu->cpuOperatorMap["div"] = &CPU::div;
+    // cpu->cpuOperatorMap["mod"] = &CPU::mod;
 }
 
 void CPU::push(Memory *memo, std::string type, std::string value)
@@ -147,8 +145,57 @@ int CPU::exit()
     return (0);
 }
 
-void CPU::add(Memory *memory, CPU *cpu) {}
-void CPU::sub(Memory *memory, CPU *cpu) {}
-void CPU::mul(Memory *memory, CPU *cpu) {}
-void CPU::div(Memory *memory, CPU *cpu) {}
-void CPU::mod(Memory *memory, CPU *cpu) {}
+void CPU::add(Memory *memory)
+{
+    std::cout << "===addtion =====" << std::endl;
+    IOperand *nb1 = memory->getAllStack().at(0);
+    IOperand *nb2 = memory->getAllStack().at(1);
+    IOperand *nb3 = *nb1 + *nb2;
+    memory->pop();
+    memory->pop();
+    memory->setStack(nb3);
+}
+
+void CPU::sub(Memory *memory)
+{
+    std::cout << "===substraction====" << std::endl;
+    IOperand *nb1 = memory->getAllStack().at(0);
+    IOperand *nb2 = memory->getAllStack().at(1);
+    IOperand *nb3 = *nb1 - *nb2;
+    memory->pop();
+    memory->pop();
+    memory->setStack(nb3);
+}
+
+void CPU::mul(Memory *memory)
+{
+    std::cout << "===multiplication====" << std::endl;
+    IOperand *nb1 = memory->getAllStack().at(0);
+    IOperand *nb2 = memory->getAllStack().at(1);
+    IOperand *nb3 = *nb1 * *nb2;
+    memory->pop();
+    memory->pop();
+    memory->setStack(nb3);
+}
+
+// void CPU::div(Memory *memory)
+// {
+//     AbstractVmException exception;
+
+//     exception.setErrorMessage("division by zero");
+
+//     std::cout << "===division===="<< std::endl;
+//     IOperand *nb1 = Factory::createOperand(eOperandType::DOUBLE, "15");
+//     IOperand *nb2 = Factory::createOperand(eOperandType::INT16, "3");
+//     nb1->debug_obj();
+//     nb2->debug_obj();
+//     try
+//     {
+//         IOperand *nb3 = *nb1 / *nb2;
+//         nb3->debug_obj();
+//     }
+//     catch(const std::exception& e)
+//     {
+//         throw exception;
+//     }
+// }

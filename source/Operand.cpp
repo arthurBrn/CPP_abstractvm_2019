@@ -6,6 +6,7 @@
 */
 
 #include "Operand.hh"
+#include <regex>
 
 Operand::Operand(eOperandType type, std::string value)
 {
@@ -17,26 +18,74 @@ Operand::~Operand()
 {
 }
 
-// void Operand::setOperandCmd(Operand *operand)
-// {
-//     operand->cmdOperand["add"] = &Operand::add;
-//     operand->cmdOperand["sub"] = &Operand::sub;
-//     operand->cmdOperand["mul"] = &Operand::mul;
-//     operand->cmdOperand["div"] = &Operand::div;
-//     operand->cmdOperand["mod"] = &Operand::mod;
-// }
+eOperandType choose_type(eOperandType type1, eOperandType type2)
+{
+    if (type1 >= type2)
+        return (type1);
+    return (type2);
+}
 
+double Operand::create_nb_1() const
+{
+    std::string value = this->toString();
+    double nb1 = std::stod(value);
+    return (nb1);
+}
+
+IOperand *Operand::operator+(const IOperand& rhs) const
+{
+    std::string value = rhs.toString();
+    double nb2 = std::stod(value);
+
+    double nb3 = create_nb_1() + nb2;
+    eOperandType type = choose_type(this->getType(), rhs.getType());
+    IOperand *nb = Factory::createOperand(type, std::to_string(nb3));
+    return (nb);
+}
+
+IOperand *Operand::operator-(const IOperand& rhs) const
+{
+    std::string value = rhs.toString();
+    double nb2 = std::stod(value);
+
+    double nb3 = create_nb_1() - nb2;
+    eOperandType type = choose_type(this->getType(), rhs.getType());
+    IOperand *nb = Factory::createOperand(type, std::to_string(nb3));
+    return (nb);
+}
+
+IOperand *Operand::operator*(const IOperand& rhs) const
+{
+    std::string value = rhs.toString();
+    double nb2 = std::stod(value);
+
+    double nb3 = create_nb_1() * nb2;
+    eOperandType type = choose_type(this->getType(), rhs.getType());
+    IOperand *nb = Factory::createOperand(type, std::to_string(nb3));
+    return (nb);
+}
+
+// IOperand *Operand::operator/(const IOperand& rhs) const
+// {
+//     std::string value = rhs.toString();
+//     AbstractVmException exception;
+//     int res = std::stoi(value);
+//     double nb2;
+//     if (nb2 != 0)
+//         nb2 = std::stod(value);
+//     else
+//         throw exception;
+//     double nb3 = create_nb_1() * nb2;
+//     eOperandType type = choose_type(this->getType(), rhs.getType());
+//     IOperand *nb = Factory::createOperand(type, std::to_string(nb3));
+//     return (nb);
+// }
 
 std::string Operand::toString() const
 {
     std::ostringstream ss;
     ss << this->value;
     return (ss.str());
-}
-
-std::map<std::string, void (Operand::*)(Memory, CPU)> Operand::getOperandCmd()
-{
-    return (this->cmdOperand);
 }
 
 void Operand::debug_obj()
@@ -49,12 +98,12 @@ void Operand::debug_obj()
     std::cout << "value : " + this->value << std::endl;
 }
 
-eOperandType Operand::getType()
+eOperandType Operand::getType() const
 {
     return (this->type);
 }
 
-std::string Operand::getValue()
+std::string Operand::getValue () const
 {
     return (this->value);
 }
@@ -69,43 +118,5 @@ void Operand::setType(eOperandType typ)
     this->type = typ;
 }
 
-// void Operand::setType(std::string value)
-// {
 
-// }
 
-// IOperand Operand::*operator+(const IOperand &rhs)
-// {
-// }
-
-// IOperand Operand::*operator-(const IOperand &rhs)
-// {
-// }
-
-// IOperand Operand::*operator*(const IOperand &rhs)
-// {
-// }   
-
-// IOperand Operand::*operator/(const IOperand &rhs)
-// {
-// }
-
-// IOperand Operand::*operator%(const IOperand &rhs)
-// {
-// }
-
-void Operand::add(Memory memory, CPU cpu)
-{
-}
-void Operand::sub(Memory objMemory, CPU objCPU)
-{
-}
-void Operand::mul(Memory objMemory, CPU objCPU)
-{
-}
-void Operand::div(Memory objMemory, CPU objCPU)
-{
-}
-void Operand::mod(Memory objMemory, CPU objCPU)
-{
-}

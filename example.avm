@@ -1,15 +1,26 @@
 ; ---------------
 ; - example.avm -
 ; --------------
-push int8(2)
-dump
-store int8(2)
-dump
+;push int8(2)
+;dump
+;store int8(2)
+;dump
 push int16(3)
 push int32(5)
 dump
-load int32(3)
+;load int32(3)
 ;assert int32(6)
+add
+dump
+push int16(10)
+dump
+sub
+dump
+push int16(10)
+dump
+mul
+dump
+add
 dump
 ;pop
 ;dump

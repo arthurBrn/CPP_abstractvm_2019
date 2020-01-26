@@ -7,45 +7,31 @@
 
 #include "Factory.hh"
 
-Factory::Factory()
-{
-}
-
-Factory::~Factory()
-{
-}
-
 IOperand *Factory::createInt8(const std::string &value)
 {
-    std::string val = value;
     IOperand *res = new Operand(eOperandType::INT8, value);
     return (res); 
 }
 
 IOperand *Factory::createInt16(const std::string &value)
 {
-    std::string val = value;
     IOperand *res = new Operand(eOperandType::INT16, value);
-
     return (res);
 }
+
 IOperand *Factory::createInt32(const std::string &value)
 {
-    std::string val = value;
-
     IOperand *res = new Operand(eOperandType::INT32, value);
     return (res);
 }
 
 IOperand *Factory::createFloat(const std::string &value)
 {
-    std::string val = value;
     IOperand *res = new Operand(eOperandType::FLOAT, value);
     return (res);
 }
 IOperand *Factory::createDouble(const std::string &value)
 {
-    std::string val = value;
     IOperand *res = new Operand(eOperandType::DOUBLE, value);
     return (res);
 }
@@ -57,7 +43,10 @@ IOperand *Factory::createBigDecimal(const std::string &value)
 
 IOperand *Factory::createOperand(eOperandType type, const std::string &value)
 {
+    AbstractVmException exception;
     IOperand *res;
+
+    exception.setErrorMessage("incompatible type");
     switch (type)
     {
     case eOperandType::INT8:
@@ -79,7 +68,7 @@ IOperand *Factory::createOperand(eOperandType type, const std::string &value)
         res = createBigDecimal(value);
         break;
     default:
-        std::cout << "ERROR FACTORY SWITCH" << std::endl;
+        throw exception;
         break;
     }
     return (res);

@@ -9,7 +9,6 @@
 #define _CPU_HH_
 
 #include "abstractvm.hh"
-#include "AbstractVmException.hh"
 #include "Factory.hh"
 #include "Operand.hh"
 #include "Memory.hh"
@@ -38,17 +37,13 @@ public:
     void load(Memory *memo, std::string type, std::string value);
     void assert(Memory *memo, std::string type, std::string value);
     int exit();
+    void add(Memory *memory);
+    void sub(Memory *memory);
+    void mul(Memory *memory);
+    // void div(Memory *memory);
     std::map<std::string, void (CPU::*)(Memory*, std::string, std::string)> cpuRegularMap;
-    std::map<std::string, void (CPU::*)(Memory*, CPU*)> cpuOperatorMap;
-
-    // std::map<std::string, void (Operand::*)(Memory, CPU)> getOperandCmd();
-    void add(Memory *memory, CPU *cpu);
-    void sub(Memory *memory, CPU *cpu);
-    void mul(Memory *memory, CPU *cpu);
-    void div(Memory *memory, CPU *cpu);
-    void mod(Memory *memory, CPU *cpu);
+    std::map<std::string, void (CPU::*)(Memory*)> cpuOperatorMap;
 private:
-    // std::map<std::string, void (Operand::*)(Memory, CPU)> cmdOperand;
     std::vector<IOperand *> registre;
     Operand *_operand;
 };
