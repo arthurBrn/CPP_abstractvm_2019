@@ -187,8 +187,8 @@ void CPU::div(Memory *memory)
 void CPU::mod(Memory *memory)
 {
     std::cout << "===modulo===="<< std::endl;
-    IOperand *nb1 = Factory::createOperand(eOperandType::DOUBLE, "15");
-    IOperand *nb2 = Factory::createOperand(eOperandType::INT16, "3");
+    IOperand *nb1 = Factory::createOperand(eOperandType::DOUBLE, "20");
+    IOperand *nb2 = Factory::createOperand(eOperandType::INT16, "8");
     nb1->debug_obj();
     nb2->debug_obj();
     IOperand *nb3 = *nb1 % *nb2;

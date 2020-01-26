@@ -78,13 +78,15 @@ IOperand *Operand::operator/(const IOperand& rhs) const
 
 IOperand *Operand::operator%(const IOperand& rhs) const
 {
-    std::string value1 = rhs.toString();
+    std::string value1 = this->toString();
     int nb1 = std::stoi(value1);
     std::string value2 = rhs.toString();
     int nb2 = std::stoi(value2);
 
-    double nb3 = nb1 % nb2;
+    int nb3 = nb1 % nb2;
     eOperandType type = choose_type(this->getType(), rhs.getType());
+    if (type >= 3 )
+        type = eOperandType::INT16;
     IOperand *nb = Factory::createOperand(type, std::to_string(nb3));
     return (nb);
 }

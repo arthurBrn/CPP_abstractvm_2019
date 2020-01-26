@@ -126,8 +126,6 @@ int Chipset::execute()
     Memory *memory = new Memory();
     CPU *cpu = new CPU();
     std::string instruction;
-    std::string value = "no";
-    std::string type = "no";
     std::string str;
     int escape = 0;
     auto iterator = this->getAllCommands().begin();
