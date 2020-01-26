@@ -29,7 +29,9 @@ public:
     void setRegistre(IOperand *object);
     void setRegistreStackAtIndex(int index, IOperand *object);
     void displayRegistre();
-    void setCpuCmd(CPU *cpu);
+    void setCpuRegularCmd(CPU *cpu);
+    void setCpuOperatorCmd(CPU *cpu);
+    // std::map<std::string, void (CPU::*)(Memory, std::string, std::string)> getCpuCmd();
     void push(Memory *memo, std::string type, std::string value);
     void store(Memory *memo, std::string type, std::string value);
     void load(Memory *memo, std::string type, std::string value);
@@ -40,7 +42,8 @@ public:
     void mul(Memory *memory);
     void div(Memory *memory);
     void mod(Memory *memory);
-    std::map<std::string, void (CPU::*)(Memory*, std::string, std::string)> cmdCpu;
+    std::map<std::string, void (CPU::*)(Memory *, std::string, std::string)> cpuRegularMap;
+    std::map<std::string, void (CPU::*)(Memory *)> cpuOperatorMap;
 private:
     std::vector<IOperand *> registre;
     Operand *_operand;

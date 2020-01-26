@@ -109,20 +109,46 @@ void Chipset::callCpuMap(CPU *cpu, Memory *memory, std::string str)
 
     exception.setErrorMessage("Calcul Error");
     std::map<std::string, void (CPU::*)(Memory *, std::string, std::string)>::iterator cpuIt;
-    for (cpuIt = cpu->cmdCpu.begin(); cpuIt != cpu->cmdCpu.end(); cpuIt++)
+
+    for (cpuIt = cpu->cpuRegularMap.begin(); cpuIt != cpu->cpuRegularMap.end(); cpuIt++)
     {
         if (instruction.compare(cpuIt->first) == 0)
         {
-            void (CPU::*cpuPtr)(Memory *, std::string, std::string) = cpu->cmdCpu[instruction];
+            void (CPU::*cpuPtr)(Memory *, std::string, std::string) = cpu->cpuRegularMap[instruction];
             (cpu->*cpuPtr)(memory, type, value);
-            cpu->mod(memory);
+            // cpu->div(memory);
         }
     }
 }
 
+void Chipset::callCpuOperator(Memory *memory, CPU *cpu, std::string cmds)
+{
+    std::string instruction = this->getCommandInstruction(cmds);
+    std::map<std::string, void (CPU::*)(Memory *)>::iterator operatorIt;
+    AbstractVmException stack;
+
+    for (operatorIt = cpu->cpuOperatorMap.begin(); operatorIt != cpu->cpuOperatorMap.end(); operatorIt++)
+    {
+        if (instruction.compare(operatorIt->first) == 0)
+        {
+            if (memory->getStackSize() < 2) {
+                
+                stack.setErrorMessage("ERROR : Can't add on stack with less than two values.");
+                throw(stack);
+            }       
+            void (CPU::*opPtr)(Memory *) = cpu->cpuOperatorMap[instruction];
+            try {
+                (cpu->*opPtr)(memory);
+            } catch(AbstractVmException exception) {
+                throw exception;
+            }
+        }
+    }
+}
 
 int Chipset::execute()
 {
+    std::vector<std::string>::iterator cmdsIt;
     Memory *memory = new Memory();
     CPU *cpu = new CPU();
     std::string instruction;
@@ -133,7 +159,8 @@ int Chipset::execute()
 
     this->cleanCommands();
     memory->setMemoryCmd(memory);
-    cpu->setCpuCmd(cpu);
+    cpu->setCpuRegularCmd(cpu);
+    cpu->setCpuOperatorCmd(cpu);
     Factory fac;
     IOperand *nb = fac.createOperand(eOperandType::INT32, "34");
     for (int i = 0; i < this->getAllCommands().size(); i++)
@@ -146,9 +173,10 @@ int Chipset::execute()
             if (instruction.compare("exit") == 0)
                 cpu->exit();
             this->callMemoryMap(memory, instruction);
+            this->callCpuOperator(memory, cpu, str);
         }
         if (str.size() > escape && str[0] != ';')
-            this->callCpuMap(cpu, memory, str); 
+            this->callCpuMap(cpu, memory, str);
     }
     return (0);
 }

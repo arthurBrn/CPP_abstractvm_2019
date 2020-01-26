@@ -18,14 +18,11 @@
 #include <regex>
 #include <stdexcept>
 
+#define DIVISION_BY_ZERO "OPERATOR ERROR: Division by zero forbiden.\n"
+#define FALSE_ASSERT "ASSERT ERROR: the value does not match the top stack value.\n"
+#define LOAD_ERROR "LOAD ERROR: can't execute load on empty register.\n"
+#define EMPTY_STACK "STACK ERROR: Can't execute commands on empty stack.\n"
+
 #include "AbstractVmException.hh"
-// #include "Chipset.hh"
-// #include "Operand.hh"
-// #include "CPU.hh"
-// #include "Factory.hh"
-// #include "IOperand.hh"
-// #include "Input.hh"
-// #include "Output.hh"
-// #include "Memory.hh"
 
 #endif
