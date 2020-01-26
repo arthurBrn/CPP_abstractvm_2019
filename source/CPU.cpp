@@ -72,12 +72,21 @@ eOperandType CPU::defineEnum(std::string type)
     return (value);
 }
 
-void CPU::setCpuCmd(CPU *cpu)
+void CPU::setCpuRegularCmd(CPU *cpu)
 {
-    cpu->cmdCpu["push"] = &CPU::push;
-    cpu->cmdCpu["store"] = &CPU::store;
-    cpu->cmdCpu["load"] = &CPU::load;
-    cpu->cmdCpu["assert"] = &CPU::assert;
+    cpu->cpuRegularMap["push"] = &CPU::push;
+    cpu->cpuRegularMap["store"] = &CPU::store;
+    cpu->cpuRegularMap["load"] = &CPU::load;
+    cpu->cpuRegularMap["assert"] = &CPU::assert;
+}
+
+void CPU::setCpuOperatorCmd(CPU *cpu)
+{
+    cpu->cpuOperatorMap["add"] = &CPU::add;
+    cpu->cpuOperatorMap["sub"] = &CPU::sub;
+    cpu->cpuOperatorMap["mul"] = &CPU::mul;
+    cpu->cpuOperatorMap["div"] = &CPU::div;
+    cpu->cpuOperatorMap["mod"] = &CPU::mod;
 }
 
 void CPU::push(Memory *memo, std::string type, std::string value)
@@ -99,7 +108,7 @@ void CPU::store(Memory *memory, std::string type, std::string value)
 
     exception.setErrorMessage("ERROR Store : Can not execute store on empty stack");
     if (memory->getAllStack().empty())
-        throw (exception);
+        throw(exception);
     holder = memory->unstackAtIndex(0);
     this->setRegistre(holder);
 }
@@ -109,11 +118,11 @@ void CPU::load(Memory *memo, std::string type, std::string value)
     AbstractVmException exception;
     Factory fact;
     IOperand *stacked;
-    std::vector<IOperand*>::iterator it = this->registre.begin();
+    std::vector<IOperand *>::iterator it = this->registre.begin();
     exception.setErrorMessage("Error : can't execute load on empty register");
 
     if (this->getRegistreSize() < 1)
-        throw (exception);
+        throw(exception);
     stacked = this->getRegistreStackAtIndex(0);
     this->registre.erase(it);
     memo->setStack(stacked);
@@ -138,33 +147,8 @@ int CPU::exit()
     return (0);
 }
 
-
-// void Operand::setOperandCmd(Operand *operand)
-// {
-    // operand->cmdOperand["add"] = &Operand::add;
-    // operand->cmdOperand["sub"] = &Operand::sub;
-    // operand->cmdOperand["mul"] = &Operand::mul;
-    // operand->cmdOperand["div"] = &Operand::div;
-    // operand->cmdOperand["mod"] = &Operand::mod;
-// }
-
-// std::map<std::string, void (Operand::*)(Memory, CPU)> Operand::getOperandCmd()
-// {
-    // return (this->cmdOperand);
-// }
-
-// void Operand::add(Memory memory, CPU cpu)
-// {
-// }
-// void Operand::sub(Memory objMemory, CPU objCPU)
-// {
-// }
-// void Operand::mul(Memory objMemory, CPU objCPU)
-// {
-// }
-// void Operand::div(Memory objMemory, CPU objCPU)
-// {
-// }
-// void Operand::mod(Memory objMemory, CPU objCPU)
-// {
-// }
+void CPU::add(Memory *memory, CPU *cpu) {}
+void CPU::sub(Memory *memory, CPU *cpu) {}
+void CPU::mul(Memory *memory, CPU *cpu) {}
+void CPU::div(Memory *memory, CPU *cpu) {}
+void CPU::mod(Memory *memory, CPU *cpu) {}

@@ -30,21 +30,23 @@ public:
     void setRegistre(IOperand *object);
     void setRegistreStackAtIndex(int index, IOperand *object);
     void displayRegistre();
-    void setCpuCmd(CPU *cpu);
+    void setCpuRegularCmd(CPU *cpu);
+    void setCpuOperatorCmd(CPU *cpu);
     // std::map<std::string, void (CPU::*)(Memory, std::string, std::string)> getCpuCmd();
     void push(Memory *memo, std::string type, std::string value);
     void store(Memory *memo, std::string type, std::string value);
     void load(Memory *memo, std::string type, std::string value);
     void assert(Memory *memo, std::string type, std::string value);
     int exit();
-    std::map<std::string, void (CPU::*)(Memory*, std::string, std::string)> cmdCpu;
+    std::map<std::string, void (CPU::*)(Memory*, std::string, std::string)> cpuRegularMap;
+    std::map<std::string, void (CPU::*)(Memory*, CPU*)> cpuOperatorMap;
 
     // std::map<std::string, void (Operand::*)(Memory, CPU)> getOperandCmd();
-    // void add(Memory objMemory, CPU objCPU);
-    // void sub(Memory objMemory, CPU objCPU);
-    // void mul(Memory objMemory, CPU objCPU);
-    // void div(Memory objMemory, CPU objCPU);
-    // void mod(Memory objMemory, CPU objCPU);
+    void add(Memory *memory, CPU *cpu);
+    void sub(Memory *memory, CPU *cpu);
+    void mul(Memory *memory, CPU *cpu);
+    void div(Memory *memory, CPU *cpu);
+    void mod(Memory *memory, CPU *cpu);
 private:
     // std::map<std::string, void (Operand::*)(Memory, CPU)> cmdOperand;
     std::vector<IOperand *> registre;

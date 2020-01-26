@@ -17,14 +17,14 @@ Operand::~Operand()
 {
 }
 
-void Operand::setOperandCmd(Operand *operand)
-{
-    operand->cmdOperand["add"] = &Operand::add;
-    operand->cmdOperand["sub"] = &Operand::sub;
-    operand->cmdOperand["mul"] = &Operand::mul;
-    operand->cmdOperand["div"] = &Operand::div;
-    operand->cmdOperand["mod"] = &Operand::mod;
-}
+// void Operand::setOperandCmd(Operand *operand)
+// {
+//     operand->cmdOperand["add"] = &Operand::add;
+//     operand->cmdOperand["sub"] = &Operand::sub;
+//     operand->cmdOperand["mul"] = &Operand::mul;
+//     operand->cmdOperand["div"] = &Operand::div;
+//     operand->cmdOperand["mod"] = &Operand::mod;
+// }
 
 
 std::string Operand::toString() const
