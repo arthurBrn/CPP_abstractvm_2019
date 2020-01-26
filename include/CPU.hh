@@ -39,6 +39,7 @@ public:
     void sub(Memory *memory);
     void mul(Memory *memory);
     void div(Memory *memory);
+    void mod(Memory *memory);
     std::map<std::string, void (CPU::*)(Memory*, std::string, std::string)> cmdCpu;
 private:
     std::vector<IOperand *> registre;

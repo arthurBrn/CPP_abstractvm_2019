@@ -183,3 +183,14 @@ void CPU::div(Memory *memory)
     IOperand *nb3 = *nb1 / *nb2;
     nb3->debug_obj();
 }
+
+void CPU::mod(Memory *memory)
+{
+    std::cout << "===modulo===="<< std::endl;
+    IOperand *nb1 = Factory::createOperand(eOperandType::DOUBLE, "15");
+    IOperand *nb2 = Factory::createOperand(eOperandType::INT16, "3");
+    nb1->debug_obj();
+    nb2->debug_obj();
+    IOperand *nb3 = *nb1 % *nb2;
+    nb3->debug_obj();
+}

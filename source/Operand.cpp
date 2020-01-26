@@ -68,11 +68,22 @@ IOperand *Operand::operator*(const IOperand& rhs) const
 IOperand *Operand::operator/(const IOperand& rhs) const
 {
     std::string value = rhs.toString();
-    int res = std::stoi(value);
-    double nb2;
-    nb2 = std::stod(value);
+    double nb2 = std::stod(value);
 
     double nb3 = create_nb_1() / nb2;
+    eOperandType type = choose_type(this->getType(), rhs.getType());
+    IOperand *nb = Factory::createOperand(type, std::to_string(nb3));
+    return (nb);
+}
+
+IOperand *Operand::operator%(const IOperand& rhs) const
+{
+    std::string value1 = rhs.toString();
+    int nb1 = std::stoi(value1);
+    std::string value2 = rhs.toString();
+    int nb2 = std::stoi(value2);
+
+    double nb3 = nb1 % nb2;
     eOperandType type = choose_type(this->getType(), rhs.getType());
     IOperand *nb = Factory::createOperand(type, std::to_string(nb3));
     return (nb);
