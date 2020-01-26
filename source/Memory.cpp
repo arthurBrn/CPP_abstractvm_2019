@@ -17,7 +17,10 @@ IOperand *Memory::unstackAtIndex(int index)
 {
     AbstractVmException exception;
     std::vector<IOperand *>::iterator it = this->stack.begin();
-
+    
+    exception.setErrorMessage(STACK_NOT_ENOUGH_ELEMENTS);
+    if (this->stack.empty())
+        throw(exception);
     exception.setErrorMessage("Error unstacking a memory stack. The index is greater than the stack.");
     if ((this->getStackSize() < index) || (index < 0))
         throw(exception);
@@ -56,7 +59,6 @@ std::vector<IOperand *> Memory::getAllStack()
 void Memory::setStack(IOperand *obj)
 {
     this->setStackAtIndexX(0, obj);
-    // std::cout << "STAAAAAACK" << std::endl;
 }
 
 void Memory::pop()
@@ -86,22 +88,14 @@ void Memory::dup()
 
 void Memory::swap()
 {
-    std::string holding_value;
-    eOperandType holding_type;
     AbstractVmException exception;
-    std::vector<IOperand *>::iterator it = this->stack.begin() + 1;
 
     exception.setErrorMessage(STACK_NOT_ENOUGH_ELEMENTS);
     if (this->stack.size() < 2)
         throw(exception);
-    holding_value = this->getStackAtIndexX(0)->getValue();
-    holding_type = this->getStackAtIndexX(0)->getType();
-    std::string valSndObj = this->getStackAtIndexX(1)->getValue();
-    eOperandType typeSndObj = this->getStackAtIndexX(1)->getType();
-    this->getStackAtIndexX(0)->setValue(valSndObj);
-    this->getStackAtIndexX(0)->setType(typeSndObj);
-    this->getStackAtIndexX(1)->setValue(holding_value);
-    this->getStackAtIndexX(1)->setType(holding_type);
+    IOperand *topHolder = this->getStackAtIndexX(0);
+    this->pop();
+    this->setStackAtIndexX(1, topHolder);
 }
 
 void Memory::dump()
