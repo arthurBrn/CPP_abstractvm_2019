@@ -15,12 +15,6 @@ Chipset::~Chipset()
 {
 }
 
-void Chipset::showCommands()
-{
-    for (int i = 0; i < this->commands.size(); i++)
-        std::cout << this->commands.at(i) << std::endl;
-}
-
 std::vector<std::string> Chipset::getAllCommands()
 {
     return (this->commands);
@@ -116,7 +110,6 @@ void Chipset::callCpuMap(CPU *cpu, Memory *memory, std::string str)
         {
             void (CPU::*cpuPtr)(Memory *, std::string, std::string) = cpu->cpuRegularMap[instruction];
             (cpu->*cpuPtr)(memory, type, value);
-            // cpu->div(memory);
         }
     }
 }

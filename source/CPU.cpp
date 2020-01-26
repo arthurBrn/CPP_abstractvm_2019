@@ -39,18 +39,6 @@ void CPU::setRegistre(IOperand *object)
 {
     this->registre.push_back(object);
 }
-
-void CPU::displayRegistre()
-{
-    for (int i = 0; i < this->registre.size(); i++)
-    {
-        std::cout << "Registre value : ";
-        std::cout << this->registre.at(i)->getValue() << std::endl;
-        std::cout << "Registre type : ";
-        std::cout << this->registre.at(i)->getType() << std::endl;
-    }
-}
-
 eOperandType CPU::defineEnum(std::string type)
 {
     eOperandType value;
@@ -145,14 +133,19 @@ int CPU::exit()
     return (0);
 }
 
+void CPU::move_stack(Memory *memory, IOperand *nb)
+{
+    memory->pop();
+    memory->pop();
+    memory->setStack(nb);
+}
+
 void CPU::add(Memory *memory)
 {
     IOperand *nb1 = memory->getAllStack().at(0);
     IOperand *nb2 = memory->getAllStack().at(1);
     IOperand *nb3 = *nb1 + *nb2;
-    memory->pop();
-    memory->pop();
-    memory->setStack(nb3);
+    move_stack(memory, nb3);
 }
 
 void CPU::sub(Memory *memory)
@@ -160,9 +153,7 @@ void CPU::sub(Memory *memory)
     IOperand *nb1 = memory->getAllStack().at(0);
     IOperand *nb2 = memory->getAllStack().at(1);
     IOperand *nb3 = *nb1 - *nb2;
-    memory->pop();
-    memory->pop();
-    memory->setStack(nb3);
+    move_stack(memory, nb3);
 }
 
 void CPU::mul(Memory *memory)
@@ -170,9 +161,7 @@ void CPU::mul(Memory *memory)
     IOperand *nb1 = memory->getAllStack().at(0);
     IOperand *nb2 = memory->getAllStack().at(1);
     IOperand *nb3 = *nb1 * *nb2;
-    memory->pop();
-    memory->pop();
-    memory->setStack(nb3);
+    move_stack(memory, nb3);
 }
 
 void CPU::div(Memory *memory)
@@ -181,9 +170,7 @@ void CPU::div(Memory *memory)
     IOperand *nb2 = memory->getAllStack().at(1);
     try {
         IOperand *nb3 = *nb1 / *nb2;
-        memory->pop();
-        memory->pop();
-        memory->setStack(nb3);
+        move_stack(memory, nb3);
     } catch(AbstractVmException exception) {
         throw exception;
     }
@@ -196,9 +183,7 @@ void CPU::mod(Memory *memory)
     IOperand *nb2 = memory->getAllStack().at(1);
     try {
         IOperand *nb3 = *nb1 % *nb2;
-        memory->pop();
-        memory->pop();
-        memory->setStack(nb3);
+        move_stack(memory, nb3);
     } catch(AbstractVmException exception) {
         throw exception;
     }

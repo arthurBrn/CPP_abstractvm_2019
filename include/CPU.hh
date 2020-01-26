@@ -28,15 +28,14 @@ public:
     eOperandType defineEnum(std::string type);
     void setRegistre(IOperand *object);
     void setRegistreStackAtIndex(int index, IOperand *object);
-    void displayRegistre();
     void setCpuRegularCmd(CPU *cpu);
     void setCpuOperatorCmd(CPU *cpu);
-    // std::map<std::string, void (CPU::*)(Memory, std::string, std::string)> getCpuCmd();
     void push(Memory *memo, std::string type, std::string value);
     void store(Memory *memo, std::string type, std::string value);
     void load(Memory *memo, std::string type, std::string value);
     void assert(Memory *memo, std::string type, std::string value);
     int exit();
+    void move_stack(Memory *memory, IOperand *nb);
     void add(Memory *memory);
     void sub(Memory *memory);
     void mul(Memory *memory);

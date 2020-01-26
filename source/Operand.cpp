@@ -83,7 +83,7 @@ IOperand *Operand::operator/(const IOperand& rhs) const
     std::string value = rhs.toString();
     double nb2 = std::stod(value);
 
-    exception.setErrorMessage("Division by 0 impossible");
+    exception.setErrorMessage(DIVISION_BY_ZERO);
     if (nb2 == 0)
         throw exception;
     double nb3 = create_nb_1() / nb2;
@@ -102,12 +102,12 @@ IOperand *Operand::operator%(const IOperand& rhs) const
     int nb3;
     
     if (nb2 == 0) {
-        exception.setErrorMessage("Modulo by 0 impossible");
+        exception.setErrorMessage(MODULO_BY_ZERO);
         throw(exception);
     } 
     eOperandType type = choose_type(this->getType(), rhs.getType());
     if (type > 2) {
-        exception.setErrorMessage("Modulo only work with int");
+        exception.setErrorMessage(MODULO_DECIMAL);
         throw(exception);
     }
     nb3 = nb1 % nb2;
@@ -120,16 +120,6 @@ std::string Operand::toString() const
     std::ostringstream ss;
     ss << this->value;
     return (ss.str());
-}
-
-void Operand::debug_obj()
-{
-    eOperandType type = this->type;
-    std::ostringstream eOperandType;
-    eOperandType << type;
-    std::string type_s = eOperandType.str();
-    std::cout << "type : " + type_s << std::endl;
-    std::cout << "value : " + this->value << std::endl;
 }
 
 eOperandType Operand::getType() const
