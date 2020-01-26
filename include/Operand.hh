@@ -33,7 +33,6 @@ public:
     std::string getValue() const override;
     void setValue(std::string&) override;
     void setType(eOperandType) override;
-    void debug_obj() override;
 private:
     CPU *_cpu;
     std::string value;

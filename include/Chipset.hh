@@ -25,7 +25,6 @@ public:
     void callCpuMap(CPU *cpu, Memory *memory, std::string str);
     void callCpuOperator(Memory *memory, CPU *cpu, std::string cmds);
     void setCommand(std::string);
-    void showCommands();
     int execute();
     std::string getCommandInstruction(std::string cmd);
     std::string getCommandValue(std::string cmd);

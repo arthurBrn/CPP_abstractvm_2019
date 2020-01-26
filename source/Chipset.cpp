@@ -15,12 +15,6 @@ Chipset::~Chipset()
 {
 }
 
-void Chipset::showCommands()
-{
-    for (int i = 0; i < this->commands.size(); i++)
-        std::cout << this->commands.at(i) << std::endl;
-}
-
 std::vector<std::string> Chipset::getAllCommands()
 {
     return (this->commands);
