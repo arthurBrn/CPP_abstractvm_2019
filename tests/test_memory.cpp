@@ -10,6 +10,39 @@
 #include "AbstractVmException.hh"
 #include "Output.hh"
 #include "Factory.hh"
+#include "IOperand.hh"
+#include "Operand.hh"
+
+Test(setStack, verify_stack_being_set_one_element)
+{
+    Memory me;
+    IOperand *obj = Factory::createOperand(eOperandType::INT16, "14");
+
+    me.setStack(obj);
+    cr_assert_eq(me.getStackSize(), 1);
+    cr_assert_eq(me.getStackAtIndexX(0)->getValue(), obj->getValue());
+    cr_assert_eq(me.getStackAtIndexX(0)->getType(), obj->getType());
+}
+
+Test(setStack, verify_stack_being_set_multiple_element)
+{
+    Memory me;
+    IOperand *obj3 = Factory::createOperand(eOperandType::INT16, "14");
+    IOperand *obj2 = Factory::createOperand(eOperandType::INT16, "13");
+    IOperand *obj1 = Factory::createOperand(eOperandType::INT16, "12");
+
+    me.setStack(obj3);
+    me.setStack(obj2);
+    me.setStack(obj1);
+
+    cr_assert_eq(me.getStackSize(), 3);
+    cr_assert_eq(me.getStackAtIndexX(0)->getValue(), obj1->getValue());
+    cr_assert_eq(me.getStackAtIndexX(0)->getType(), obj1->getType());
+    cr_assert_eq(me.getStackAtIndexX(1)->getValue(), obj2->getValue());
+    cr_assert_eq(me.getStackAtIndexX(1)->getType(), obj2->getType());
+    cr_assert_eq(me.getStackAtIndexX(2)->getValue(), obj3->getValue());
+    cr_assert_eq(me.getStackAtIndexX(2)->getType(), obj3->getType());
+}
 
 Test(getStackSize, recover_stack_size)
 {
@@ -22,39 +55,85 @@ Test(getStackSize, recover_stack_size)
     cr_assert_eq(mem.getStackSize(), 2);
 }
 
+Test(getStackSize, recover_stack_size_zero)
+{
+    Memory mem;
+
+    cr_assert_eq(mem.getStackSize(), 0);
+}
+
 Test(getStackAtIndexX, verify_return_stack_at_index)
 {
-    Memory *memoire;
-    Factory fact;
-    IOperand *fst = fact.createOperand(eOperandType::INT8, "1");
-    IOperand *snd = fact.createOperand(eOperandType::INT16, "2");
-    IOperand *thr = fact.createOperand(eOperandType::INT32, "3");
+    Memory memoire;
+    IOperand* obj = Factory::createOperand(eOperandType::INT8, "2");
+    IOperand* obj2 = Factory::createOperand(eOperandType::INT8, "3");
 
-    memoire->setStack(fst);
-    memoire->setStack(snd);
-    memoire->setStack(thr);
-    cr_assert_eq(memoire->getStackAtIndexX(0), thr);    
+    memoire.setStack(obj);
+    memoire.setStack(obj2);
 
+    cr_assert_eq(memoire.getStackAtIndexX(0), obj2);
+    cr_assert_eq(memoire.getStackAtIndexX(1), obj);
 }
-Test(setStackAtIndexX, verify_set_stack_at_index) {}
-Test(getAllStack, verify_this_return_all_stack) {}
-Test(setStack, verify_stack_being_set) {}
-// returns error if the stack is empty unstack the value at the top
-Test(pop, verify_pop_throw_error_on_empty_stack) {}
-Test(pop, verify_pop_unstack_the_stack) {}
-// empty the stack
-Test(clear, verify_stack_is_emptied) {}
-// Duplicate stack top value
-Test(dup, verify_get_stack_top_value) {}
-Test(dup, verify_dup_create_copy_of_top_stack) {}
-Test(dup, verify_dup_stack_back_the_copie) {}
-Test(dup, verify_two_first_top_value_are_the_same) {}
-// swap top two values of the stack
-Test(swap, verify_top_two_value_are_diff) {}
-Test(swap, verify_swap_throw_error_on_stack_of_one_stack) {}
-Test(swap, verify_top_two_value_swaped) {}
-// dump, display all stack value from newest to oldest, separated w/ linebreak
-Test(dump, verify_stack_not_empty) {}
-Test(dump, verify_stack_dumped) {}
-// print, make sure top stack is 8bit integer, interpret ascii value
-Test(print, verify_print_recvoer_top_stack) {}
+
+Test(setStackAtIndexX, verify_set_stack_at_index)
+{
+    Memory memoire;
+    IOperand *obj1 = Factory::createOperand(eOperandType::INT8, "1");
+    IOperand *obj2 = Factory::createOperand(eOperandType::INT8, "2");
+
+    memoire.setStack(obj1);
+    memoire.setStack(obj2);
+    cr_assert_eq(memoire.getStackAtIndexX(0), obj2);
+    cr_assert_eq(memoire.getStackAtIndexX(1), obj1);
+    memoire.setStackAtIndexX(0, obj1);
+    memoire.setStackAtIndexX(1, obj2);
+    cr_assert_eq(memoire.getStackAtIndexX(0), obj1);
+    cr_assert_eq(memoire.getStackAtIndexX(1), obj2);
+}
+Test(pop, verify_pop_throw_error_on_empty_stack) 
+{
+    Memory memoire;
+    IOperand *obj = Factory::createOperand(eOperandType::INT8, "12");
+
+    memoire.setStack(obj);
+    cr_assert_eq(memoire.getStackSize(), 1);
+    memoire.pop();
+    cr_assert_eq(memoire.getStackSize(), 0);
+}
+Test(clear, verify_stack_is_emptied) 
+{
+    Memory mem;
+    IOperand *obj = Factory::createOperand(eOperandType::INT8, "2");
+    mem.setStack(obj);
+    cr_assert_eq(mem.getStackSize(), 1);
+    mem.clear();
+    cr_assert_eq(mem.getStackSize(), 0);
+}
+Test(dup, verify_dup_create_copy_of_top_stack) 
+{
+    Memory mem;
+    IOperand *obj = Factory::createOperand(eOperandType::INT8, "2");
+    mem.setStack(obj);
+    cr_assert_eq(mem.getStackSize(), 1);
+    mem.dup();
+    cr_assert_eq(mem.getStackSize(), 2);
+    cr_assert_eq(mem.getStackAtIndexX(0)->getValue(), obj->getValue());
+    cr_assert_eq(mem.getStackAtIndexX(0)->getType(), obj->getType());
+    cr_assert_eq(mem.getStackAtIndexX(1)->getValue(), obj->getValue());
+    cr_assert_eq(mem.getStackAtIndexX(1)->getType(), obj->getType());
+}
+
+Test(swap, verify_top_two_value_are_diff) 
+{
+    Memory mem;
+    IOperand *obj1 = Factory::createOperand(eOperandType::INT8, "1");
+    IOperand *obj2 = Factory::createOperand(eOperandType::INT16, "2");
+
+    mem.setStack(obj1);
+    mem.setStack(obj2);
+    cr_assert_eq(mem.getStackAtIndexX(0)->getValue(), obj2->getValue());
+    cr_assert_eq(mem.getStackAtIndexX(1)->getValue(), obj1->getValue());
+    mem.swap();
+    cr_assert_eq(mem.getStackAtIndexX(0)->getValue(), obj1->getValue());
+    cr_assert_eq(mem.getStackAtIndexX(1)->getValue(), obj2->getValue());
+}

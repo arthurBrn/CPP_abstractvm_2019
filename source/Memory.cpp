@@ -29,8 +29,16 @@ IOperand *Memory::unstackAtIndex(int index)
 
 IOperand *Memory::getStackAtIndexX(int index)
 {
-    IOperand *obj = this->getAllStack().at(index);
-    return (obj);
+    AbstractVmException exception;
+    if (this->stack.empty()) {
+        exception.setErrorMessage("ERROR getStackAtIndexX(): Stack is empty.");
+        throw (exception);
+    }
+    if (this->getStackSize() < index) {
+        exception.setErrorMessage("ERROR getStackAtIndexX(): Stack is empty or index is greater than stack size");
+        throw(exception);
+    }
+    return (this->getAllStack().at(index));
 }
 
 void Memory::setStackAtIndexX(int index, IOperand *obj)
@@ -48,6 +56,7 @@ std::vector<IOperand *> Memory::getAllStack()
 void Memory::setStack(IOperand *obj)
 {
     this->setStackAtIndexX(0, obj);
+    // std::cout << "STAAAAAACK" << std::endl;
 }
 
 void Memory::pop()
